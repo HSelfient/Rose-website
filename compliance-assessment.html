@@ -1,917 +1,817 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AI Compliance Assessment — ROSÉ Partnership</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Cinzel:wght@400;600&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Compliance & Risk Assessment · ROSÉ Partnership</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Cinzel:wght@400;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --rose:       #CC3562;
-      --rose-light: #E05080;
-      --rose-dark:  #8B1030;
-      --gold:       #C9A96E;
-      --ink:        #040104;
-      --ink-2:      #0A0208;
-      --ink-3:      #12050D;
-      --text:       #EDE8E3;
-      --muted:      #9A8A90;
-      --border:     rgba(204,53,98,0.2);
+      --rose:#CC3562; --rose-light:#E05080; --rose-dark:#8B1030;
+      --gold:#C9A96E; --ink:#040104; --ink-2:#0A0208; --ink-3:#12050D;
+      --text:#EDE8E3; --muted:#9A8A90;
+      --border:rgba(204,53,98,0.2); --border-soft:rgba(204,53,98,0.12);
     }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--ink);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      min-height: 100vh;
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{background:var(--ink);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;min-height:100vh;overflow-x:hidden;}
+    .top-rule{height:1px;background:linear-gradient(to right,transparent,var(--rose-dark),transparent);}
+    header{text-align:center;padding:56px 24px 40px;}
+    .eyebrow{font-family:'Cinzel',serif;font-size:0.66rem;letter-spacing:0.5em;color:var(--gold);text-transform:uppercase;margin-bottom:24px;}
+    .page-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,5vw,52px);font-weight:300;line-height:1.1;color:var(--text);margin-bottom:14px;}
+    .page-title em{font-style:italic;color:var(--rose-light);}
+    .page-subtitle{font-family:'Cormorant Garamond',serif;font-size:clamp(13px,1.6vw,16px);font-style:italic;color:var(--muted);line-height:1.8;max-width:560px;margin:0 auto 32px;}
+    .jurisdiction-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:36px;}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:5px 14px;border:1px solid var(--border);font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);}
+    .badge .dot{width:5px;height:5px;border-radius:50%;background:var(--rose);flex-shrink:0;}
+    .progress-wrap{max-width:680px;margin:0 auto 40px;padding:0 24px;display:none;}
+    .progress-meta{display:flex;justify-content:space-between;font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+    .progress-track{height:1px;background:var(--border);}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--rose-dark),var(--rose),var(--gold));transition:width 0.5s cubic-bezier(0.4,0,0.2,1);}
+    .stage{max-width:740px;margin:0 auto;padding:0 24px 80px;}
+    .card{border:1px solid var(--border);background:var(--ink-2);padding:clamp(28px,4vw,52px);display:none;animation:fadeUp 0.45s cubic-bezier(0.16,1,0.3,1) both;}
+    .card.active{display:block;}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+    .section-label{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.45em;color:var(--gold);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:12px;}
+    .section-label::before{content:'';display:block;width:20px;height:1px;background:var(--rose-dark);}
+    .q-counter{font-family:'Cormorant Garamond',serif;font-size:12px;color:var(--rose);letter-spacing:0.1em;margin-bottom:10px;opacity:0.7;}
+    .q-text{font-family:'Cormorant Garamond',serif;font-size:clamp(18px,2.8vw,26px);font-weight:300;line-height:1.4;color:var(--text);margin-bottom:6px;}
+    .q-note{font-family:'Cormorant Garamond',serif;font-size:14px;font-style:italic;color:var(--muted);line-height:1.7;margin-bottom:16px;}
+    /* JURISDICTION PANEL — added from my version */
+    .q-juris{font-size:0.78rem;line-height:1.75;color:var(--muted);background:rgba(201,169,110,0.06);border-left:2px solid rgba(201,169,110,0.3);padding:0.9rem 1.1rem;margin-bottom:20px;}
+    .q-juris strong{color:var(--gold);}
+    /* HIGH RISK ALERT */
+    .q-alert{font-size:0.78rem;line-height:1.7;color:var(--rose-light);background:rgba(204,53,98,0.07);border-left:2px solid var(--rose-dark);padding:0.8rem 1.1rem;margin-bottom:16px;}
+    .multi-tag{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
+    .options{display:flex;flex-direction:column;gap:10px;margin-bottom:36px;}
+    .opt{display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1px solid var(--border-soft);background:transparent;width:100%;text-align:left;cursor:pointer;transition:all 0.2s ease;font-family:'DM Sans',sans-serif;}
+    .opt:hover{border-color:var(--rose);background:rgba(204,53,98,0.06);transform:translateX(4px);}
+    .opt.selected{border-color:var(--rose-dark);background:rgba(139,16,48,0.18);}
+    .opt-ring{width:20px;height:20px;border:1px solid rgba(204,53,98,0.4);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:2px;transition:all 0.2s ease;}
+    .opt.selected .opt-ring{background:var(--rose-dark);border-color:var(--rose-dark);}
+    .opt.selected .opt-ring::after{content:'';width:7px;height:7px;background:var(--text);border-radius:50%;}
+    .opt-label{font-size:13px;font-weight:300;line-height:1.6;color:var(--muted);}
+    .opt-label strong{display:block;font-weight:500;font-size:13.5px;color:var(--text);margin-bottom:2px;}
+    .nav-row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+    .btn-primary{background:linear-gradient(135deg,var(--rose-dark),var(--rose));color:var(--text);border:none;padding:12px 28px;font-family:'DM Sans',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:opacity 0.2s,transform 0.2s;}
+    .btn-primary:hover{opacity:0.85;transform:translateY(-1px);}
+    .btn-primary:disabled{background:rgba(255,255,255,0.06);color:var(--muted);cursor:not-allowed;transform:none;}
+    .btn-outline{background:transparent;color:var(--muted);border:1px solid var(--border);padding:12px 24px;font-family:'DM Sans',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:border-color 0.2s,color 0.2s;}
+    .btn-outline:hover{border-color:var(--rose);color:var(--rose-light);}
+    .intro-inner{text-align:center;}
+    .intro-inner h2{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3.5vw,36px);font-weight:300;line-height:1.25;color:var(--text);margin-bottom:18px;}
+    .intro-inner h2 em{font-style:italic;color:var(--rose-light);}
+    .intro-inner p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--muted);line-height:1.85;max-width:500px;margin:0 auto 32px;}
+    .tier-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);margin-bottom:36px;text-align:left;}
+    .tier-cell{background:var(--ink-2);padding:22px 24px;}
+    .tier-cell .tier-label{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.35em;color:var(--gold);text-transform:uppercase;margin-bottom:8px;}
+    .tier-cell h4{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;color:var(--text);margin-bottom:6px;}
+    .tier-cell p{font-size:12px;color:var(--muted);line-height:1.7;margin:0;font-style:normal;}
+    .flag-box{border:1px solid rgba(204,53,98,0.5);background:rgba(139,16,48,0.14);padding:18px 22px;margin-bottom:10px;display:flex;gap:14px;}
+    .flag-icon{font-size:18px;flex-shrink:0;line-height:1.4;}
+    .flag-text strong{display:block;font-size:13px;font-weight:500;color:var(--rose-light);margin-bottom:4px;}
+    .flag-text span{font-size:12.5px;font-weight:300;color:var(--muted);line-height:1.65;}
+    .triage-verdict{text-align:center;padding:28px 0 8px;}
+    .verdict-label{font-family:'Cormorant Garamond',serif;font-size:clamp(42px,7vw,70px);font-weight:300;line-height:1;margin-bottom:6px;}
+    .verdict-sub{font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
+    .triage-bar-outer{height:2px;background:var(--border-soft);margin:16px 0 24px;}
+    .triage-bar-inner{height:100%;transition:width 1.2s cubic-bezier(0.4,0,0.2,1) 0.3s;}
+    .triage-summary{font-family:'Cormorant Garamond',serif;font-size:clamp(15px,1.8vw,18px);font-style:italic;color:var(--muted);line-height:1.8;margin-bottom:32px;max-width:520px;margin-left:auto;margin-right:auto;}
+    .deep-cta-block{border:1px solid var(--border);background:rgba(204,53,98,0.04);padding:28px 32px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;margin-bottom:24px;}
+    .deep-cta-block p{font-family:'Cormorant Garamond',serif;font-size:17px;font-style:italic;color:var(--text);line-height:1.5;max-width:380px;margin:0;}
+    /* ROSÉ SPOTLIGHT — added from my version */
+    .rose-spotlight{border:1px solid rgba(201,169,110,0.25);background:rgba(201,169,110,0.04);padding:2rem;margin:2rem 0;}
+    .spotlight-label{font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.45em;color:var(--gold);text-transform:uppercase;margin-bottom:0.8rem;}
+    .spotlight-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;line-height:1.8;color:var(--text);}
+    .results-header{text-align:center;margin-bottom:36px;}
+    .score-ring{margin:0 auto 24px;width:120px;height:120px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid var(--border);background:var(--ink-3);}
+    .score-ring .score-num{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:300;line-height:1;}
+    .score-ring .score-denom{font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.2em;color:var(--muted);}
+    .results-verdict{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,52px);font-weight:300;line-height:1;margin-bottom:8px;}
+    .results-bar-outer{height:3px;background:var(--border-soft);max-width:320px;margin:16px auto 20px;}
+    .results-bar-inner{height:100%;transition:width 1.2s cubic-bezier(0.4,0,0.2,1) 0.4s;}
+    .results-summary{font-family:'Cormorant Garamond',serif;font-size:16px;font-style:italic;color:var(--muted);line-height:1.85;max-width:540px;margin:0 auto 40px;}
+    .category-breakdown{margin-bottom:36px;}
+    .cat-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border-soft);}
+    .cat-row:last-child{border-bottom:none;}
+    .cat-name{font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);flex:1;min-width:0;}
+    .cat-bar-outer{width:120px;height:2px;background:var(--border-soft);flex-shrink:0;}
+    .cat-bar-inner{height:100%;}
+    .cat-status{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:0.1em;flex-shrink:0;width:72px;text-align:right;}
+    .findings-title{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--text);margin-bottom:18px;}
+    .finding{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid var(--border-soft);}
+    .finding:last-of-type{border-bottom:none;}
+    .finding-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+    .finding-dot.high{background:var(--rose);}
+    .finding-dot.medium{background:var(--gold);}
+    .finding-dot.ok{background:#4a9e6b;}
+    .finding-body strong{display:block;font-size:14px;font-weight:500;color:var(--text);margin-bottom:4px;}
+    .finding-body span{font-size:13px;font-weight:300;color:var(--muted);line-height:1.65;}
+    .email-cta{border:1px solid var(--border);background:rgba(204,53,98,0.04);padding:28px 32px;display:flex;flex-wrap:wrap;gap:20px;align-items:center;justify-content:space-between;margin-top:36px;}
+    .email-cta p{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--text);line-height:1.4;max-width:380px;margin:0;}
+    .btn-download{background:transparent;color:var(--gold);border:1px solid rgba(201,169,110,0.35);padding:12px 24px;font-family:'DM Sans',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:border-color 0.2s,background 0.2s;margin-top:14px;width:100%;justify-content:center;}
+    .btn-download:hover{border-color:var(--gold);background:rgba(201,169,110,0.08);}
+    .btn-home{background:transparent;color:var(--muted);border:1px solid var(--border);padding:12px 24px;font-family:'DM Sans',sans-serif;font-size:0.72rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:border-color 0.2s,color 0.2s;margin-top:14px;}
+    .btn-home:hover{border-color:var(--gold);color:var(--gold);}
+    .disclaimer{font-size:11px;color:var(--muted);text-align:center;margin-top:18px;font-style:italic;opacity:0.6;}
+    .retake{text-align:center;margin-top:14px;font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);cursor:pointer;transition:color 0.2s;}
+    .retake:hover{color:var(--rose-light);}
+    .ornament{text-align:center;padding:24px 0;color:var(--rose-dark);font-size:0.9rem;letter-spacing:0.8em;opacity:0.45;}
+    footer{border-top:1px solid var(--border-soft);padding:20px 24px;text-align:center;font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);opacity:0.55;}
+    #printReport{display:none;}
+    @media print{
+      *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+      body>*:not(#printReport){display:none !important;}
+      #printReport{display:block !important;font-family:'DM Sans',Georgia,serif;background:#fff;color:#1a0810;padding:0;margin:0;}
+      .pr-page{max-width:100%;padding:36px 48px 48px;background:#fff;}
+      .pr-header{border-bottom:2px solid #8B1030;padding-bottom:20px;margin-bottom:24px;display:flex;justify-content:space-between;align-items:flex-end;}
+      .pr-logo-text{font-family:Georgia,serif;font-size:26px;font-weight:400;letter-spacing:6px;color:#CC3562;}
+      .pr-logo-sub{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:#9A2240;margin-top:2px;}
+      .pr-meta{text-align:right;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#9A8A90;line-height:1.8;}
+      .pr-title{font-family:Georgia,serif;font-size:22px;font-weight:400;color:#1a0810;margin-bottom:4px;}
+      .pr-subtitle{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#9A8A90;margin-bottom:24px;}
+      .pr-verdict-block{background:#f9f3f5;border-left:4px solid #CC3562;padding:18px 24px;margin-bottom:24px;display:flex;align-items:center;gap:24px;}
+      .pr-verdict-level{font-family:Georgia,serif;font-size:32px;font-weight:400;line-height:1;min-width:160px;}
+      .pr-verdict-summary{font-size:10.5px;line-height:1.75;color:#4a3040;}
+      .pr-section-label{font-size:7.5px;letter-spacing:3.5px;text-transform:uppercase;color:#C9A96E;border-bottom:1px solid #e8d8dc;padding-bottom:6px;margin:22px 0 12px;}
+      .pr-flag{border:1px solid #CC3562;background:#fdf0f3;padding:10px 14px;margin-bottom:8px;display:flex;gap:12px;}
+      .pr-flag-icon{font-size:14px;flex-shrink:0;}
+      .pr-flag strong{display:block;font-size:10px;font-weight:600;color:#8B1030;margin-bottom:3px;}
+      .pr-flag span{font-size:9.5px;color:#5a3040;line-height:1.6;}
+      .pr-cat-row{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f0e0e5;font-size:9.5px;}
+      .pr-cat-name{letter-spacing:1.5px;text-transform:uppercase;color:#5a3040;flex:1;}
+      .pr-cat-bar-outer{width:100px;height:4px;background:#f0dde3;margin:0 14px;flex-shrink:0;}
+      .pr-cat-bar-inner{height:100%;}
+      .pr-cat-status{font-weight:600;font-size:9px;letter-spacing:1px;text-transform:uppercase;width:80px;text-align:right;flex-shrink:0;}
+      .pr-finding{padding:10px 0;border-bottom:1px solid #f0e0e5;display:flex;gap:12px;}
+      .pr-finding-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+      .pr-finding strong{display:block;font-size:10px;font-weight:600;color:#1a0810;margin-bottom:3px;}
+      .pr-finding span{font-size:9.5px;color:#5a3040;line-height:1.65;}
+      .pr-spotlight{background:#f9f9f0;border:1px solid #d8c88a;padding:12px 16px;margin:16px 0;}
+      .pr-spotlight-label{font-size:7.5px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E;margin-bottom:6px;}
+      .pr-spotlight-text{font-size:9.5px;font-style:italic;color:#4a3040;line-height:1.7;}
+      .pr-next-steps{background:#f9f3f5;border:1px solid #e8c8d0;padding:14px 18px;margin-top:20px;}
+      .pr-next-steps h4{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#C9A96E;margin-bottom:8px;}
+      .pr-next-steps p{font-size:10px;color:#4a3040;line-height:1.7;font-style:italic;}
+      .pr-footer{border-top:1px solid #e0d0d5;margin-top:32px;padding-top:14px;display:flex;justify-content:space-between;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:#9A8A90;}
     }
-
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0.7rem 3rem;
-      background: rgba(4,1,4,0.97);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-home {
-      font-family: 'Cinzel', serif; font-size: 1.1rem;
-      letter-spacing: 0.35em; color: var(--rose-light);
-      text-decoration: none;
-    }
-    .nav-home:hover { color: var(--text); }
-    .nav-back {
-      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
-      color: var(--muted); text-decoration: none;
-      border: 1px solid var(--rose-dark); padding: 0.4rem 1.2rem;
-      transition: background 0.3s, color 0.3s;
-    }
-    .nav-back:hover { background: var(--rose-dark); color: var(--text); }
-
-    /* MAIN */
-    main {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 9rem 2rem 6rem;
-    }
-
-    /* HEADER */
-    .assess-eyebrow {
-      font-family: 'Cinzel', serif; font-size: 0.66rem;
-      letter-spacing: 0.5em; color: var(--gold);
-      text-transform: uppercase; margin-bottom: 1.2rem;
-    }
-    .assess-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 300; line-height: 1.15; color: var(--text);
-      margin-bottom: 1rem;
-    }
-    .assess-title em { font-style: italic; color: var(--rose-light); }
-    .assess-intro {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem; font-style: italic;
-      line-height: 1.85; color: var(--muted);
-      margin-bottom: 3rem; max-width: 680px;
-    }
-
-    /* MODE SELECTOR */
-    .mode-selector {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 1.5px; background: var(--border);
-      margin-bottom: 3rem;
-    }
-    .mode-btn {
-      background: var(--ink-2);
-      border: none; cursor: pointer;
-      padding: 2rem 2rem 1.8rem;
-      text-align: left;
-      transition: background 0.3s;
-      position: relative;
-    }
-    .mode-btn:hover { background: var(--ink-3); }
-    .mode-btn.active { background: rgba(204,53,98,0.08); }
-    .mode-btn.active::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(to right, var(--rose), var(--gold));
-    }
-    .mode-btn-label {
-      font-family: 'Cinzel', serif; font-size: 0.6rem;
-      letter-spacing: 0.4em; color: var(--gold);
-      text-transform: uppercase; margin-bottom: 0.6rem;
-      display: block;
-    }
-    .mode-btn.active .mode-btn-label { color: var(--rose-light); }
-    .mode-btn-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.5rem; font-weight: 300; color: var(--text);
-      display: block; margin-bottom: 0.5rem;
-    }
-    .mode-btn-desc {
-      font-size: 0.8rem; line-height: 1.7; color: var(--muted);
-      display: block;
-    }
-    .mode-btn-time {
-      font-size: 0.68rem; color: var(--rose-dark);
-      letter-spacing: 0.15em; text-transform: uppercase;
-      display: block; margin-top: 0.8rem;
-    }
-
-    /* ASSESSMENT WRAPPER */
-    .assessment-wrap { display: none; }
-    .assessment-wrap.active { display: block; }
-
-    /* PROGRESS */
-    .progress-bar {
-      height: 2px; background: var(--border);
-      margin-bottom: 2.5rem; position: relative;
-    }
-    .progress-fill {
-      height: 100%; background: linear-gradient(to right, var(--rose-dark), var(--rose));
-      transition: width 0.4s ease;
-    }
-    .progress-label {
-      font-size: 0.68rem; letter-spacing: 0.2em;
-      color: var(--muted); text-transform: uppercase;
-      margin-bottom: 0.5rem;
-    }
-
-    /* QUESTION */
-    .question-block { display: none; }
-    .question-block.active { display: block; }
-    .q-section {
-      font-family: 'Cinzel', serif; font-size: 0.6rem;
-      letter-spacing: 0.4em; color: var(--gold);
-      text-transform: uppercase; margin-bottom: 0.8rem;
-    }
-    .q-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.2rem, 2.5vw, 1.65rem);
-      font-weight: 300; line-height: 1.4; color: var(--text);
-      margin-bottom: 0.5rem;
-    }
-    .q-sub {
-      font-size: 0.82rem; color: var(--muted);
-      line-height: 1.7; margin-bottom: 2rem;
-    }
-    .q-options { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 2.5rem; }
-    .q-option {
-      display: flex; align-items: flex-start; gap: 1rem;
-      padding: 1.2rem 1.4rem;
-      border: 1px solid var(--border);
-      cursor: pointer; transition: border-color 0.3s, background 0.3s;
-      background: var(--ink-2);
-    }
-    .q-option:hover { border-color: var(--rose); background: rgba(204,53,98,0.04); }
-    .q-option.selected { border-color: var(--rose); background: rgba(204,53,98,0.08); }
-    .q-option.selected .q-radio { background: var(--rose); border-color: var(--rose); }
-    .q-radio {
-      width: 16px; height: 16px; border: 1px solid var(--border);
-      border-radius: 50%; flex-shrink: 0; margin-top: 2px;
-      transition: background 0.2s, border-color 0.2s;
-    }
-    .q-option-text { font-size: 0.88rem; line-height: 1.6; color: var(--text); }
-    .q-option-sub { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
-
-    /* NAV BUTTONS */
-    .q-nav { display: flex; gap: 1rem; align-items: center; }
-    .btn-next {
-      background: linear-gradient(135deg, var(--rose-dark), var(--rose));
-      color: var(--text); border: none; padding: 0.85rem 2.2rem;
-      font-family: 'DM Sans', sans-serif; font-size: 0.78rem;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      cursor: pointer; transition: opacity 0.3s;
-    }
-    .btn-next:hover { opacity: 0.85; }
-    .btn-next:disabled { opacity: 0.3; cursor: not-allowed; }
-    .btn-prev {
-      background: transparent; color: var(--muted);
-      border: 1px solid var(--border); padding: 0.85rem 2rem;
-      font-family: 'DM Sans', sans-serif; font-size: 0.78rem;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      cursor: pointer; transition: border-color 0.3s, color 0.3s;
-    }
-    .btn-prev:hover { border-color: var(--rose); color: var(--rose-light); }
-
-    /* RESULTS */
-    .results-block { display: none; }
-    .results-block.active { display: block; }
-    .result-score-wrap {
-      text-align: center; padding: 3rem;
-      border: 1px solid var(--border);
-      background: rgba(204,53,98,0.04);
-      margin-bottom: 2.5rem;
-    }
-    .result-score {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 5rem; font-weight: 300;
-      line-height: 1; margin-bottom: 0.5rem;
-    }
-    .result-tier {
-      font-family: 'Cinzel', serif; font-size: 0.72rem;
-      letter-spacing: 0.4em; text-transform: uppercase;
-      margin-bottom: 1rem;
-    }
-    .result-summary {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.15rem; font-style: italic;
-      line-height: 1.75; color: var(--muted);
-      max-width: 600px; margin: 0 auto;
-    }
-    .result-findings { margin-bottom: 2.5rem; }
-    .finding {
-      display: flex; gap: 1rem; padding: 1.2rem 1.4rem;
-      border-bottom: 1px solid var(--border);
-      align-items: flex-start;
-    }
-    .finding:last-child { border-bottom: none; }
-    .finding-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
-    .finding h4 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem; font-weight: 400; color: var(--text);
-      margin-bottom: 0.3rem;
-    }
-    .finding p { font-size: 0.82rem; line-height: 1.7; color: var(--muted); }
-    .result-actions {
-      display: flex; gap: 1rem; flex-wrap: wrap;
-      justify-content: center; margin-top: 2.5rem;
-    }
-    .btn-home {
-      background: transparent; color: var(--muted);
-      border: 1px solid var(--border); padding: 0.85rem 2rem;
-      font-family: 'DM Sans', sans-serif; font-size: 0.78rem;
-      letter-spacing: 0.15em; text-transform: uppercase;
-      cursor: pointer; text-decoration: none; display: inline-block;
-      transition: border-color 0.3s, color 0.3s;
-    }
-    .btn-home:hover { border-color: var(--gold); color: var(--gold); }
-
-    /* DIVIDER */
-    .ornament {
-      text-align: center; padding: 1.5rem 0;
-      color: var(--rose-dark); font-size: 0.9rem;
-      letter-spacing: 0.8em; opacity: 0.4;
-    }
-
-    @media (max-width: 600px) {
-      nav { padding: 0.7rem 1.2rem; }
-      main { padding: 7rem 1.2rem 4rem; }
-      .mode-selector { grid-template-columns: 1fr; }
-    }
+    @media(max-width:560px){.tier-grid{grid-template-columns:1fr;}.nav-row{flex-direction:column-reverse;}.btn-primary,.btn-outline{width:100%;justify-content:center;}.deep-cta-block,.email-cta{flex-direction:column;}}
   </style>
 </head>
 <body>
-
-<nav>
-  <a href="index.html" class="nav-home">ROSÉ</a>
-  <a href="index.html" class="nav-back">← Back to Home</a>
-</nav>
-
-<main>
-  <p class="assess-eyebrow">AI Governance · ROSÉ Partnership</p>
-  <h1 class="assess-title">Compliance<br><em>Readiness Assessment</em></h1>
-  <p class="assess-intro">Understand your organisation's current posture against the EU AI Act, ISO 42001, and emerging AI governance requirements. Choose the assessment that fits your available time.</p>
-
-  <!-- MODE SELECTOR -->
-  <div class="mode-selector" id="mode-selector">
-    <button class="mode-btn" onclick="startAssessment('triage')" id="btn-triage">
-      <span class="mode-btn-label">Option 1</span>
-      <span class="mode-btn-title">Triage Assessment</span>
-      <span class="mode-btn-desc">Six essential questions that identify your most critical exposure areas and immediate priorities. Designed for executives who need a rapid picture of risk.</span>
-      <span class="mode-btn-time">⏱ Approx. 3–4 minutes</span>
-    </button>
-    <button class="mode-btn" onclick="startAssessment('full')" id="btn-full">
-      <span class="mode-btn-label">Option 2</span>
-      <span class="mode-btn-title">Full Assessment</span>
-      <span class="mode-btn-desc">A comprehensive evaluation across all high-risk AI obligation domains — documentation, logging, oversight, bias, transparency, and data governance. Produces a detailed readiness report.</span>
-      <span class="mode-btn-time">⏱ Approx. 12–15 minutes</span>
-    </button>
+<div class="top-rule"></div>
+<header>
+  <p class="eyebrow">ROSÉ Partnership · Compliance Intelligence</p>
+  <h1 class="page-title"><em>AI Compliance</em> &amp; Risk<br>Profile Assessment</h1>
+  <p class="page-subtitle">Does your organization know its true exposure under the laws already in force?</p>
+  <div class="jurisdiction-badges">
+    <div class="badge"><span class="dot"></span>EU AI Act 2024/1689</div>
+    <div class="badge"><span class="dot"></span>NYC Local Law 144</div>
+    <div class="badge"><span class="dot"></span>Colorado AI Act</div>
+    <div class="badge"><span class="dot"></span>Texas TRAIGA</div>
+    <div class="badge"><span class="dot"></span>California SB 53 / AB 2013</div>
+    <div class="badge"><span class="dot"></span>South Korea AI Basic Act</div>
   </div>
+</header>
+<div class="progress-wrap" id="progressWrap">
+  <div class="progress-meta">
+    <span id="progressText">Triage · Question 1 of 5</span>
+    <span id="progressPct">0%</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+</div>
+<div class="ornament" id="topOrnament">✦ &nbsp; ✦ &nbsp; ✦</div>
+<div class="stage">
 
-  <!-- ══ TRIAGE ASSESSMENT ══ -->
-  <div class="assessment-wrap" id="triage-wrap">
-    <div class="progress-label" id="triage-progress-label">Question 1 of 6</div>
-    <div class="progress-bar"><div class="progress-fill" id="triage-progress" style="width:16%;"></div></div>
-    <div id="triage-questions"></div>
-    <div class="q-nav">
-      <button class="btn-prev" id="triage-prev" onclick="triagePrev()" style="display:none;">← Previous</button>
-      <button class="btn-next" id="triage-next" onclick="triageNext()">Next →</button>
+<!-- INTRO -->
+<div class="card active" id="introCard">
+  <div class="intro-inner">
+    <div class="section-label">AI Regulatory Readiness</div>
+    <h2>Six jurisdictions.<br><em>One assessment.</em><br>Your complete risk profile.</h2>
+    <p>This assessment is structured in two tiers. A five-question triage surfaces your immediate risk level in under two minutes. Those who wish to proceed receive a full category-by-category analysis across every major AI law enacted through March 2026.</p>
+    <div class="tier-grid">
+      <div class="tier-cell"><div class="tier-label">Tier One · ~2 Minutes</div><h4>Triage Assessment</h4><p>Five questions. Instant risk tier. Understand your immediate exposure before proceeding further.</p></div>
+      <div class="tier-cell"><div class="tier-label">Tier Two · ~15 Minutes</div><h4>Full Risk Profile</h4><p>Complete analysis across all six regulatory frameworks with a category breakdown and specific priority actions.</p></div>
     </div>
-    <div class="results-block" id="triage-results"></div>
+    <button class="btn-primary" onclick="startTriage()">Begin Triage <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></button>
   </div>
+</div>
 
-  <!-- ══ FULL ASSESSMENT ══ -->
-  <div class="assessment-wrap" id="full-wrap">
-    <div class="progress-label" id="full-progress-label">Question 1 of 20</div>
-    <div class="progress-bar"><div class="progress-fill" id="full-progress" style="width:5%;"></div></div>
-    <div id="full-questions"></div>
-    <div class="q-nav">
-      <button class="btn-prev" id="full-prev" onclick="fullPrev()" style="display:none;">← Previous</button>
-      <button class="btn-next" id="full-next" onclick="fullNext()">Next →</button>
+<!-- T1 -->
+<div class="card" id="t1">
+  <div class="section-label">Triage · Geography</div>
+  <div class="q-counter">Triage 01 / 05</div>
+  <div class="q-text">Where does your organization operate, sell to, or make employment decisions?</div>
+  <div class="q-note">Select all that apply — your jurisdiction footprint determines which laws govern you.</div>
+  <div class="q-juris"><strong>EU AI Act:</strong> Extraterritorial reach — applies wherever AI output affects EU individuals. &nbsp;·&nbsp; <strong>NYC LL144:</strong> Applies to NYC-based candidates regardless of where your organisation is headquartered. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> Applies to consequential decisions affecting Colorado residents. &nbsp;·&nbsp; <strong>Texas TRAIGA:</strong> Disclosure and high-risk AI requirements apply from January 2026. &nbsp;·&nbsp; <strong>California SB53/AB2013:</strong> Safety reporting and training data transparency obligations. &nbsp;·&nbsp; <strong>South Korea AI Basic Act:</strong> High-impact AI reporting requirements.</div>
+  <div class="multi-tag">Select all that apply</div>
+  <div class="options" data-multi="true" data-id="t1">
+    <button class="opt" data-value="eu" data-weight="3" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>European Union / EEA</strong>Full EU AI Act obligations apply, including high-risk and GPAI provisions</div></button>
+    <button class="opt" data-value="nyc" data-weight="2" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>New York City</strong>NYC Local Law 144 mandates bias audits for any automated employment tool</div></button>
+    <button class="opt" data-value="co" data-weight="2" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Colorado</strong>Colorado AI Act (SB 205) — consequential decision obligations from June 2026</div></button>
+    <button class="opt" data-value="tx" data-weight="2" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Texas</strong>TRAIGA — AI disclosure and high-risk system requirements</div></button>
+    <button class="opt" data-value="ca" data-weight="2" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>California</strong>SB 53 / AB 2013 — safety reporting and training data transparency</div></button>
+    <button class="opt" data-value="kr" data-weight="2" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>South Korea</strong>AI Basic Act — high-impact AI system reporting requirements</div></button>
+  </div>
+  <div class="nav-row"><div></div><button class="btn-primary" onclick="triageNext(1)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- T2 -->
+<div class="card" id="t2">
+  <div class="section-label">Triage · Consequential AI</div>
+  <div class="q-counter">Triage 02 / 05</div>
+  <div class="q-text">Does your organization use AI to make or materially influence decisions that affect people's employment, credit, housing, healthcare, education, insurance, or legal services?</div>
+  <div class="q-note">These are the highest-liability categories across every major law.</div>
+  <div class="q-juris"><strong>EU AI Act Annex III:</strong> Employment, credit, healthcare, education, and critical infrastructure are categorically high-risk — no further classification needed. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> "Consequential decisions" is defined broadly to cover all of these domains. &nbsp;·&nbsp; <strong>NYC LL144:</strong> Employment AI triggers specific audit and notice obligations. &nbsp;·&nbsp; <strong>Texas TRAIGA:</strong> High-risk AI in employment, financial, and healthcare contexts triggers disclosure obligations.</div>
+  <div class="options" data-multi="false" data-id="t2">
+    <button class="opt" data-value="yes_primary" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — this is a core function of our AI systems</strong></div></button>
+    <button class="opt" data-value="yes_secondary" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — AI supports or influences these decisions, though humans decide</strong></div></button>
+    <button class="opt" data-value="unsure" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Unsure — our AI tools may touch these areas but we have not formally assessed</strong></div></button>
+    <button class="opt" data-value="no" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No — our AI is limited to internal productivity or content generation only</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="triagePrev(2)">← Back</button><button class="btn-primary" onclick="triageNext(2)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- T3 -->
+<div class="card" id="t3">
+  <div class="section-label">Triage · Employment AI</div>
+  <div class="q-counter">Triage 03 / 05</div>
+  <div class="q-text">Do you use any automated tool to screen, score, rank, or evaluate job candidates or employees — including via your ATS, HCM platform, or any vendor-supplied AI feature?</div>
+  <div class="q-note">Many modern applicant tracking systems include AI scoring by default. Even if you did not configure it, using a platform with this capability may trigger compliance obligations.</div>
+  <div class="q-juris"><strong>NYC LL144 — in force:</strong> Any AEDT used for NYC candidates requires an annual independent bias audit + public posting + 10-day candidate notice. Fines begin at $500/day per violation. &nbsp;·&nbsp; <strong>EU AI Act Annex III:</strong> Employment AI is categorically high-risk — conformity assessment, risk management system, automatic logging, and human oversight are mandatory. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> Reasonable care against discrimination, impact assessments, and right of appeal are mandatory. &nbsp;·&nbsp; <strong>US EEOC:</strong> Employers are liable for discriminatory AI outcomes from vendor tools — vendor compliance does not shield the deployer.</div>
+  <div class="options" data-multi="false" data-id="t3">
+    <button class="opt" data-value="yes_no_audit" data-weight="6" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — and we have NOT completed an independent bias audit</strong>High exposure: NYC LL144 fines begin at $500/day; EU Annex III obligations apply</div></button>
+    <button class="opt" data-value="yes_audited" data-weight="1" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — and we HAVE completed a compliant independent bias audit within 12 months</strong></div></button>
+    <button class="opt" data-value="unsure" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Unsure — our platforms may contain automated scoring we have not reviewed</strong></div></button>
+    <button class="opt" data-value="no" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No — no automated employment decision tools are in use</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="triagePrev(3)">← Back</button><button class="btn-primary" onclick="triageNext(3)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- T4 -->
+<div class="card" id="t4">
+  <div class="section-label">Triage · Logging &amp; Proof</div>
+  <div class="q-counter">Triage 04 / 05</div>
+  <div class="q-text">If a regulator, court, or auditor requested proof of how your AI made a specific decision six months ago — the exact inputs, the rules in force, the timestamp — could your organization produce it?</div>
+  <div class="q-note">This is the single most commonly failed requirement across all six regulatory frameworks. Ordinary server logs are not sufficient.</div>
+  <div class="q-juris"><strong>EU AI Act Art. 12:</strong> High-risk AI systems must automatically log events throughout their lifecycle — server logs do not satisfy this standard. &nbsp;·&nbsp; <strong>NYC LL144:</strong> Bias audit reconstruction requires complete, accessible decision records. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> Appeals processes require retrievable, complete decision records. &nbsp;·&nbsp; <strong>US Federal Rules of Evidence:</strong> Electronic records must be authenticated — tamper-evident logs with hardware-attested timestamps significantly strengthen admissibility. &nbsp;·&nbsp; <strong>ROSÉ / Timebeat:</strong> IEEE-1588 PTP cryptographic execution proofs satisfy the most demanding evidentiary standards across all six jurisdictions.</div>
+  <div class="options" data-multi="false" data-id="t4">
+    <button class="opt" data-value="yes_crypto" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — we have cryptographic, tamper-proof execution records</strong></div></button>
+    <button class="opt" data-value="yes_logs" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially — we have standard internal logs, not independently verified</strong></div></button>
+    <button class="opt" data-value="no" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No — we could not produce defensible AI execution records on demand</strong></div></button>
+    <button class="opt" data-value="unsure" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Unsure — we have not assessed what our current logging infrastructure can produce</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="triagePrev(4)">← Back</button><button class="btn-primary" onclick="triageNext(4)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- T5 -->
+<div class="card" id="t5">
+  <div class="section-label">Triage · Governance Maturity</div>
+  <div class="q-counter">Triage 05 / 05</div>
+  <div class="q-text">How would you characterize your organization's current AI governance program?</div>
+  <div class="q-juris"><strong>EU AI Act Art. 9:</strong> A documented risk management system maintained throughout the AI lifecycle is mandatory for high-risk AI — not a one-time exercise. &nbsp;·&nbsp; <strong>ISO 42001:</strong> Certification requires demonstrated governance maturity across policy, risk management, and continuous improvement. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> "Reasonable care" to prevent algorithmic discrimination requires a structured governance programme — not ad hoc review. &nbsp;·&nbsp; <strong>NIST AI RMF:</strong> Organisational governance and accountability structures are the foundation of the Govern function.</div>
+  <div class="options" data-multi="false" data-id="t5">
+    <button class="opt" data-value="mature" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Mature — dedicated AI governance function, documented policies, active monitoring</strong></div></button>
+    <button class="opt" data-value="developing" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Developing — actively building compliance infrastructure; some gaps remain</strong></div></button>
+    <button class="opt" data-value="early" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Early Stage — we recognize the need but have not formally begun</strong></div></button>
+    <button class="opt" data-value="none" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>None — no AI compliance program exists</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="triagePrev(5)">← Back</button><button class="btn-primary" onclick="showTriageResult()">See My Risk Tier <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- TRIAGE RESULT -->
+<div class="card" id="triageResult">
+  <div class="section-label">Your Triage Result</div>
+  <div class="triage-verdict">
+    <div class="verdict-label" id="triageVerdictLabel">—</div>
+    <div class="verdict-sub">Preliminary Risk Tier</div>
+    <div class="triage-bar-outer"><div class="triage-bar-inner" id="triageBar" style="width:0%"></div></div>
+  </div>
+  <div id="triageFlags"></div>
+  <div class="triage-summary" id="triageSummary"></div>
+  <div class="rose-spotlight">
+    <div class="spotlight-label">ROSÉ Partnership — Why This Matters</div>
+    <p class="spotlight-text">The most common source of triage flags — across every jurisdiction — is the logging and proof gap. ROSÉ's on-action cryptographic proofs and IEEE-1588 hardware-attested timestamps produce tamper-proof execution records for every consequential AI decision. One infrastructure investment satisfies EU AI Act Art. 12, NYC LL144 audit reconstruction, Colorado appeals processes, and EEOC discrimination defence simultaneously.</p>
+  </div>
+  <div class="deep-cta-block">
+    <p>Proceed to the full assessment for a category-by-category analysis across all six regulatory frameworks.</p>
+    <button class="btn-primary" onclick="startDeepDive()">Full Risk Profile <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+  </div>
+  <div class="retake" onclick="retake()">↺ &nbsp; Retake from the Beginning</div>
+</div>
+
+<!-- D1 -->
+<div class="card" id="d1">
+  <div class="section-label">Section 1 · Company Profile</div>
+  <div class="q-counter">Deep Dive 01 / 19</div>
+  <div class="q-text">What is your organization's annual global revenue?</div>
+  <div class="q-note">Revenue thresholds affect fine calculations across EU, Colorado, and other frameworks.</div>
+  <div class="q-juris"><strong>EU AI Act:</strong> Maximum fines are the greater of a fixed amount OR a % of global annual turnover — €35M/7% for prohibited practices; €15M/3% for high-risk non-compliance; €7.5M/1.5% for incorrect information. For a $1B+ revenue company, a 7% fine could exceed $70M. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> Up to $20,000 per violation. &nbsp;·&nbsp; <strong>NYC LL144:</strong> $500/day per violation. &nbsp;·&nbsp; <strong>Illinois BIPA:</strong> $1,000–$5,000 per biometric data violation with class action exposure.</div>
+  <div class="options" data-multi="false" data-id="d1">
+    <button class="opt" data-value="small" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Under $50 million</strong></div></button>
+    <button class="opt" data-value="mid" data-weight="1" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>$50 million – $500 million</strong></div></button>
+    <button class="opt" data-value="large" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Over $500 million</strong>EU fines up to 7% of global turnover represent a potential nine-figure exposure</div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(1)">← Back</button><button class="btn-primary" onclick="deepNext(1)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D2 -->
+<div class="card" id="d2">
+  <div class="section-label">Section 2 · High-Risk Use Cases</div>
+  <div class="q-counter">Deep Dive 02 / 19</div>
+  <div class="q-text">In which of the following high-risk domains does your organization deploy or influence AI systems?</div>
+  <div class="q-note">These map directly to EU AI Act Annex III and Colorado's consequential decision categories.</div>
+  <div class="q-alert">⚠ Even indirect or vendor-supplied AI in these areas triggers compliance obligations. The category designation is categorical — there is no materiality threshold.</div>
+  <div class="q-juris"><strong>EU AI Act Annex III:</strong> These categories are categorically high-risk — full obligations apply regardless of system sophistication. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> "High-risk consequential decisions" covers employment, housing, education, healthcare, credit, and legal services. &nbsp;·&nbsp; <strong>NYC LL144:</strong> Employment AI triggers specific annual audit and notice obligations. &nbsp;·&nbsp; <strong>Texas TRAIGA:</strong> High-risk AI in these domains triggers disclosure and impact assessment obligations. &nbsp;·&nbsp; <strong>Brazil PL 2338:</strong> Mirrors EU Annex III categories closely — EU readiness substantially satisfies Brazilian requirements.</div>
+  <div class="multi-tag">Select all that apply</div>
+  <div class="options" data-multi="true" data-id="d2">
+    <button class="opt" data-value="biometrics" data-weight="5" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Biometrics, Identification, or Emotion Recognition</strong>Highest-risk category; real-time biometric ID in public spaces is prohibited in the EU</div></button>
+    <button class="opt" data-value="employment" data-weight="5" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Employment, Hiring, Worker Management, or Performance Monitoring</strong>Annex III high-risk; NYC LL144; Colorado; Texas TRAIGA all apply</div></button>
+    <button class="opt" data-value="credit_finance" data-weight="4" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Credit, Insurance, Lending, or Financial Decisions</strong></div></button>
+    <button class="opt" data-value="healthcare" data-weight="4" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Healthcare Diagnostics, Triage, or Clinical Recommendations</strong></div></button>
+    <button class="opt" data-value="education" data-weight="3" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Education, Admissions, Exam Scoring, or Student Profiling</strong></div></button>
+    <button class="opt" data-value="housing" data-weight="3" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Housing, Social Benefits, or Government Services</strong></div></button>
+    <button class="opt" data-value="law_enforcement" data-weight="5" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Law Enforcement, Border Control, or Administration of Justice</strong>Most heavily regulated category; near-absolute prohibition in many applications</div></button>
+    <button class="opt" data-value="none_hr" data-weight="0" onclick="pickNone(this)"><div class="opt-ring"></div><div class="opt-label"><strong>None of the above — our AI is limited to internal tools or content generation</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(2)">← Back</button><button class="btn-primary" onclick="deepNext(2)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D3 -->
+<div class="card" id="d3">
+  <div class="section-label">Section 2 · High-Risk Use Cases</div>
+  <div class="q-counter">Deep Dive 03 / 19</div>
+  <div class="q-text">Do you use — or plan to use — any of the following practices that are outright prohibited under the EU AI Act as of February 2, 2025?</div>
+  <div class="q-note">These bans are in force now. Violations carry fines of up to €35 million or 7% of global annual turnover.</div>
+  <div class="q-alert">⚠ These prohibitions are already active violations. There is no grace period and no compliance pathway — these practices must cease immediately for EU operations.</div>
+  <div class="q-juris"><strong>EU AI Act — in force February 2025:</strong> Prohibited practices include emotion recognition in employment, biometric inference for sensitive characteristics, social scoring, subliminal manipulation, and real-time biometric identification in public spaces. &nbsp;·&nbsp; <strong>US Illinois BIPA:</strong> Biometric data collection in employment (including facial recognition in interviews) requires prior written consent — violations carry $1,000–$5,000 per incident. &nbsp;·&nbsp; <strong>US Maryland HB1202:</strong> Prohibits facial recognition in employment interviews without consent. &nbsp;·&nbsp; <strong>California CPRA:</strong> Sensitive personal information including biometric data carries heightened protection requirements.</div>
+  <div class="multi-tag">Select all that apply</div>
+  <div class="options" data-multi="true" data-id="d3">
+    <button class="opt" data-value="social_scoring" data-weight="8" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Social Scoring Systems</strong>Evaluating individuals based on personal characteristics or social behavior</div></button>
+    <button class="opt" data-value="subliminal" data-weight="8" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Subliminal Manipulation</strong>AI that exploits vulnerabilities or subconscious mechanisms to alter behavior</div></button>
+    <button class="opt" data-value="realtime_biometric" data-weight="8" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Real-Time Remote Biometric ID in Public Spaces</strong>Live facial recognition in publicly accessible areas</div></button>
+    <button class="opt" data-value="emotion_workplace" data-weight="6" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Emotion Recognition in the Workplace or Educational Settings</strong>Inferring emotional states of employees or students from biometric signals</div></button>
+    <button class="opt" data-value="facial_scraping" data-weight="6" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Untargeted Scraping of Facial Images to Build Recognition Databases</strong></div></button>
+    <button class="opt" data-value="none_prohibited" data-weight="0" onclick="pickNone(this)"><div class="opt-ring"></div><div class="opt-label"><strong>None of the above apply to our organization</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(3)">← Back</button><button class="btn-primary" onclick="deepNext(3)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D4 -->
+<div class="card" id="d4">
+  <div class="section-label">Section 3 · Employment &amp; Hiring (High Liability)</div>
+  <div class="q-counter">Deep Dive 04 / 19</div>
+  <div class="q-text">For any AI used in employment or hiring, which of the following compliance steps have been completed?</div>
+  <div class="q-note">NYC Local Law 144, EU Annex III, and Colorado SB 205 each impose distinct obligations. Select every item your organization has completed.</div>
+  <div class="q-alert">⚠ Employment AI carries the highest compliance liability across all jurisdictions. Missing items below are active or imminent violations.</div>
+  <div class="q-juris"><strong>NYC LL144 — in force:</strong> Annual independent bias audit + public posting on website + 10-day candidate notice are all mandatory before any AEDT may be used for NYC candidates. &nbsp;·&nbsp; <strong>EU AI Act Annex III:</strong> Full high-risk obligations apply — conformity assessment, risk management, automatic logging, human oversight. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> Impact assessments + reasonable care against discrimination + right of appeal mandatory from June 2026. &nbsp;·&nbsp; <strong>US EEOC:</strong> Employers cannot disclaim liability for discriminatory vendor AI tools — the deployer bears responsibility.</div>
+  <div class="multi-tag">Select all that apply</div>
+  <div class="options" data-multi="true" data-id="d4">
+    <button class="opt" data-value="bias_audit" data-weight="0" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>✓ Independent bias audit completed within the past 12 months</strong>NYC LL144: mandatory before any AEDT may be used</div></button>
+    <button class="opt" data-value="audit_public" data-weight="0" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>✓ Bias audit summary is publicly posted on our website</strong>Required by NYC LL144; must remain posted as long as the tool is in use</div></button>
+    <button class="opt" data-value="candidate_notice" data-weight="0" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>✓ Candidates and employees are notified before AI is used in decisions affecting them</strong>Required by NYC LL144 (10 days), EU Art. 26, Colorado</div></button>
+    <button class="opt" data-value="override_mechanism" data-weight="0" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>✓ Human override mechanisms are in place for all AI-influenced employment decisions</strong>EU AI Act Art. 14: genuine, technically-enabled oversight required</div></button>
+    <button class="opt" data-value="employment_logs" data-weight="0" onclick="toggle(this)"><div class="opt-ring"></div><div class="opt-label"><strong>✓ Tamper-proof logs of AI inputs, outputs, and scores are maintained for each decision</strong>Required for bias audit reconstruction and regulatory defence</div></button>
+    <button class="opt" data-value="none_employment" data-weight="10" onclick="pickNone(this)"><div class="opt-ring"></div><div class="opt-label"><strong>None of the above — or AI is not used in employment decisions</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(4)">← Back</button><button class="btn-primary" onclick="deepNext(4)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D5 -->
+<div class="card" id="d5">
+  <div class="section-label">Section 3 · Employment &amp; Hiring</div>
+  <div class="q-counter">Deep Dive 05 / 19</div>
+  <div class="q-text">Have you verified that none of your HR technology vendors use automated scoring or ranking features that would constitute an Automated Employment Decision Tool under NYC Local Law 144?</div>
+  <div class="q-note">Platforms such as Workday, Greenhouse, HireVue, LinkedIn Recruiter, and many others include AI scoring features that may be active by default.</div>
+  <div class="q-juris"><strong>NYC LL144:</strong> The deploying organisation — not the vendor — bears LL144 compliance responsibility. A vendor's terms of service do not insulate the employer from liability. &nbsp;·&nbsp; <strong>EU AI Act Art. 25:</strong> Deployers share compliance obligations with providers — you cannot contractually disclaim your own obligations. &nbsp;·&nbsp; <strong>US EEOC:</strong> Employers are liable for discriminatory AI outcomes from vendor tools they selected and deployed, regardless of what the vendor contract says. &nbsp;·&nbsp; <strong>Practice:</strong> Request model cards, bias audit results, and AEDT status documentation from every HR technology vendor as a condition of contract renewal.</div>
+  <div class="options" data-multi="false" data-id="d5">
+    <button class="opt" data-value="verified_no_aedt" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — we have reviewed all HR platforms and confirmed AEDT status</strong></div></button>
+    <button class="opt" data-value="partial" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially — some platforms reviewed but not all vendors assessed</strong></div></button>
+    <button class="opt" data-value="no" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No — we have not reviewed HR vendors for AEDT features</strong></div></button>
+    <button class="opt" data-value="na" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Not applicable — we do not operate in NYC or make NYC employment decisions</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(5)">← Back</button><button class="btn-primary" onclick="deepNext(5)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D6 -->
+<div class="card" id="d6">
+  <div class="section-label">Section 4 · Transparency &amp; Consumer Rights</div>
+  <div class="q-counter">Deep Dive 06 / 19</div>
+  <div class="q-text">When AI is used in decisions that materially affect individuals, do you provide clear notice and offer a mechanism to appeal or seek human review?</div>
+  <div class="q-note">Required across NYC, Colorado, EU AI Act, California, and Texas.</div>
+  <div class="q-juris"><strong>EU AI Act + GDPR Art. 22:</strong> Individuals have the right to explanation, human review, and to contest automated decisions — this applies to high-risk AI systems and solely automated decisions producing legal effects. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> Consumers have the right to appeal consequential AI decisions and receive a written explanation within 90 days. &nbsp;·&nbsp; <strong>California CPRA:</strong> Right to opt out of automated decision-making with significant effects. &nbsp;·&nbsp; <strong>Texas TRAIGA:</strong> Consumers must be notified when AI is used in consequential decisions and must be able to request human review.</div>
+  <div class="options" data-multi="false" data-id="d6">
+    <button class="opt" data-value="always" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Always — notice is provided and a formal appeal mechanism exists</strong></div></button>
+    <button class="opt" data-value="sometimes" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Sometimes — practice is inconsistent across systems or business units</strong></div></button>
+    <button class="opt" data-value="never" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Never — no systematic disclosure or appeal process is in place</strong></div></button>
+    <button class="opt" data-value="na" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Not applicable — AI does not influence decisions affecting individuals</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(6)">← Back</button><button class="btn-primary" onclick="deepNext(6)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D7 -->
+<div class="card" id="d7">
+  <div class="section-label">Section 4 · Transparency</div>
+  <div class="q-counter">Deep Dive 07 / 19</div>
+  <div class="q-text">When your AI systems interact directly with end users or customers, do they disclose that the interaction is AI-generated or AI-mediated?</div>
+  <div class="q-note">EU AI Act Article 50 mandates disclosure for all AI systems that interact with natural persons.</div>
+  <div class="q-juris"><strong>EU AI Act Art. 50 — in force:</strong> AI systems interacting with natural persons must clearly disclose they are AI. Applies to chatbots, virtual agents, and synthetic content. &nbsp;·&nbsp; <strong>California AB 2602:</strong> Prohibition on using AI to impersonate humans in certain consumer contexts. &nbsp;·&nbsp; <strong>Texas TRAIGA:</strong> AI disclosure requirements apply to consumer-facing AI interactions. &nbsp;·&nbsp; <strong>South Korea AI Basic Act:</strong> Disclosure obligations apply to AI systems used in public-facing services and high-impact applications. &nbsp;·&nbsp; <strong>FTC:</strong> Undisclosed AI impersonation of humans may constitute deceptive trade practice under Section 5.</div>
+  <div class="options" data-multi="false" data-id="d7">
+    <button class="opt" data-value="always" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — AI disclosure is built into all user-facing interactions</strong></div></button>
+    <button class="opt" data-value="partial" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially — disclosure exists in some channels but not others</strong></div></button>
+    <button class="opt" data-value="no" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No — users are not informed they are engaging with AI systems</strong></div></button>
+    <button class="opt" data-value="na" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Not applicable — our AI does not interact directly with end users</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(7)">← Back</button><button class="btn-primary" onclick="deepNext(7)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D8 -->
+<div class="card" id="d8">
+  <div class="section-label">Section 4 · Generative &amp; Frontier AI</div>
+  <div class="q-counter">Deep Dive 08 / 19</div>
+  <div class="q-text">Does your organization develop, fine-tune, or operate large-scale generative AI or foundation models for use by others?</div>
+  <div class="q-note">California SB 53 and AB 2013 require safety frameworks and training data provenance disclosure. EU AI Act Title VIII targets General Purpose AI model providers.</div>
+  <div class="q-juris"><strong>EU AI Act Title VIII — GPAI:</strong> Providers of general-purpose AI models must publish technical documentation and comply with copyright law. Models with systemic risk face additional adversarial testing and incident reporting obligations. &nbsp;·&nbsp; <strong>California SB 53:</strong> Requires frontier AI developers to implement safety protocols before training runs above a compute threshold. &nbsp;·&nbsp; <strong>California AB 2013:</strong> Training data transparency — disclosure of datasets used to train generative AI systems made available to Californians. &nbsp;·&nbsp; <strong>South Korea AI Basic Act:</strong> High-impact generative AI systems require registration and governance framework publication.</div>
+  <div class="options" data-multi="false" data-id="d8">
+    <button class="opt" data-value="yes_no_framework" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — and we have NOT published a safety or governance framework</strong></div></button>
+    <button class="opt" data-value="yes_framework" data-weight="1" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — and we HAVE published a safety framework and training data transparency report</strong></div></button>
+    <button class="opt" data-value="use_only" data-weight="1" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We use third-party generative AI but do not develop or fine-tune our own models</strong></div></button>
+    <button class="opt" data-value="no" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No — generative or foundation AI is not part of our operations</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(8)">← Back</button><button class="btn-primary" onclick="deepNext(8)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D9 -->
+<div class="card" id="d9">
+  <div class="section-label">Section 4 · EU AI Act Obligations</div>
+  <div class="q-counter">Deep Dive 09 / 19</div>
+  <div class="q-text">For any high-risk AI systems deployed in EU markets, has your organization completed — or initiated — the required conformity assessment and registered the system in the EU AI database?</div>
+  <div class="q-note">Full high-risk AI obligations now extended to December 2027 — but accountability for outcomes is immediate regardless of the enforcement deadline.</div>
+  <div class="q-juris"><strong>EU AI Act — conformity assessment:</strong> High-risk AI systems must undergo conformity assessment before being placed on the market. Many employment and credit AI systems require third-party assessment — self-certification is not available. &nbsp;·&nbsp; <strong>EU AI database registration:</strong> High-risk AI systems must be registered before deployment in EU markets. &nbsp;·&nbsp; <strong>CE marking:</strong> Required for all high-risk AI systems — without it, the system may not lawfully operate in EU markets. &nbsp;·&nbsp; <strong>Timeline note:</strong> The December 2027 extension is conditional on harmonised standards being confirmed — organisations that delay risk being caught without time to remediate.</div>
+  <div class="options" data-multi="false" data-id="d9">
+    <button class="opt" data-value="complete" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — conformity assessment complete and EU registration in progress</strong></div></button>
+    <button class="opt" data-value="in_progress" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>In progress — assessment underway ahead of the December 2027 deadline</strong></div></button>
+    <button class="opt" data-value="not_started" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Not started — we have not yet initiated this process</strong></div></button>
+    <button class="opt" data-value="unaware" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We were not aware a conformity assessment was required</strong></div></button>
+    <button class="opt" data-value="na" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Not applicable — we do not deploy high-risk AI systems in EU markets</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(9)">← Back</button><button class="btn-primary" onclick="deepNext(9)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D10 -->
+<div class="card" id="d10">
+  <div class="section-label">Section 5 · Logging &amp; Proof</div>
+  <div class="q-counter">Deep Dive 10 / 19</div>
+  <div class="q-text">How does your organization currently maintain proof of AI decision-making for audit or regulatory purposes?</div>
+  <div class="q-note">EU AI Act Articles 12 and 26 require automatic logging of high-risk AI decision events throughout the system's lifecycle.</div>
+  <div class="q-juris"><strong>EU AI Act Art. 12:</strong> High-risk AI systems must automatically generate logs. Logs must be retained for minimum periods and be available to national authorities. &nbsp;·&nbsp; <strong>NYC LL144:</strong> Bias audit reconstruction requires complete, accessible decision records for each candidate evaluated. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> Impact assessment and appeals processes require retrievable, complete decision records. &nbsp;·&nbsp; <strong>US Federal Rules of Evidence Rule 901:</strong> Electronic records must be authenticated — hardware-attested timestamps and cryptographic sealing significantly strengthen admissibility. &nbsp;·&nbsp; <strong>ROSÉ / Timebeat:</strong> IEEE-1588 PTP hardware-attested timestamps combined with cryptographic on-action proofs satisfy all of these requirements simultaneously.</div>
+  <div class="options" data-multi="false" data-id="d10">
+    <button class="opt" data-value="crypto" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Cryptographic or immutable execution proofs — tamper-evident and independently verifiable</strong>Satisfies all six jurisdictions</div></button>
+    <button class="opt" data-value="third_party" data-weight="1" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Third-party audit trail service — logs held outside our administrative boundary</strong></div></button>
+    <button class="opt" data-value="internal" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Internal logs only — standard database or server records within our own systems</strong>Does not satisfy EU AI Act or court evidentiary standards</div></button>
+    <button class="opt" data-value="none" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No systematic logging of AI decisions exists</strong>Critical gap across all frameworks</div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(10)">← Back</button><button class="btn-primary" onclick="deepNext(10)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D11 -->
+<div class="card" id="d11">
+  <div class="section-label">Section 5 · Logging &amp; Proof</div>
+  <div class="q-counter">Deep Dive 11 / 19</div>
+  <div class="q-text">Do your AI execution records capture the specific rules, model version, input data, confidence scores, and governing policies in force at the precise moment each decision was made?</div>
+  <div class="q-note">A log entry stating "candidate rejected" is not the same as a non-repudiable execution record. Regulators and courts will test whether execution evidence can withstand adversarial challenge.</div>
+  <div class="q-juris"><strong>EU AI Act Art. 13 (Transparency):</strong> High-risk AI systems must be sufficiently transparent to enable deployers to interpret outputs — which requires reconstructable execution context, not just outcome records. &nbsp;·&nbsp; <strong>UK GDPR Art. 22:</strong> Individuals have the right to meaningful information about the logic of automated decisions — "the model rejected you" is not sufficient. &nbsp;·&nbsp; <strong>US disparate impact doctrine:</strong> Defending an AI discrimination claim requires reconstructing the decision inputs and governing logic at the exact moment of the challenged decision. &nbsp;·&nbsp; <strong>Canada AIDA:</strong> Organisations must be able to explain how high-impact AI decisions were made — outcome-only records are insufficient.</div>
+  <div class="options" data-multi="false" data-id="d11">
+    <button class="opt" data-value="full" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — full execution context is captured and independently timestamped</strong></div></button>
+    <button class="opt" data-value="partial" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially — some fields are captured but the record is incomplete</strong></div></button>
+    <button class="opt" data-value="outcome_only" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Outcome only — we record the decision but not the inputs, rules, or context</strong></div></button>
+    <button class="opt" data-value="none" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No execution records are maintained</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(11)">← Back</button><button class="btn-primary" onclick="deepNext(11)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D12 -->
+<div class="card" id="d12">
+  <div class="section-label">Section 5 · Incident Response</div>
+  <div class="q-counter">Deep Dive 12 / 19</div>
+  <div class="q-text">Does your organization have a documented AI incident response protocol — covering detection, internal escalation, and regulatory notification — for bias events, errors, or harmful AI outputs?</div>
+  <div class="q-note">A generic IT incident process does not satisfy AI-specific requirements under EU Art. 73 or Colorado's 90-day reporting obligation.</div>
+  <div class="q-juris"><strong>EU AI Act Art. 73:</strong> Providers must report serious incidents to national market surveillance authorities without undue delay — and deployers must notify providers of any incidents. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> Developers must report algorithmic discrimination to the Colorado Attorney General within 90 days of discovery. &nbsp;·&nbsp; <strong>UK ICO:</strong> AI-related data breaches or rights violations may trigger mandatory breach notification under UK GDPR. &nbsp;·&nbsp; <strong>US EEOC:</strong> Discovering and failing to act on discriminatory AI outcomes strengthens discrimination claims — a documented response protocol demonstrates good faith.</div>
+  <div class="options" data-multi="false" data-id="d12">
+    <button class="opt" data-value="full" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — documented, tested AI-specific incident response and regulatory reporting protocol</strong></div></button>
+    <button class="opt" data-value="partial" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partial — general IT incident response exists but no AI-specific protocol</strong></div></button>
+    <button class="opt" data-value="none" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No formal incident response protocol</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(12)">← Back</button><button class="btn-primary" onclick="deepNext(12)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D13 -->
+<div class="card" id="d13">
+  <div class="section-label">Section 5 · Human Oversight</div>
+  <div class="q-counter">Deep Dive 13 / 19</div>
+  <div class="q-text">For high-risk AI systems, are human operators technically capable of understanding, questioning, and overriding AI decisions in real time?</div>
+  <div class="q-note">EU AI Act Article 14 requires genuine oversight — not nominal. A human who cannot meaningfully interpret or challenge a decision does not constitute lawful oversight.</div>
+  <div class="q-juris"><strong>EU AI Act Art. 14:</strong> Oversight measures must include the ability to decide not to use the system in a given situation and the ability to override or interrupt its output. Operators must be properly trained. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> Reasonable care requires that humans remain meaningfully in the decision loop — not just nominally present. &nbsp;·&nbsp; <strong>Singapore MAS FEAT Principle 4:</strong> Financial institutions must be able to intervene in AI processes where outputs may cause harm. &nbsp;·&nbsp; <strong>Australia proposed guardrails:</strong> Human oversight and control is one of eight proposed mandatory guardrails for high-risk AI systems.</div>
+  <div class="options" data-multi="false" data-id="d13">
+    <button class="opt" data-value="full" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — override capability is built in and operators are trained to use it</strong></div></button>
+    <button class="opt" data-value="limited" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Limited — override is possible but cumbersome; operators rarely intervene</strong></div></button>
+    <button class="opt" data-value="none" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No — our AI systems operate autonomously without routine human review</strong></div></button>
+    <button class="opt" data-value="na" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Not applicable — we do not deploy high-risk AI systems</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(13)">← Back</button><button class="btn-primary" onclick="deepNext(13)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D14 -->
+<div class="card" id="d14">
+  <div class="section-label">Section 6 · Governance &amp; Accountability</div>
+  <div class="q-counter">Deep Dive 14 / 19</div>
+  <div class="q-text">Does your organization have a designated individual or formal team responsible for AI regulatory compliance?</div>
+  <div class="q-juris"><strong>EU AI Act Art. 26:</strong> Deployers of high-risk AI must assign oversight responsibility to competent, trained personnel. &nbsp;·&nbsp; <strong>UK FCA Senior Managers Regime:</strong> AI governance accountability must be traceable to a named senior individual. &nbsp;·&nbsp; <strong>ISO 42001 Clause 5.3:</strong> Roles, responsibilities, and authorities for AI governance must be formally assigned and communicated throughout the organisation. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> "Reasonable care" to prevent algorithmic discrimination requires an identifiable accountability structure — a gap here weakens every other compliance defence.</div>
+  <div class="options" data-multi="false" data-id="d14">
+    <button class="opt" data-value="dedicated" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — a dedicated AI governance officer or compliance team is in place</strong></div></button>
+    <button class="opt" data-value="assigned" data-weight="1" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially — responsibility is assigned to an existing role (Legal, CTO, CISO, etc.)</strong></div></button>
+    <button class="opt" data-value="none" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No — AI compliance ownership is unclear within our organization</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(14)">← Back</button><button class="btn-primary" onclick="deepNext(14)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D15 -->
+<div class="card" id="d15">
+  <div class="section-label">Section 6 · Data Governance</div>
+  <div class="q-counter">Deep Dive 15 / 19</div>
+  <div class="q-text">Does your organization maintain documented data governance practices covering AI training datasets — including data lineage, quality criteria, and bias testing?</div>
+  <div class="q-juris"><strong>EU AI Act Art. 10:</strong> Training, validation, and testing datasets must be subject to data governance practices — including relevance, representativeness, freedom from errors, and bias assessment. Continuous documentation is mandatory. &nbsp;·&nbsp; <strong>NYC LL144:</strong> Bias audits require accessible records of the training data demographics used to build the AEDT. &nbsp;·&nbsp; <strong>US EEOC:</strong> Training data documentation is increasingly requested in EEOC investigations of AI discrimination complaints. &nbsp;·&nbsp; <strong>California AB 2013:</strong> Developers must disclose training data characteristics for generative AI made available to Californians.</div>
+  <div class="options" data-multi="false" data-id="d15">
+    <button class="opt" data-value="full" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — documented policies cover data quality, lineage, and demographic bias testing</strong></div></button>
+    <button class="opt" data-value="partial" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partial — informal practices exist but not formally documented</strong></div></button>
+    <button class="opt" data-value="none" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No formal data governance in place</strong></div></button>
+    <button class="opt" data-value="vendor" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We rely on third-party AI providers and have not reviewed their data practices</strong>Deployers retain compliance obligations even when using vendor-supplied AI</div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(15)">← Back</button><button class="btn-primary" onclick="deepNext(15)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D16 -->
+<div class="card" id="d16">
+  <div class="section-label">Section 6 · Vendor Management</div>
+  <div class="q-counter">Deep Dive 16 / 19</div>
+  <div class="q-text">When procuring AI systems from third-party vendors, does your organization conduct formal compliance due diligence — including requiring model cards, dataset documentation, and regulatory status?</div>
+  <div class="q-note">EU AI Act Article 25 makes clear that deployers share compliance obligations. Your vendor's non-compliance is your exposure.</div>
+  <div class="q-juris"><strong>EU AI Act Art. 25(6):</strong> Providers must give deployers all information necessary to fulfil their own obligations — this must be contractually secured. &nbsp;·&nbsp; <strong>EU GDPR Art. 28:</strong> Data processing agreements must address AI-specific governance requirements. &nbsp;·&nbsp; <strong>US EEOC:</strong> Employers cannot contractually disclaim liability for discriminatory vendor AI tools — you remain responsible for what you deploy. &nbsp;·&nbsp; <strong>UK FCA:</strong> Outsourcing rules require financial institutions to maintain audit rights and governance oversight over AI service providers.</div>
+  <div class="options" data-multi="false" data-id="d16">
+    <button class="opt" data-value="formal" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — a formal AI vendor due diligence framework is in place</strong></div></button>
+    <button class="opt" data-value="informal" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Informally — we ask questions but lack a structured review process</strong></div></button>
+    <button class="opt" data-value="none" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No — AI vendors are procured without formal compliance review</strong></div></button>
+    <button class="opt" data-value="inhouse" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Not applicable — all AI is developed in-house</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(16)">← Back</button><button class="btn-primary" onclick="deepNext(16)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D17 -->
+<div class="card" id="d17">
+  <div class="section-label">Section 6 · Bias Testing</div>
+  <div class="q-counter">Deep Dive 17 / 19</div>
+  <div class="q-text">Does your organization conduct regular — at minimum annual — bias and discrimination testing across protected characteristics for all AI systems used in consequential decisions?</div>
+  <div class="q-juris"><strong>NYC LL144:</strong> Annual independent bias audit required — not a one-time exercise, not internal testing, not a vendor's self-certification. &nbsp;·&nbsp; <strong>EU AI Act Art. 9:</strong> Continuous bias monitoring is required as part of the risk management system throughout the lifecycle. &nbsp;·&nbsp; <strong>US EEOC guidance:</strong> Regular disparate impact testing is the primary mechanism for demonstrating non-discriminatory AI deployment in employment. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> Ongoing monitoring to prevent algorithmic discrimination against protected classes is a due diligence requirement — not satisfied by a one-time pre-deployment test.</div>
+  <div class="options" data-multi="false" data-id="d17">
+    <button class="opt" data-value="annual_independent" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — independent testing conducted at least annually with documented results</strong></div></button>
+    <button class="opt" data-value="internal" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Internal testing only — no independent third-party review</strong></div></button>
+    <button class="opt" data-value="ad_hoc" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Ad hoc — testing occurs only when an issue is suspected</strong></div></button>
+    <button class="opt" data-value="none" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No bias testing is conducted</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(17)">← Back</button><button class="btn-primary" onclick="deepNext(17)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D18 -->
+<div class="card" id="d18">
+  <div class="section-label">Section 6 · Financial Preparedness</div>
+  <div class="q-counter">Deep Dive 18 / 19</div>
+  <div class="q-text">Has your organization formally budgeted for potential AI regulatory fines, remediation costs, or litigation arising from AI-related incidents?</div>
+  <div class="q-note">For a mid-market enterprise, a single enforcement action under the EU AI Act could be existential.</div>
+  <div class="q-juris"><strong>EU AI Act maximum fines:</strong> €35M or 7% of global annual turnover for prohibited practices. €15M or 3% for high-risk non-compliance. €7.5M or 1.5% for providing incorrect information. &nbsp;·&nbsp; <strong>NYC LL144:</strong> $500/day per violation — accruing from the day non-compliant use begins. &nbsp;·&nbsp; <strong>Colorado SB 205:</strong> Up to $20,000 per violation; AG enforcement is active. &nbsp;·&nbsp; <strong>Illinois BIPA:</strong> $1,000–$5,000 per biometric violation — class actions have produced settlements exceeding $100M. &nbsp;·&nbsp; <strong>US employment discrimination:</strong> AI bias class actions are an emerging and growing area of litigation risk.</div>
+  <div class="options" data-multi="false" data-id="d18">
+    <button class="opt" data-value="yes" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — AI compliance risk is formally budgeted and quantified</strong></div></button>
+    <button class="opt" data-value="partial" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially — some contingency exists but AI risk is not explicitly broken out</strong></div></button>
+    <button class="opt" data-value="no" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No — no formal budget allocation for AI regulatory exposure</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(18)">← Back</button><button class="btn-primary" onclick="deepNext(18)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- D19 -->
+<div class="card" id="d19">
+  <div class="section-label">Section 6 · Maturity</div>
+  <div class="q-counter">Deep Dive 19 / 19</div>
+  <div class="q-text">On a scale of one to five, how would you rate your organization's overall AI governance maturity?</div>
+  <div class="q-juris"><strong>ISO 42001:</strong> Certification requires demonstrated maturity across policy, risk management, operations, and continuous improvement — level 3 or above is a practical prerequisite. &nbsp;·&nbsp; <strong>EU AI Act:</strong> Quality management systems are required for high-risk AI. &nbsp;·&nbsp; <strong>NIST AI RMF:</strong> Organisational profile and maturity are assessed across Govern, Map, Measure, and Manage functions. &nbsp;·&nbsp; <strong>Key insight:</strong> The organisation that is EU AI Act-ready at a maturity level of 4 or 5 is substantially positioned for every other jurisdiction simultaneously — the Brussels Effect in practice.</div>
+  <div class="options" data-multi="false" data-id="d19">
+    <button class="opt" data-value="5" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>5 — Fully documented, audited, and actively monitored enterprise-wide</strong></div></button>
+    <button class="opt" data-value="4" data-weight="1" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>4 — Strong program with minor gaps; continuous improvement in place</strong></div></button>
+    <button class="opt" data-value="3" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>3 — Developing; core policies exist but not consistently enforced or audited</strong></div></button>
+    <button class="opt" data-value="2" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>2 — Early stage; awareness exists but formal program has not been built</strong></div></button>
+    <button class="opt" data-value="1" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>1 — None; no AI compliance program or governance structure exists</strong></div></button>
+  </div>
+  <div class="nav-row"><button class="btn-outline" onclick="deepPrev(19)">← Back</button><button class="btn-primary" onclick="showFullResults()">View Full Risk Profile <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+</div>
+
+<!-- FULL RESULTS -->
+<div class="card" id="fullResults">
+  <div class="section-label">Your Full Risk Profile</div>
+  <div class="results-header">
+    <div class="score-ring"><span class="score-num" id="resultScoreNum">—</span><span class="score-denom">Risk Score</span></div>
+    <div class="results-verdict" id="resultVerdict">—</div>
+    <div style="font-family:'Cinzel',serif;font-size:0.55rem;letter-spacing:0.25em;color:var(--muted);" id="resultSub">Risk Level</div>
+    <div class="results-bar-outer"><div class="results-bar-inner" id="resultsBar" style="width:0%"></div></div>
+    <div class="results-summary" id="resultSummary"></div>
+  </div>
+  <div id="elevatedFlags"></div>
+  <div class="section-label" style="margin-bottom:18px;">Category Breakdown</div>
+  <div class="category-breakdown" id="categoryBreakdown"></div>
+  <div style="height:1px;background:var(--border-soft);margin:32px 0;"></div>
+  <div class="findings-title">Priority Findings &amp; Actions</div>
+  <div id="findingsList"></div>
+  <!-- ROSÉ SPOTLIGHT in full results -->
+  <div class="rose-spotlight" style="margin-top:32px;">
+    <div class="spotlight-label">ROSÉ Partnership — Mitigation Spotlight</div>
+    <p class="spotlight-text">The most common source of high-risk flags across all six jurisdictions is the logging and proof gap. ROSÉ's on-action cryptographic proofs and IEEE-1588 PTP hardware-attested timestamps produce tamper-proof execution records for every consequential AI decision — directly satisfying EU AI Act Art. 12 automatic logging, NYC LL144 bias-audit reconstruction, Colorado SB 205 appeals documentation, EEOC discrimination defence records, and Texas TRAIGA disclosure requirements. One infrastructure investment. Every jurisdiction. No workflow overhauls.</p>
+  </div>
+  <div class="email-cta">
+    <p>Speak with a compliance specialist about your specific risk profile and next steps.</p>
+    <button class="btn-primary" onclick="sendEmail()">Request a Consultation <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+  </div>
+  <button class="btn-download" onclick="downloadResults()">
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v8M4 7l4 4 4-4M2 13h12"/></svg>
+    Download My Results as PDF
+  </button>
+  <a href="index.html" class="btn-home">← Return to ROSÉ Partnership Home</a>
+  <p class="disclaimer">This assessment is for informational purposes only and does not constitute legal advice. Consult qualified counsel for jurisdiction-specific compliance guidance.</p>
+  <div class="retake" onclick="retake()">↺ &nbsp; Retake Assessment</div>
+</div>
+
+</div><!-- /.stage -->
+
+<!-- PRINT REPORT -->
+<div id="printReport">
+  <div class="pr-page">
+    <div class="pr-header">
+      <div><div class="pr-logo-text">ROSÉ</div><div class="pr-logo-sub">Partnership</div></div>
+      <div class="pr-meta"><div>AI Compliance &amp; Risk Profile Assessment</div><div id="pr-date"></div><div>Confidential — For Internal Use</div></div>
     </div>
-    <div class="results-block" id="full-results"></div>
+    <div class="pr-title">AI Compliance &amp; Risk Profile</div>
+    <div class="pr-subtitle">Full Assessment Report · ROSÉ Partnership · 2026</div>
+    <div class="pr-verdict-block"><div class="pr-verdict-level" id="pr-verdict-level">—</div><div class="pr-verdict-summary" id="pr-verdict-summary"></div></div>
+    <div id="pr-flags-section"><div class="pr-section-label">Elevated Risk Flags</div><div id="pr-flags"></div></div>
+    <div class="pr-section-label">Category Breakdown</div><div id="pr-categories"></div>
+    <div class="pr-section-label">Priority Findings &amp; Recommended Actions</div><div id="pr-findings"></div>
+    <div class="pr-spotlight"><div class="pr-spotlight-label">ROSÉ Partnership — Mitigation Spotlight</div><p class="pr-spotlight-text" id="pr-spotlight-text"></p></div>
+    <div class="pr-next-steps"><h4>Recommended Next Step</h4><p id="pr-next-text"></p></div>
+    <div class="pr-footer"><span>© 2026 ROSÉ Partnership &nbsp;·&nbsp; Selfient · Matric · Roko.network · Latitude.sh · Fortémi · TimeBeat</span><span>selfient.xyz &nbsp;·&nbsp; This report does not constitute legal advice.</span></div>
   </div>
+</div>
 
-</main>
+<div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+<footer>© 2026 ROSÉ Partnership &nbsp;·&nbsp; Selfient · Matric · Roko.network · Latitude.sh · Fortémi · TimeBeat &nbsp;·&nbsp; This assessment does not constitute legal advice.</footer>
 
 <script>
-// ══════════════════════════════════════════════
-//  TRIAGE QUESTIONS (6)
-// ══════════════════════════════════════════════
-const triageQs = [
-  {
-    section: "AI System Inventory",
-    text: "Does your organisation use AI systems to support, influence, or make decisions about hiring, promotion, termination, or workforce management?",
-    sub: "Include any tools that screen CVs, rank candidates, assess competencies, predict performance, or flag employees.",
-    options: [
-      { text: "Yes — AI is actively used in one or more of these areas", sub: "", score: 3 },
-      { text: "Partially — AI assists but humans make all final decisions", sub: "", score: 2 },
-      { text: "Under evaluation — we are piloting or planning to deploy", sub: "", score: 2 },
-      { text: "No — we do not use AI in workforce decisions", sub: "", score: 0 }
-    ]
-  },
-  {
-    section: "Regulatory Exposure",
-    text: "Does your organisation employ, recruit, or make workforce decisions affecting individuals located in the European Union?",
-    sub: "The EU AI Act applies based on where AI output is used, not where your organisation is incorporated.",
-    options: [
-      { text: "Yes — we operate across EU member states", sub: "", score: 3 },
-      { text: "Yes — we recruit from EU-based candidate pools", sub: "", score: 3 },
-      { text: "Potentially — we have EU-adjacent operations or partners", sub: "", score: 2 },
-      { text: "No — our operations and workforce are entirely outside the EU", sub: "", score: 0 }
-    ]
-  },
-  {
-    section: "Audit Trail Capability",
-    text: "If a regulator or court requested evidence of how a specific AI-assisted hiring decision was made six months ago, what could your organisation produce?",
-    sub: "Be candid — this is the question regulators will ask.",
-    options: [
-      { text: "A cryptographically signed, tamper-evident execution record with full context", sub: "Full proof capability", score: 0 },
-      { text: "Detailed system logs with timestamps and decision rationale", sub: "Strong but not cryptographically sealed", score: 1 },
-      { text: "Basic logs showing an outcome was recorded", sub: "Exists but limited evidentiary value", score: 2 },
-      { text: "We would struggle to reconstruct the specific decision", sub: "Significant exposure", score: 3 }
-    ]
-  },
-  {
-    section: "Human Oversight",
-    text: "Can your designated AI oversight personnel currently intervene in, modify, or override AI decisions in your high-risk workflows — and can you demonstrate that capability to regulators?",
-    sub: "The EU AI Act requires genuine oversight capacity, not nominal oversight.",
-    options: [
-      { text: "Yes — with documented procedures and training records", sub: "", score: 0 },
-      { text: "Yes — oversight exists but documentation is incomplete", sub: "", score: 1 },
-      { text: "Partially — oversight exists in theory but is not systematically practised", sub: "", score: 2 },
-      { text: "No — or we have not assessed this requirement", sub: "", score: 3 }
-    ]
-  },
-  {
-    section: "Prohibited Practices",
-    text: "Has your organisation audited its AI systems to confirm that prohibited practices — emotion recognition in hiring, biometric trait inference, social scoring — have ceased as of February 2025?",
-    sub: "These prohibitions are in force now. Non-compliance is already a violation.",
-    options: [
-      { text: "Yes — formal audit completed with documented confirmation", sub: "", score: 0 },
-      { text: "Yes — informally confirmed but not formally documented", sub: "", score: 1 },
-      { text: "In progress — audit is underway", sub: "", score: 2 },
-      { text: "Not yet — this has not been formally assessed", sub: "", score: 3 }
-    ]
-  },
-  {
-    section: "Timeline Awareness",
-    text: "How would you characterise your organisation's current readiness for the August 2026 full high-risk AI obligations deadline?",
-    sub: "Be candid — underestimating this timeline is the most common compliance risk.",
-    options: [
-      { text: "Prepared — programme is in place and tracking well", sub: "", score: 0 },
-      { text: "In progress — meaningful work underway but gaps remain", sub: "", score: 1 },
-      { text: "Early stages — we have begun but have significant work ahead", sub: "", score: 2 },
-      { text: "Not started — we have not yet launched a compliance programme", sub: "", score: 3 }
-    ]
-  }
-];
+let triageScore=0,deepScore=0,tAnswers={},dAnswers={},elevated=[];
+const TRIAGE_TOTAL=5,DEEP_TOTAL=19;
 
-// ══════════════════════════════════════════════
-//  FULL ASSESSMENT QUESTIONS (20)
-// ══════════════════════════════════════════════
-const fullQs = [
-  // SECTION A: Inventory & Classification
-  {
-    section: "A · System Inventory",
-    text: "Have you completed a formal inventory of all AI systems used in employment-related decisions?",
-    sub: "Include screening, scheduling, assessment, performance management, and workforce planning tools.",
-    options: [
-      { text: "Yes — comprehensive, maintained inventory with risk classifications", score: 0 },
-      { text: "Yes — inventory exists but risk classifications are incomplete", score: 1 },
-      { text: "Partial — some systems documented, others not", score: 2 },
-      { text: "No formal inventory exists", score: 3 }
-    ]
-  },
-  {
-    section: "A · System Inventory",
-    text: "Have all AI systems in scope been formally classified against the EU AI Act's risk tiers, with particular attention to Annex III high-risk designations?",
-    sub: "Annex III explicitly designates employment, workforce management, and access to self-employment as high-risk domains.",
-    options: [
-      { text: "Yes — formal classification with legal review completed", score: 0 },
-      { text: "Yes — classification completed internally without external legal review", score: 1 },
-      { text: "In progress — classification underway", score: 2 },
-      { text: "Not completed", score: 3 }
-    ]
-  },
-  // SECTION B: Documentation
-  {
-    section: "B · Technical Documentation",
-    text: "Do your high-risk AI systems have technical documentation that satisfies EU AI Act requirements — covering design, training data, intended purpose, limitations, and accuracy metrics?",
-    sub: "This documentation must be continuously maintained, not a one-time submission.",
-    options: [
-      { text: "Yes — comprehensive, current documentation maintained for all in-scope systems", score: 0 },
-      { text: "Partial — documentation exists but is incomplete or outdated", score: 1 },
-      { text: "Minimal — basic vendor documentation only", score: 2 },
-      { text: "Not in place", score: 3 }
-    ]
-  },
-  {
-    section: "B · Technical Documentation",
-    text: "Can you produce AI system documentation on demand in response to a regulatory request within a commercially reasonable timeframe?",
-    sub: "Regulators expect prompt production. The inability to produce documentation promptly may itself be treated as a compliance failure.",
-    options: [
-      { text: "Yes — documented process and designated custodian in place", score: 0 },
-      { text: "Likely — documentation exists but retrieval process is informal", score: 1 },
-      { text: "Uncertain — documentation is fragmented across vendors and systems", score: 2 },
-      { text: "No — this capability does not currently exist", score: 3 }
-    ]
-  },
-  // SECTION C: Logging & Proof
-  {
-    section: "C · Execution Logging",
-    text: "Do your AI systems automatically log events relevant to identifying risks throughout their operational lifecycle?",
-    sub: "The Act mandates automatic logging — not retrospective reconstruction.",
-    options: [
-      { text: "Yes — automatic logging with tamper-evident records", score: 0 },
-      { text: "Yes — automatic logging but records are not tamper-evident", score: 1 },
-      { text: "Partial — some events logged, others not", score: 2 },
-      { text: "No automatic logging in place", score: 3 }
-    ]
-  },
-  {
-    section: "C · Execution Logging",
-    text: "Are your AI decision logs cryptographically sealed and timestamped with a trusted, hardware-attested time source?",
-    sub: "Server clocks can be manipulated. Regulators increasingly expect independently verifiable timestamps.",
-    options: [
-      { text: "Yes — cryptographic sealing and hardware-attested timestamps in place", score: 0 },
-      { text: "Partial — logs exist with standard timestamps but no cryptographic sealing", score: 2 },
-      { text: "No — standard server logs only", score: 3 },
-      { text: "Not assessed", score: 3 }
-    ]
-  },
-  {
-    section: "C · Execution Logging",
-    text: "Can you produce, for a specific historical AI hiring decision, the exact rules in force at the moment of that decision — including any constraints or delegated authority under which the system operated?",
-    sub: "This is the question regulators and opposing counsel will ask.",
-    options: [
-      { text: "Yes — execution context is captured and retrievable at the decision level", score: 0 },
-      { text: "Partially — outcome is logged but governing rules are not captured at execution time", score: 2 },
-      { text: "No — we cannot reconstruct the governing context for specific decisions", score: 3 },
-      { text: "Not assessed", score: 3 }
-    ]
-  },
-  // SECTION D: Human Oversight
-  {
-    section: "D · Human Oversight",
-    text: "Have individuals responsible for AI oversight been formally identified, with documented roles, responsibilities, and appropriate technical training?",
-    sub: "The Act requires that oversight personnel understand the systems they supervise.",
-    options: [
-      { text: "Yes — formal designation with training records and regular review", score: 0 },
-      { text: "Yes — designated but training is informal or incomplete", score: 1 },
-      { text: "Partially — oversight roles exist but are not formally documented", score: 2 },
-      { text: "No formal oversight designation", score: 3 }
-    ]
-  },
-  {
-    section: "D · Human Oversight",
-    text: "Can designated oversight personnel currently intervene in, modify, or halt AI system operations in high-risk workflows — with documented evidence of that capability?",
-    sub: "The Act requires genuine, exercisable oversight — not nominal oversight.",
-    options: [
-      { text: "Yes — intervention capability documented and tested", score: 0 },
-      { text: "Yes — capability exists but has not been formally tested or documented", score: 1 },
-      { text: "Partial — intervention is possible but not systematically structured", score: 2 },
-      { text: "No — or this has not been assessed", score: 3 }
-    ]
-  },
-  // SECTION E: Bias & Data Governance
-  {
-    section: "E · Bias & Data Governance",
-    text: "Have your AI training datasets been assessed for representativeness, relevance, and freedom from historical bias — with documentation of those assessments?",
-    sub: "This applies both to datasets you control and to third-party vendor datasets.",
-    options: [
-      { text: "Yes — formal bias assessments completed and documented within the past 12 months", score: 0 },
-      { text: "Yes — assessments completed but not within the past 12 months", score: 1 },
-      { text: "Partial — some datasets assessed, others not", score: 2 },
-      { text: "No formal bias assessment has been conducted", score: 3 }
-    ]
-  },
-  {
-    section: "E · Bias & Data Governance",
-    text: "Is ongoing bias monitoring in place for AI systems actively used in hiring decisions — with documented results?",
-    sub: "One-time assessment at deployment is insufficient. The Act requires continuous monitoring.",
-    options: [
-      { text: "Yes — continuous monitoring with documented reporting cadence", score: 0 },
-      { text: "Periodic monitoring — conducted at intervals but not continuously", score: 1 },
-      { text: "Minimal — monitoring is ad hoc or reactive", score: 2 },
-      { text: "No ongoing monitoring in place", score: 3 }
-    ]
-  },
-  // SECTION F: Transparency
-  {
-    section: "F · Transparency",
-    text: "Have employee representative bodies been informed and consulted prior to deploying high-risk AI systems, as required by Article 26(7)?",
-    sub: "This obligation is already in force. It is not subject to the August 2026 timeline.",
-    options: [
-      { text: "Yes — consultation completed and documented for all in-scope deployments", score: 0 },
-      { text: "Yes — consultation occurred informally or incompletely", score: 1 },
-      { text: "In progress", score: 2 },
-      { text: "No — this obligation has not been addressed", score: 3 }
-    ]
-  },
-  {
-    section: "F · Transparency",
-    text: "Are candidates and employees informed when AI systems are used in decisions that affect them, with clear explanation of the AI's role?",
-    sub: "Transparency to data subjects is a combined requirement of the EU AI Act and GDPR.",
-    options: [
-      { text: "Yes — formal disclosure process in place for all AI-assisted decisions", score: 0 },
-      { text: "Partial — some disclosures made but not systematically", score: 1 },
-      { text: "Minimal — disclosure is buried in general privacy policies", score: 2 },
-      { text: "No — candidates and employees are not specifically informed", score: 3 }
-    ]
-  },
-  // SECTION G: Vendor Management
-  {
-    section: "G · Vendor Management",
-    text: "Have you engaged your AI vendors directly on EU AI Act readiness — including CE marking status, bias audit documentation, and execution proof capability?",
-    sub: "Deployers share compliance responsibility with providers. Vendor non-compliance does not shield deployers from liability.",
-    options: [
-      { text: "Yes — formal vendor assessment completed with documented responses", score: 0 },
-      { text: "Partial — informal conversations underway but not documented", score: 1 },
-      { text: "Minimal — vendor AI Act readiness has not been formally assessed", score: 2 },
-      { text: "No — vendor compliance has not been addressed", score: 3 }
-    ]
-  },
-  {
-    section: "G · Vendor Management",
-    text: "Do your AI vendor contracts currently contain EU AI Act compliance warranties, audit rights, and indemnification provisions?",
-    sub: "Existing contracts signed before 2024 are unlikely to contain these provisions.",
-    options: [
-      { text: "Yes — contracts updated to include AI Act-specific provisions", score: 0 },
-      { text: "In progress — contract updates underway", score: 1 },
-      { text: "Not yet — existing contracts are being reviewed", score: 2 },
-      { text: "No — contracts have not been reviewed for AI Act provisions", score: 3 }
-    ]
-  },
-  // SECTION H: Prohibited Practices
-  {
-    section: "H · Prohibited Practices",
-    text: "Has your organisation formally confirmed that prohibited AI practices — emotion recognition in hiring contexts, biometric trait inference, predictive social scoring — have ceased as of February 2025?",
-    sub: "These are already violations. There is no grace period.",
-    options: [
-      { text: "Yes — formal audit completed with legal sign-off", score: 0 },
-      { text: "Yes — internally confirmed but not formally documented", score: 1 },
-      { text: "In progress — audit underway", score: 2 },
-      { text: "Not completed — this has not been formally assessed", score: 3 }
-    ]
-  },
-  // SECTION I: Programme Readiness
-  {
-    section: "I · Programme Readiness",
-    text: "Does your organisation have a designated AI compliance programme with executive sponsorship, defined milestones, and a documented path to August 2026 readiness?",
-    sub: "",
-    options: [
-      { text: "Yes — formal programme with board-level visibility and tracking", score: 0 },
-      { text: "Yes — programme exists but lacks formal executive sponsorship", score: 1 },
-      { text: "Early stage — programme is being scoped", score: 2 },
-      { text: "No formal programme in place", score: 3 }
-    ]
-  },
-  {
-    section: "I · Programme Readiness",
-    text: "Has your organisation engaged external legal counsel with EU AI Act expertise to validate your compliance approach?",
-    sub: "",
-    options: [
-      { text: "Yes — external AI law expertise engaged and actively involved", score: 0 },
-      { text: "Partial — general data protection counsel advising without specific AI Act expertise", score: 1 },
-      { text: "Not yet — planning to engage", score: 2 },
-      { text: "No external legal support", score: 3 }
-    ]
-  },
-  {
-    section: "I · Programme Readiness",
-    text: "Have you performed AI impact assessments before adopting new AI tools in employment-related contexts?",
-    sub: "Pre-deployment assessment is a requirement, not a recommendation.",
-    options: [
-      { text: "Yes — formal AI impact assessment process in place for all new deployments", score: 0 },
-      { text: "Partial — assessments conducted for some deployments", score: 1 },
-      { text: "Minimal — informal review only", score: 2 },
-      { text: "No formal impact assessment process", score: 3 }
-    ]
-  },
-  {
-    section: "I · Programme Readiness",
-    text: "Overall, how would you characterise your organisation's confidence in its ability to demonstrate full EU AI Act compliance for high-risk AI systems by August 2026?",
-    sub: "",
-    options: [
-      { text: "High confidence — we are on track and have clear evidence of readiness", score: 0 },
-      { text: "Moderate confidence — meaningful progress but gaps remain", score: 1 },
-      { text: "Low confidence — significant work required in a compressed timeframe", score: 2 },
-      { text: "Very low — we are not on a path to compliance by August 2026", score: 3 }
-    ]
-  }
-];
+function pick(btn){btn.closest('.options').querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));btn.classList.add('selected');}
+function toggle(btn){btn.closest('.options').querySelectorAll('[data-value="none_hr"],[data-value="none_prohibited"]').forEach(o=>o.classList.remove('selected'));btn.classList.toggle('selected');}
+function pickNone(btn){const c=btn.closest('.options');c.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));btn.classList.add('selected');}
 
-// ══════════════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════════════
-let triageIdx = 0, triageAnswers = [], triageMode = false;
-let fullIdx   = 0, fullAnswers   = [], fullMode   = false;
+function startTriage(){hide('introCard');show('t1');document.getElementById('progressWrap').style.display='block';document.getElementById('topOrnament').style.display='none';updateProgress('Triage',1,TRIAGE_TOTAL);scrollTop();}
+function triageNext(n){saveTriage(n);if(n<TRIAGE_TOTAL){hide('t'+n);show('t'+(n+1));updateProgress('Triage',n+1,TRIAGE_TOTAL);}scrollTop();}
+function triagePrev(n){hide('t'+n);show('t'+(n-1));updateProgress('Triage',n-1,TRIAGE_TOTAL);scrollTop();}
+function saveTriage(n){const id='t'+n;const card=document.getElementById(id);const sel=card.querySelectorAll('.opt.selected');let s=0;const vals=[];sel.forEach(o=>{s+=parseInt(o.dataset.weight||0);vals.push(o.dataset.value);});triageScore+=s;tAnswers[id]={values:vals,score:s};}
+function startDeepDive(){hide('triageResult');show('d1');updateProgress('Full Profile',1,DEEP_TOTAL);scrollTop();}
+function deepNext(n){saveDeep(n);if(n<DEEP_TOTAL){hide('d'+n);show('d'+(n+1));updateProgress('Full Profile',n+1,DEEP_TOTAL);}scrollTop();}
+function deepPrev(n){if(n===1){hide('d1');show('triageResult');document.getElementById('progressWrap').style.display='none';}else{hide('d'+n);show('d'+(n-1));updateProgress('Full Profile',n-1,DEEP_TOTAL);}scrollTop();}
+function saveDeep(n){const id='d'+n;const card=document.getElementById(id);const sel=card.querySelectorAll('.opt.selected');let s=0;const vals=[];sel.forEach(o=>{s+=parseInt(o.dataset.weight||0);vals.push(o.dataset.value);});deepScore+=s;dAnswers[id]={values:vals,score:s};}
 
-function startAssessment(mode) {
-  document.getElementById('mode-selector').style.display = 'none';
-  if (mode === 'triage') {
-    triageMode = true;
-    document.getElementById('triage-wrap').classList.add('active');
-    renderTriage();
-  } else {
-    fullMode = true;
-    document.getElementById('full-wrap').classList.add('active');
-    renderFull();
-  }
+function showTriageResult(){
+  saveTriage(5);hide('t5');document.getElementById('progressWrap').style.display='none';
+  const pct=Math.min(100,Math.round((triageScore/22)*100));
+  let level,color,grad,summary;
+  if(pct<=20){level='Low Risk';color='#4a9e6b';grad='linear-gradient(90deg,#4a9e6b,#82c9a0)';summary='Your triage responses indicate a relatively low immediate exposure profile. The foundations of compliance appear to be in place. The full assessment will identify any latent gaps that triage cannot surface.';}
+  else if(pct<=45){level='Moderate Risk';color='var(--gold)';grad='linear-gradient(90deg,var(--gold),#e8c97a)';summary='Meaningful gaps have been identified. As enforcement timelines accelerate through 2026 and 2027, these gaps carry increasing regulatory and legal consequence.';}
+  else if(pct<=70){level='High Risk';color='var(--rose)';grad='linear-gradient(90deg,var(--rose-dark),var(--rose))';summary='Significant compliance exposure has been identified across one or more critical areas. Prompt and structured remediation is warranted before enforcement windows open.';}
+  else{level='Critical';color='#d44040';grad='linear-gradient(90deg,#a02020,#d44040)';summary='The triage has identified critical, urgent exposure. Immediate engagement with qualified AI compliance counsel is strongly advised. Do not expand AI deployment until core gaps are addressed.';}
+
+  const lbl=document.getElementById('triageVerdictLabel');lbl.textContent=level;lbl.style.color=color;
+  document.getElementById('triageBar').style.background=grad;
+  setTimeout(()=>document.getElementById('triageBar').style.width=pct+'%',100);
+  document.getElementById('triageSummary').textContent=summary;
+
+  const flagsEl=document.getElementById('triageFlags');flagsEl.innerHTML='';
+  const t3=tVal('t3');const t4=tVal('t4');
+  if(t3==='yes_no_audit')flagsEl.innerHTML+=flag('⚠','Employment AI Flag — Immediate Action Required','Automated employment decision tools in use without a bias audit. NYC LL144 fines begin at $500/day per violation. EU Annex III and Colorado obligations also apply. An independent bias audit must be completed before AEDT use may lawfully continue in covered jurisdictions.');
+  if(t4==='no'||t4==='unsure')flagsEl.innerHTML+=flag('◈','Proof Gap — Critical Infrastructure Missing','Your organization cannot produce defensible AI execution records on demand. This gap is tested by every major AI law in force today. Internal logs do not satisfy EU AI Act Art. 12, NYC LL144 audit reconstruction, or EEOC evidentiary standards.');
+  show('triageResult');scrollTop();
 }
 
-// ══ TRIAGE ══
-function renderTriage() {
-  const q = triageQs[triageIdx];
-  const total = triageQs.length;
-  document.getElementById('triage-progress-label').textContent = `Question ${triageIdx+1} of ${total}`;
-  document.getElementById('triage-progress').style.width = `${((triageIdx+1)/total)*100}%`;
+function tVal(id){return(tAnswers[id]?.values||[])[0]||'';}
+function dVals(id){return dAnswers[id]?.values||[];}
+function dVal(id){return dVals(id)[0]||'';}
+function flag(icon,title,detail){return`<div class="flag-box"><div class="flag-icon">${icon}</div><div class="flag-text"><strong>${title}</strong><span>${detail}</span></div></div>`;}
 
-  const selected = triageAnswers[triageIdx];
-  let html = `<div class="question-block active">
-    <p class="q-section">${q.section}</p>
-    <p class="q-text">${q.text}</p>
-    ${q.sub ? `<p class="q-sub">${q.sub}</p>` : ''}
-    <div class="q-options">`;
-  q.options.forEach((o,i) => {
-    const sel = selected === i ? 'selected' : '';
-    html += `<div class="q-option ${sel}" onclick="selectTriage(${i})">
-      <div class="q-radio"></div>
-      <div>
-        <div class="q-option-text">${o.text}</div>
-        ${o.sub ? `<div class="q-option-sub">${o.sub}</div>` : ''}
-      </div>
-    </div>`;
-  });
-  html += `</div></div>`;
-  document.getElementById('triage-questions').innerHTML = html;
-  document.getElementById('triage-prev').style.display = triageIdx > 0 ? 'block' : 'none';
-  document.getElementById('triage-next').textContent = triageIdx === total-1 ? 'See Results' : 'Next →';
-  document.getElementById('triage-next').disabled = selected === undefined;
-}
+function showFullResults(){
+  saveDeep(19);hide('d19');document.getElementById('progressWrap').style.display='none';
+  const totalScore=triageScore+deepScore;
+  let adjustedScore=totalScore;
+  const d2v=dVals('d2'),d3v=dVals('d3'),d4v=dVals('d4'),d10v=dVal('d10');
+  if(d2v.length&&!d2v.includes('none_hr')){if(d10v==='internal'||d10v==='none')adjustedScore+=8;}
+  if(d4v.includes('none_employment')&&!d2v.includes('none_hr'))adjustedScore+=6;
+  if(!d4v.includes('bias_audit')&&!d4v.includes('none_employment')&&d2v.includes('employment'))adjustedScore+=6;
+  const prohibitedSelected=d3v.filter(v=>v!=='none_prohibited');
+  if(prohibitedSelected.length)adjustedScore+=10;
+  const adjPct=Math.min(100,Math.round((adjustedScore/120)*100));
+  let level,color,grad,summary;
+  if(adjPct<=20){level='Low Risk';color='#4a9e6b';grad='linear-gradient(90deg,#4a9e6b,#82c9a0)';summary='Your full assessment reflects a mature compliance posture. The infrastructure for governed AI appears to be substantively in place. Maintain this position through regular monitoring, annual bias audits, and proactive engagement with regulatory developments.';}
+  else if(adjPct<=45){level='Moderate Risk';color='var(--gold)';grad='linear-gradient(90deg,var(--gold),#e8c97a)';summary='Compliance work has begun, but material gaps remain — particularly in logging, proof infrastructure, and jurisdictional coverage. With Colorado obligations activating in June 2026 and EU high-risk requirements on the horizon, the window for remediation is narrowing.';}
+  else if(adjPct<=70){level='High Risk';color='var(--rose-light)';grad='linear-gradient(90deg,var(--rose-dark),var(--rose))';summary='Significant, specific compliance deficiencies have been identified across multiple regulatory frameworks. The combination of high-risk AI use cases and infrastructure gaps creates compounding liability. A structured remediation program, beginning immediately, is warranted.';}
+  else{level='Critical Risk';color='#d44040';grad='linear-gradient(90deg,#a02020,#d44040)';summary='Critical, urgent exposure has been identified across multiple frameworks, with potential for immediate enforcement consequences. Engage qualified AI compliance counsel before any further AI deployment or expansion. Prioritize the proof and logging gap above all other actions.';}
 
-function selectTriage(i) {
-  triageAnswers[triageIdx] = i;
-  renderTriage();
-}
+  document.getElementById('resultScoreNum').textContent=adjustedScore;document.getElementById('resultScoreNum').style.color=color;
+  const v=document.getElementById('resultVerdict');v.textContent=level;v.style.color=color;
+  document.getElementById('resultsBar').style.background=grad;
+  setTimeout(()=>document.getElementById('resultsBar').style.width=adjPct+'%',150);
+  document.getElementById('resultSummary').textContent=summary;
 
-function triageNext() {
-  if (triageAnswers[triageIdx] === undefined) return;
-  if (triageIdx < triageQs.length - 1) { triageIdx++; renderTriage(); }
-  else { showTriageResults(); }
-}
+  const flagsEl=document.getElementById('elevatedFlags');flagsEl.innerHTML='';
+  if(prohibitedSelected.length){flagsEl.innerHTML+=flag('🚫','EU AI Act — Prohibited Practice in Use','One or more AI practices identified are outright prohibited under the EU AI Act as of February 2025. These systems must be immediately suspended for EU operations. Maximum fines: €35M or 7% of global annual turnover.');elevated.push('prohibited');}
+  if(!d4v.includes('bias_audit')&&d2v.includes('employment')){flagsEl.innerHTML+=flag('⚠','Employment AI Flag — Bias Audit Absent','AI is in use for employment decisions without a completed independent bias audit. NYC LL144 fines begin at $500/day. EU Annex III and Colorado SB 205 obligations also apply.');elevated.push('employment');}
+  if(d10v==='none'){flagsEl.innerHTML+=flag('◈','Logging Gap — No AI Execution Records','No systematic logging of AI decisions exists. This gap triggers deficiencies under every major AI law in force — EU Art. 12/26, Colorado impact assessment, NYC bias audit reconstruction. This is the single most actionable remediation item.');elevated.push('logging');}
 
-function triagePrev() {
-  if (triageIdx > 0) { triageIdx--; renderTriage(); }
-}
-
-function showTriageResults() {
-  document.getElementById('triage-questions').style.display = 'none';
-  document.getElementById('triage-progress').closest('.progress-bar').style.width = '100%';
-  document.querySelector('#triage-wrap .q-nav').style.display = 'none';
-
-  let score = 0;
-  triageAnswers.forEach((a,i) => { score += triageQs[i].options[a].score; });
-  const max = triageQs.length * 3;
-  const pct = Math.round((1 - score/max) * 100);
-
-  let tier, tierColor, summary, findings;
-  if (pct >= 75) {
-    tier = 'Strong Foundation'; tierColor = '#4CAF50';
-    summary = 'Your organisation demonstrates solid foundational awareness of AI governance requirements. Key processes appear to be in place. The full assessment will help identify specific gaps before the August 2026 deadline.';
-  } else if (pct >= 50) {
-    tier = 'Moderate Exposure'; tierColor = '#C9A96E';
-    summary = 'Your organisation has begun addressing AI governance obligations but meaningful gaps remain. The August 2026 high-risk deadline represents a material compliance risk that requires focused programme investment now.';
-  } else if (pct >= 25) {
-    tier = 'Significant Exposure'; tierColor = '#CC3562';
-    summary = 'Your organisation faces significant compliance exposure. Multiple foundational requirements are not yet in place. Given the August 2026 deadline, the time for a comprehensive programme is now — not later.';
-  } else {
-    tier = 'Critical Exposure'; tierColor = '#8B1030';
-    summary = 'Your organisation has critical AI governance gaps. Some prohibited practices may already represent active violations. Immediate engagement with legal counsel and infrastructure partners is strongly advised.';
-  }
-
-  findings = buildTriageFindings(triageAnswers);
-
-  const html = `
-    <div class="result-score-wrap">
-      <div class="result-score" style="color:${tierColor};">${pct}%</div>
-      <div class="result-tier" style="color:${tierColor}; letter-spacing:0.4em;">${tier}</div>
-      <p class="result-summary">${summary}</p>
-    </div>
-    <div class="result-findings">${findings}</div>
-    <div class="result-actions">
-      <a href="index.html" class="btn-home">← Return to Home</a>
-      <button class="btn-next" onclick="restartTriage()">Retake Assessment</button>
-      <button class="btn-next" style="background:linear-gradient(135deg,#6A3000,#C9A96E);" onclick="document.getElementById('mode-selector').style.display='grid';document.getElementById('triage-wrap').classList.remove('active');triageIdx=0;triageAnswers=[];triageMode=false;">Take Full Assessment</button>
-      <a href="mailto:helen@selfient.com?subject=ROSÉ Compliance Assessment - Briefing Request" class="btn-next" style="text-decoration:none;">Request Briefing →</a>
-    </div>`;
-
-  const r = document.getElementById('triage-results');
-  r.innerHTML = html;
-  r.classList.add('active');
-}
-
-function buildTriageFindings(answers) {
-  const flags = [
-    { q: 0, threshold: 1, icon: '⚠', title: 'AI in High-Risk Workflows', text: 'Your organisation deploys AI in employment decisions — the highest-risk category under the EU AI Act.' },
-    { q: 1, threshold: 1, icon: '⚠', title: 'EU Regulatory Jurisdiction Applies', text: 'Your organisation is subject to EU AI Act obligations based on where AI outputs affect individuals.' },
-    { q: 2, threshold: 2, icon: '◈', title: 'Execution Proof Gap', text: 'Your current logging capability may not satisfy the evidentiary standard regulators and courts will require.' },
-    { q: 3, threshold: 2, icon: '◈', title: 'Human Oversight Documentation', text: 'Oversight capability exists but requires stronger documentation to satisfy regulatory scrutiny.' },
-    { q: 4, threshold: 2, icon: '⚠', title: 'Prohibited Practices Audit Required', text: 'Confirmation that prohibited AI practices have ceased is not yet formally documented — this is an active compliance obligation.' },
-    { q: 5, threshold: 2, icon: '◈', title: 'Programme Urgency', text: 'Your compliance programme requires acceleration to meet the August 2026 deadline with confidence.' }
+  const categories=[
+    {name:'High-Risk Classification',score:calcCat(['d2','d3']),max:20},
+    {name:'Employment & Hiring',score:calcCat(['d4','d5']),max:15},
+    {name:'Transparency & Notices',score:calcCat(['d6','d7','d8']),max:13},
+    {name:'Logging & Proof',score:calcCat(['d10','d11','d12']),max:14},
+    {name:'Human Oversight',score:calcCat(['d13']),max:5},
+    {name:'Governance & Maturity',score:calcCat(['d14','d15','d16','d17','d18','d19']),max:19},
   ];
-  let html = '';
-  flags.forEach(f => {
-    const score = triageQs[f.q].options[answers[f.q]].score;
-    if (score >= f.threshold) {
-      html += `<div class="finding">
-        <span class="finding-icon" style="color:var(--rose)">${f.icon}</span>
-        <div><h4>${f.title}</h4><p>${f.text}</p></div>
-      </div>`;
-    }
-  });
-  if (!html) html = `<div class="finding"><span class="finding-icon" style="color:#4CAF50">✦</span><div><h4>Strong Posture Detected</h4><p>Your triage responses indicate a well-managed AI governance programme. We recommend the full assessment to confirm depth across all obligation areas.</p></div></div>`;
-  return html;
+  const breakdown=document.getElementById('categoryBreakdown');breakdown.innerHTML='';
+  categories.forEach(c=>{const p=c.max>0?Math.min(100,Math.round((c.score/c.max)*100)):0;let sc,gc;if(p<=25){sc='#4a9e6b';gc='linear-gradient(90deg,#4a9e6b,#82c9a0)';}else if(p<=55){sc='#C9A96E';gc='linear-gradient(90deg,#C9A96E,#e8c97a)';}else{sc='#CC3562';gc='linear-gradient(90deg,#8B1030,#CC3562)';}const lbl=p<=25?'Low Exposure':p<=55?'Moderate':'Elevated';breakdown.innerHTML+=`<div class="cat-row"><span class="cat-name">${c.name}</span><div class="cat-bar-outer"><div class="cat-bar-inner" style="width:${p}%;background:${gc};transition:width 1s ease ${Math.random()*0.3}s"></div></div><span class="cat-status" style="color:${sc}">${lbl}</span></div>`;});
+
+  const findings=buildFindings();
+  const fl=document.getElementById('findingsList');fl.innerHTML='';
+  findings.forEach(f=>{fl.innerHTML+=`<div class="finding"><div class="finding-dot ${f.sev}"></div><div class="finding-body"><strong>${f.title}</strong><span>${f.detail}</span></div></div>`;});
+  show('fullResults');scrollTop();
 }
 
-function restartTriage() {
-  triageIdx = 0; triageAnswers = [];
-  document.getElementById('triage-questions').style.display = 'block';
-  document.querySelector('#triage-wrap .q-nav').style.display = 'flex';
-  document.getElementById('triage-results').classList.remove('active');
-  document.getElementById('triage-results').innerHTML = '';
-  document.getElementById('triage-progress').closest('.progress-bar').style.width = '';
-  renderTriage();
+function calcCat(ids){return ids.reduce((sum,id)=>sum+(dAnswers[id]?.score||0),0);}
+
+function buildFindings(){
+  const findings=[];
+  const d3v=dVals('d3'),d4v=dVals('d4'),d2v=dVals('d2');
+  const d5v=dVal('d5'),d7v=dVal('d7'),d9v=dVal('d9'),d10v=dVal('d10'),d11v=dVal('d11'),d12v=dVal('d12'),d13v=dVal('d13'),d14v=dVal('d14'),d15v=dVal('d15');
+  if(d3v.filter(v=>v!=='none_prohibited').length)findings.push({sev:'high',title:'CRITICAL — EU AI Act Prohibited Practice',detail:'One or more prohibited AI practices were identified. These must be suspended immediately for EU operations. Fines: up to €35M or 7% of global annual turnover. Engage legal counsel before next AI deployment cycle.'});
+  if(!d4v.includes('bias_audit')&&d2v.includes('employment'))findings.push({sev:'high',title:'NYC Local Law 144 — Independent Bias Audit Required',detail:'Automated employment decision tools are in use without a completed bias audit. Complete an independent AEDT bias audit and post the summary publicly. NYC fines begin immediately upon non-compliant use.'});
+  if(!d4v.includes('candidate_notice')&&!d4v.includes('none_employment')&&d2v.includes('employment'))findings.push({sev:'high',title:'NYC LL144 / EU Art. 26 — Candidate Notice Absent',detail:'Candidates and employees must be notified before AI is used in decisions affecting them. Update application forms and job postings to include this disclosure before any further AEDT use.'});
+  if(d10v==='none'||d10v==='internal')findings.push({sev:'high',title:'Proof Gap — AI Execution Records Not Defensible',detail:'Internal logs do not satisfy EU AI Act Articles 12/26, Colorado impact assessment standards, or NYC bias audit reconstruction requirements. Implement cryptographic, tamper-proof execution records for all high-risk AI decisions.'});
+  if(d11v==='outcome_only'||d11v==='none')findings.push({sev:'high',title:'Logging Completeness — Execution Context Not Captured',detail:'Each AI decision record must capture inputs, governing rules, model version, confidence scores, and timestamp in force at the moment of execution. Outcome-only records are insufficient under all major frameworks.'});
+  if(d9v==='not_started'||d9v==='unaware')findings.push({sev:'high',title:'EU AI Act — Conformity Assessment Not Initiated',detail:'High-risk AI systems in EU markets require conformity assessment. Begin the process now — organisations that wait until the deadline will not have sufficient time to remediate findings.'});
+  if(d13v==='none')findings.push({sev:'high',title:'Human Oversight — No Override Capability',detail:'EU AI Act Article 14 requires genuine, technically-enabled human oversight for high-risk AI. Build override and halt mechanisms into your system architecture and train operators to exercise them.'});
+  if(d5v==='no')findings.push({sev:'medium',title:'HR Vendor Review — AEDT Features Unassessed',detail:'Many enterprise ATS and HCM platforms include AI scoring features that activate by default. Audit every HR platform against NYC LL144\'s AEDT definition. The deploying organisation bears compliance responsibility.'});
+  if(d7v==='no')findings.push({sev:'medium',title:'EU AI Act Article 50 — AI Disclosure to Users Absent',detail:'Users interacting with AI systems must be clearly informed of that fact. Implement disclosure mechanisms across all customer-facing AI touchpoints.'});
+  if(d12v==='none')findings.push({sev:'medium',title:'No AI Incident Response Protocol',detail:'EU Art. 73 requires mandatory serious incident reporting. Colorado requires reporting within 90 days. Develop an AI-specific incident classification and regulatory notification workflow.'});
+  if(d14v==='none')findings.push({sev:'medium',title:'Governance Gap — No AI Compliance Ownership',detail:'Assign explicit accountability for AI regulatory compliance. Without ownership, compliance programs stall and enforcement findings expose the entire organisation.'});
+  if(d15v==='none')findings.push({sev:'medium',title:'Data Governance — No Documentation or Bias Testing',detail:'EU AI Act Article 10 requires data quality management and bias testing. Establish a data governance policy covering provenance, quality criteria, and demographic bias testing protocols.'});
+  if(!findings.length)findings.push({sev:'ok',title:'Strong Compliance Posture Identified',detail:'Your responses indicate a mature and well-considered approach to AI governance. Maintain this posture through annual bias audits, regular regulatory monitoring, and proactive review of new enforcement guidance.'});
+  return findings.slice(0,7);
 }
 
-// ══ FULL ══
-function renderFull() {
-  const q = fullQs[fullIdx];
-  const total = fullQs.length;
-  document.getElementById('full-progress-label').textContent = `Question ${fullIdx+1} of ${total}`;
-  document.getElementById('full-progress').style.width = `${((fullIdx+1)/total)*100}%`;
-
-  const selected = fullAnswers[fullIdx];
-  let html = `<div class="question-block active">
-    <p class="q-section">${q.section}</p>
-    <p class="q-text">${q.text}</p>
-    ${q.sub ? `<p class="q-sub">${q.sub}</p>` : ''}
-    <div class="q-options">`;
-  q.options.forEach((o,i) => {
-    const sel = selected === i ? 'selected' : '';
-    html += `<div class="q-option ${sel}" onclick="selectFull(${i})">
-      <div class="q-radio"></div>
-      <div>
-        <div class="q-option-text">${o.text}</div>
-        ${o.sub ? `<div class="q-option-sub">${o.sub}</div>` : ''}
-      </div>
-    </div>`;
-  });
-  html += `</div></div>`;
-  document.getElementById('full-questions').innerHTML = html;
-  document.getElementById('full-prev').style.display = fullIdx > 0 ? 'block' : 'none';
-  document.getElementById('full-next').textContent = fullIdx === total-1 ? 'See Full Report' : 'Next →';
-  document.getElementById('full-next').disabled = selected === undefined;
+function sendEmail(){
+  const r=[104,101,108,101,110,64,115,101,108,102,105,101,110,116,46,99,111,109];
+  const addr=r.map(c=>String.fromCharCode(c)).join('');
+  const tier=document.getElementById('resultVerdict').textContent||'Unknown';
+  const flags=elevated.length?elevated.join(', '):'none identified';
+  const subject=encodeURIComponent('ROSÉ Compliance Assessment — '+tier+' Profile — Consultation Request');
+  const body=encodeURIComponent('Hello,\n\nI have just completed the ROSÉ AI Compliance & Risk Assessment.\n\nRisk Tier: '+tier+'\nElevated Flags: '+flags+'\n\nI would like to discuss next steps.\n\nName: \nOrganization: \nBest time to connect: ');
+  window.location.href='mailto:'+addr+'?subject='+subject+'&body='+body;
 }
 
-function selectFull(i) {
-  fullAnswers[fullIdx] = i;
-  renderFull();
-}
+function show(id){const el=document.getElementById(id);if(el)el.classList.add('active');}
+function hide(id){const el=document.getElementById(id);if(el)el.classList.remove('active');}
+function scrollTop(){window.scrollTo({top:0,behavior:'smooth'});}
+function updateProgress(label,n,total){const pct=Math.round(((n-1)/total)*100);document.getElementById('progressFill').style.width=pct+'%';document.getElementById('progressText').textContent=label+' · Question '+n+' of '+total;document.getElementById('progressPct').textContent=pct+'%';}
+function retake(){triageScore=0;deepScore=0;tAnswers={};dAnswers={};elevated=[];document.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));document.getElementById('progressWrap').style.display='none';document.getElementById('topOrnament').style.display='';document.getElementById('progressFill').style.width='0%';show('introCard');scrollTop();}
 
-function fullNext() {
-  if (fullAnswers[fullIdx] === undefined) return;
-  if (fullIdx < fullQs.length - 1) { fullIdx++; renderFull(); }
-  else { showFullResults(); }
-}
-
-function fullPrev() {
-  if (fullIdx > 0) { fullIdx--; renderFull(); }
-}
-
-function showFullResults() {
-  document.getElementById('full-questions').style.display = 'none';
-  document.querySelector('#full-wrap .q-nav').style.display = 'none';
-
-  let total = 0;
-  const sectionScores = {};
-  fullAnswers.forEach((a,i) => {
-    const score = fullQs[i].options[a].score;
-    total += score;
-    const sec = fullQs[i].section.split('·')[0].trim();
-    if (!sectionScores[sec]) sectionScores[sec] = { score:0, max:0 };
-    sectionScores[sec].score += score;
-    sectionScores[sec].max += 3;
-  });
-
-  const max = fullQs.length * 3;
-  const pct = Math.round((1 - total/max) * 100);
-
-  let tier, tierColor, summary;
-  if (pct >= 80) {
-    tier = 'Advanced Readiness'; tierColor = '#4CAF50';
-    summary = 'Your organisation demonstrates advanced AI governance readiness. The detailed findings below highlight areas for optimisation as you approach and maintain August 2026 compliance.';
-  } else if (pct >= 60) {
-    tier = 'Developing Programme'; tierColor = '#C9A96E';
-    summary = 'Your programme has meaningful foundations but requires focused investment to reach full compliance by August 2026. Priority areas are identified below.';
-  } else if (pct >= 35) {
-    tier = 'Material Compliance Risk'; tierColor = '#CC3562';
-    summary = 'Your organisation carries material compliance risk across multiple obligation domains. A structured remediation programme with clear milestones is urgently required.';
-  } else {
-    tier = 'Critical Programme Gap'; tierColor = '#8B1030';
-    summary = 'Critical gaps exist across foundational compliance requirements. Some prohibited practice obligations are already in force. Immediate executive escalation and legal engagement is advised.';
-  }
-
-  let domainRows = '';
-  const sectionLabels = { A:'System Inventory', B:'Technical Documentation', C:'Execution & Logging', D:'Human Oversight', E:'Bias & Data Governance', F:'Transparency', G:'Vendor Management', H:'Prohibited Practices', I:'Programme Readiness' };
-  Object.entries(sectionScores).forEach(([k, v]) => {
-    const spct = Math.round((1 - v.score/v.max)*100);
-    const color = spct >= 75 ? '#4CAF50' : spct >= 50 ? '#C9A96E' : '#CC3562';
-    const label = sectionLabels[k] || k;
-    domainRows += `<div style="display:flex;align-items:center;gap:1.2rem;padding:0.9rem 0;border-bottom:1px solid var(--border);">
-      <span style="font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.3em;color:var(--gold);min-width:160px;">${label}</span>
-      <div style="flex:1;height:4px;background:var(--border);border-radius:2px;">
-        <div style="width:${spct}%;height:100%;background:${color};border-radius:2px;transition:width 0.5s;"></div>
-      </div>
-      <span style="font-size:0.8rem;color:${color};min-width:36px;text-align:right;">${spct}%</span>
-    </div>`;
-  });
-
-  const html = `
-    <div class="result-score-wrap">
-      <div class="result-score" style="color:${tierColor};">${pct}%</div>
-      <div class="result-tier" style="color:${tierColor};letter-spacing:0.4em;">${tier}</div>
-      <p class="result-summary">${summary}</p>
-    </div>
-    <div style="border:1px solid var(--border);padding:2rem;margin-bottom:2rem;">
-      <p style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;">Readiness by Obligation Domain</p>
-      ${domainRows}
-    </div>
-    <div class="result-findings">
-      <p style="font-family:'Cinzel',serif;font-size:0.62rem;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:1.5rem;">Priority Recommendations</p>
-      ${buildFullFindings()}
-    </div>
-    <div class="result-actions">
-      <a href="index.html" class="btn-home">← Return to Home</a>
-      <button class="btn-next" onclick="restartFull()">Retake Assessment</button>
-      <a href="mailto:helen@selfient.com?subject=ROSÉ Full Assessment - Briefing Request&body=My overall readiness score was ${pct}% (${tier}). I would like to discuss ROSÉ's compliance infrastructure." class="btn-next" style="text-decoration:none;">Discuss with ROSÉ →</a>
-    </div>`;
-
-  const r = document.getElementById('full-results');
-  r.innerHTML = html;
-  r.classList.add('active');
-}
-
-function buildFullFindings() {
-  const criticals = [];
-  fullAnswers.forEach((a,i) => {
-    const score = fullQs[i].options[a].score;
-    if (score >= 2) criticals.push({ q: fullQs[i], score });
-  });
-
-  if (!criticals.length) return `<div class="finding"><span class="finding-icon" style="color:#4CAF50">✦</span><div><h4>No Critical Gaps Identified</h4><p>Your assessment responses indicate a well-structured compliance programme. Focus on maintaining documentation currency and monitoring regulatory developments.</p></div></div>`;
-
-  return criticals.slice(0,5).map(c => `
-    <div class="finding">
-      <span class="finding-icon" style="color:var(--rose)">◈</span>
-      <div>
-        <h4>${c.q.section.split('·')[1]?.trim() || c.q.section} — Action Required</h4>
-        <p>${c.q.text}</p>
-      </div>
-    </div>`).join('');
-}
-
-function restartFull() {
-  fullIdx = 0; fullAnswers = [];
-  document.getElementById('full-questions').style.display = 'block';
-  document.querySelector('#full-wrap .q-nav').style.display = 'flex';
-  document.getElementById('full-results').classList.remove('active');
-  document.getElementById('full-results').innerHTML = '';
-  renderFull();
+function downloadResults(){
+  const now=new Date();document.getElementById('pr-date').textContent=now.toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const tier=document.getElementById('resultVerdict').textContent||'—';
+  const color=document.getElementById('resultVerdict').style.color||'#CC3562';
+  const summary=document.getElementById('resultSummary').textContent||'';
+  const score=document.getElementById('resultScoreNum').textContent||'—';
+  const vl=document.getElementById('pr-verdict-level');vl.textContent=tier;vl.style.color=color;
+  document.getElementById('pr-verdict-summary').innerHTML='<strong style="font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#9A8A90;">Risk Score: '+score+'</strong><br><br>'+summary;
+  const srcFlags=document.getElementById('elevatedFlags');const prFlags=document.getElementById('pr-flags');
+  if(srcFlags&&srcFlags.innerHTML.trim()){prFlags.innerHTML='';srcFlags.querySelectorAll('.flag-box').forEach(fb=>{const icon=fb.querySelector('.flag-icon')?.textContent||'⚠';const strong=fb.querySelector('.flag-text strong')?.textContent||'';const detail=fb.querySelector('.flag-text span')?.textContent||'';prFlags.innerHTML+=`<div class="pr-flag"><div class="pr-flag-icon">${icon}</div><div><strong>${strong}</strong><span>${detail}</span></div></div>`;});document.getElementById('pr-flags-section').style.display='';}else{document.getElementById('pr-flags-section').style.display='none';}
+  const srcCats=document.getElementById('categoryBreakdown');const prCats=document.getElementById('pr-categories');prCats.innerHTML='';if(srcCats){srcCats.querySelectorAll('.cat-row').forEach(row=>{const name=row.querySelector('.cat-name')?.textContent||'';const status=row.querySelector('.cat-status')?.textContent||'';const sc=row.querySelector('.cat-status')?.style.color||'#CC3562';const barW=row.querySelector('.cat-bar-inner')?.style.width||'0%';const barBg=row.querySelector('.cat-bar-inner')?.style.background||'#CC3562';prCats.innerHTML+=`<div class="pr-cat-row"><span class="pr-cat-name">${name}</span><div class="pr-cat-bar-outer"><div class="pr-cat-bar-inner" style="width:${barW};background:${barBg};"></div></div><span class="pr-cat-status" style="color:${sc};">${status}</span></div>`;});}
+  const srcFindings=document.getElementById('findingsList');const prFindings=document.getElementById('pr-findings');prFindings.innerHTML='';if(srcFindings){srcFindings.querySelectorAll('.finding').forEach(f=>{const dot=f.querySelector('.finding-dot');const sevCls=dot?.classList.contains('high')?'high':dot?.classList.contains('medium')?'medium':'ok';const dotColor=sevCls==='high'?'#CC3562':sevCls==='medium'?'#C9A96E':'#4a9e6b';const title=f.querySelector('.finding-body strong')?.textContent||'';const detail=f.querySelector('.finding-body span')?.textContent||'';prFindings.innerHTML+=`<div class="pr-finding"><div class="pr-finding-dot" style="background:${dotColor};"></div><div><strong>${title}</strong><span>${detail}</span></div></div>`;});}
+  document.getElementById('pr-spotlight-text').textContent="ROSÉ's on-action cryptographic proofs and IEEE-1588 PTP hardware-attested timestamps produce tamper-proof execution records for every consequential AI decision — satisfying EU AI Act Art. 12, NYC LL144 audit reconstruction, Colorado SB 205 appeals, and EEOC defence records simultaneously.";
+  const nextMap={'Low Risk':'Schedule an annual refresh and monitor emerging enforcement guidance. Your current posture is commendable — maintain it with regular bias audit renewals and quarterly regulatory monitoring.','Moderate Risk':'Prioritize logging and proof infrastructure and complete outstanding impact assessments before enforcement timelines arrive. Contact ROSÉ Partnership to discuss a structured gap remediation programme.','High Risk':'Engage qualified AI compliance counsel immediately and deploy immutable execution infrastructure for all high-risk AI systems before expanding AI use. Contact ROSÉ Partnership for an urgent briefing.','Critical Risk':'Do not expand AI deployment until core compliance gaps are addressed. Engage legal counsel and a compliance specialist immediately. ROSÉ Partnership recommends an urgent briefing to map remediation priorities.'};
+  document.getElementById('pr-next-text').textContent=nextMap[tier]||'Contact ROSÉ Partnership at selfient.xyz to discuss your results and recommended next steps.';
+  setTimeout(()=>window.print(),120);
 }
 </script>
 </body>
