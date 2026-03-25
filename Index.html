@@ -618,7 +618,7 @@
   </svg>
 
   <!-- Subtitle sits BELOW the logo, not inside it -->
-  <h2 class="hero-title">The infrastructure with the ability to provid proof of AI Agent decisions.</h2>
+  <h2 class="hero-title">The infrastructure with the ability to prove the work of AI agents.</h2>
   <p class="hero-sub">Six specialized systems. One federated execution architecture.
 ROSÉ runs consequential AI workflows and produces immutable compliance proof
 at the moment an action occurs — trusted, ordered, and enterprise-ready.</p>
@@ -1111,17 +1111,72 @@ at the moment an action occurs — trusted, ordered, and enterprise-ready.</p>
   <h2 class="section-title">Perspectives from<br><em>the partnership.</em></h2>
   <div class="insights-grid">
 
-    <a href="#" class="insight-card featured">
-      <span class="podcast-badge">New Episode</span>
-      <p class="insight-type">Podcast — The ROSÉ Report</p>
-      <h3 class="insight-title">Why Can't AWS or Azure Just Build This? The Answer Changes Everything.</h3>
-      <p class="insight-excerpt">The question every investor asks. The answer — rooted in the irreplaceable advantage of a purpose-built, federated architecture assembled over four years — is the one that stops the room. ROSÉ founders discuss why the infrastructure to govern AI cannot be retrofitted from existing cloud platforms, and why that asymmetry is permanent.</p>
-      <p class="insight-meta">Episode 01 &nbsp;·&nbsp; 48 min</p>
+    <a href="#" class="insight-card featured" onclick="document.getElementById('csa-modal').style.display='flex';return false;">
+      <p class="insight-type">Industry Research — Cloud Security Alliance · February 2026</p>
+      <h3 class="insight-title">84% of Enterprises Doubt They Could Pass a Compliance Audit on AI Agent Behavior</h3>
+      <p class="insight-excerpt">The Cloud Security Alliance released a landmark survey finding that traditional Identity and Access Management architectures are fundamentally incapable of governing agentic AI. The data confirms what ROSÉ was built to solve: the identity and accountability infrastructure for AI agents does not yet exist at most enterprises — and the gap is widening faster than security frameworks can adapt.</p>
+      <p class="insight-meta">CSA Survey Report &nbsp;·&nbsp; February 5, 2026 &nbsp;·&nbsp; Read the Analysis</p>
     </a>
 
-    </a>
+<!-- ══ CSA SURVEY MODAL ══ -->
+<div id="csa-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(4,1,4,0.97);overflow-y:auto;align-items:flex-start;justify-content:center;padding:4rem 2rem;">
+  <div style="max-width:780px;width:100%;margin:0 auto;position:relative;">
+    <button onclick="document.getElementById('csa-modal').style.display='none'"
+            style="position:fixed;top:2rem;right:2rem;background:transparent;border:1px solid var(--rose-dark);color:var(--muted);padding:0.5rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;"
+            onmouseover="this.style.color='#E05080'" onmouseout="this.style.color=''">✕ &nbsp; Close</button>
 
-    <a href="#" class="insight-card" onclick="document.getElementById('delay-modal').style.display='flex';return false;">
+    <p style="font-family:'Cinzel',serif;font-size:0.63rem;letter-spacing:0.5em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.2rem;">Industry Research · Cloud Security Alliance · February 5, 2026</p>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4.5vw,3rem);font-weight:300;line-height:1.2;color:#EDE8E3;margin-bottom:0.8rem;">The Agentic Identity Crisis —<br><em style="color:#E05080;">Why 84% of Enterprises Aren't Ready</em></h1>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--muted);margin-bottom:0.5rem;">Cloud Security Alliance Survey Report · February 2026 — and what it means for ROSÉ</p>
+    <div style="width:60px;height:1px;background:var(--rose-dark);margin:1.8rem 0;"></div>
+
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.9;color:#9A8A90;">
+
+      <!-- Stat callout -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:rgba(204,53,98,0.15);margin-bottom:2.5rem;">
+        <div style="background:#0A0208;padding:2rem;text-align:center;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:300;color:#CC3562;line-height:1;margin-bottom:0.4rem;text-shadow:0 0 40px rgba(204,53,98,0.3);">84%</p>
+          <p style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.3em;color:#C9A96E;text-transform:uppercase;">of organisations doubted they could pass a compliance audit focused on agent behavior or access controls</p>
+        </div>
+        <div style="background:#0A0208;padding:2rem;text-align:center;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:#EDE8E3;line-height:1.6;">Traditional IAM architectures are not capable of keeping up with agentic behavior.</p>
+          <p style="font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.2em;color:#9A8A90;text-transform:uppercase;margin-top:0.8rem;">Cloud Security Alliance · February 5, 2026</p>
+        </div>
+      </div>
+
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.2rem;">What the Survey Found</h2>
+      <p style="margin-bottom:1.5rem;">On February 5th, 2026, the Cloud Security Alliance released a survey report with a finding that enterprise technology leaders cannot afford to ignore: traditional human-centric Identity and Access Management architectures are fundamentally incapable of governing the behavior of AI agents. The infrastructure built to manage human users — static credentials, manual provisioning, siloed policies — cannot keep pace with the speed and autonomy of agentic systems.</p>
+      <p style="margin-bottom:2rem;">More than half of the organisations surveyed — 84% — doubted they could pass a compliance audit focused on agent behavior or access controls. Not that they were unprepared. Not that they had gaps. That they could not pass an audit at all.</p>
+
+      <!-- First quote -->
+      <div style="border-left:2px solid #8B1030;padding:1.2rem 1.5rem;margin:2rem 0;background:rgba(139,16,48,0.06);">
+        <p style="font-size:1.05rem;color:#EDE8E3;font-style:italic;line-height:1.75;margin-bottom:0.8rem;">"The agentic workforce is scaling faster than identity and security frameworks can adapt. Success in the agentic era will hinge on treating agent identity with the same rigor historically reserved for human users, enabling secure autonomy at enterprise scale."</p>
+        <p style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.25em;color:#C9A96E;text-transform:uppercase;">Hillary Baron, AVP of Research · Cloud Security Alliance</p>
+      </div>
+
+      <!-- Second quote -->
+      <div style="border-left:2px solid #8B1030;padding:1.2rem 1.5rem;margin:2rem 0;background:rgba(139,16,48,0.06);">
+        <p style="font-size:1.05rem;color:#EDE8E3;font-style:italic;line-height:1.75;margin-bottom:0.8rem;">"This survey shows that enterprises are coming to realize that securing AI agents isn't just about tweaking existing IAM processes — rather it requires rethinking identity architecture altogether. Static credentials, manual provisioning, and siloed policies can't keep pace with the speed and autonomy of agentic systems. The future of identity must be orchestrated, contextual, and continuous, enabling real-time authentication, authorization, and auditing wherever agents operate."</p>
+        <p style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.25em;color:#C9A96E;text-transform:uppercase;">Eric Olden, Co-founder &amp; CEO · Strata Identity</p>
+      </div>
+
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">Why This Confirms the ROSÉ Thesis</h2>
+      <p style="margin-bottom:1.5rem;">The CSA findings validate what ROSÉ has argued from its founding: that the accountability infrastructure for AI agents cannot be built by retrofitting the frameworks designed for human users. Every word of the report's conclusion — orchestrated, contextual, continuous, real-time authentication, authorization, and auditing wherever agents operate — describes precisely the capability set that the ROSÉ partnership was assembled to provide.</p>
+      <p style="margin-bottom:1.5rem;">The 84% figure is not a measure of negligence. It is a measure of architectural mismatch. The organisations surveyed are not failing because their teams are inattentive. They are failing because the infrastructure required to govern agentic AI at audit-ready standards does not exist within their current stack — and cannot be made to exist by patching what is there.</p>
+      <p style="font-size:1.05rem;color:#EDE8E3;font-style:italic;border-left:2px solid #8B1030;padding-left:1.5rem;margin:2rem 0;">The question for every enterprise is not whether this problem applies to them. The question is how long they can operate with AI agents that their own security and compliance teams cannot account for.</p>
+
+      <!-- CTA -->
+      <div style="text-align:center;border:1px solid rgba(204,53,98,0.2);padding:2.5rem;margin-top:2rem;background:rgba(204,53,98,0.04);">
+        <p style="font-size:1rem;color:#EDE8E3;margin-bottom:1.5rem;">Ready to understand how ROSÉ closes the agentic identity and accountability gap?</p>
+        <a href="#contact" onclick="document.getElementById('csa-modal').style.display='none'"
+           style="display:inline-block;background:linear-gradient(135deg,#8B1030,#CC3562);color:#EDE8E3;padding:0.9rem 2.4rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;">
+          Request a Briefing
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>    <a href="#" class="insight-card" onclick="document.getElementById('delay-modal').style.display='flex';return false;">
       <p class="insight-type">White Paper — ROSÉ Partnership</p>
       <h3 class="insight-title">What the EU AI Act Delay Actually Means — And Why "Show Your Work" Is Now the Only Defensible Position</h3>
       <p class="insight-excerpt">On March 18th, 2026, EU Parliament committees voted to delay high-risk AI obligations to December 2027. Do not misinterpret this as sixteen months of breathing room. The delay is not a reprieve. It is a moment of clarity.</p>
@@ -1346,6 +1401,9 @@ info@selfient.com · selfient.xyz
   URL.revokeObjectURL(url);
 }
 </script>
+
+    <a href="#whitepaper" class="insight-card" id="whitepaper" onclick="document.getElementById('wp-modal').style.display='flex';return false;">
+      <p class="insight-type">White Paper — ROSÉ Partnership</p>
       <h3 class="insight-title">The Black-Box AI Problem You Likely Have</h3>
       <p class="insight-excerpt">AI agents are already making decisions that can cost companies money, trigger liability, and change human lives. Most enterprises still cannot prove what those systems did. This white paper examines why logs are not proof — and what provable execution actually requires.</p>
       <p class="insight-meta">White Paper &nbsp;·&nbsp; 8 min read &nbsp;·&nbsp; 2026</p>
