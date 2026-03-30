@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The EU AI Act &amp; High-Risk AI in HR · ROSÉ Partnership</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Cinzel:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rose:#CC3562; --rose-light:#E05080; --rose-dark:#8B1030;
+      --gold:#C9A96E; --ink:#040104; --ink-2:#0A0208;
+      --text:#EDE8E3; --muted:#9A8A90;
+      --border:rgba(204,53,98,0.2);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--ink); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
+    .top-rule { height: 1px; background: linear-gradient(to right, transparent, var(--rose-dark), transparent); }
+    .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 3rem; border-bottom: 1px solid var(--border); }
+    .nav-back { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+    .nav-back:hover { color: var(--rose-light); }
+    .nav-wordmark { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; letter-spacing: 0.35em; color: var(--rose); opacity: 0.8; }
+    .paper-wrap { max-width: 760px; margin: 0 auto; padding: 5rem 2rem 8rem; }
+    .eyebrow { font-family: 'Cinzel', serif; font-size: 0.63rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.2rem; }
+    h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 300; line-height: 1.15; color: var(--text); margin-bottom: 0.8rem; }
+    h1 em { font-style: italic; color: var(--rose-light); }
+    .subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--muted); margin-bottom: 0.5rem; }
+    .rule { width: 60px; height: 1px; background: var(--rose-dark); margin: 1.8rem 0; }
+    .body-text { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; line-height: 1.9; color: var(--muted); }
+    .lead { font-size: 1.12rem; color: var(--text); font-style: italic; margin-bottom: 1.5rem; }
+    p { margin-bottom: 1.5rem; }
+    h2 { font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin: 2.8rem 0 1.2rem; }
+    .pullquote { font-size: 1.05rem; color: var(--text); font-style: italic; border-left: 2px solid var(--rose-dark); padding-left: 1.5rem; margin: 2rem 0; line-height: 1.75; }
+    .timeline-grid { background: rgba(204,53,98,0.06); border: 1px solid var(--border); padding: 2rem; margin: 1.5rem 0 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .timeline-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: var(--rose); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .timeline-text { font-size: 0.9rem; color: var(--text); line-height: 1.6; }
+    ul.req-list { list-style: none; margin-bottom: 2rem; }
+    ul.req-list li { padding: 1rem 0; border-bottom: 1px solid rgba(204,53,98,0.12); }
+    ul.req-list li:last-child { border-bottom: none; }
+    ul.req-list strong { display: block; color: var(--text); font-size: 1rem; margin-bottom: 0.4rem; }
+    ul.req-list span { font-size: 0.95rem; padding-left: 1.6rem; display: block; }
+    ul.action-list { list-style: none; margin-bottom: 2rem; }
+    ul.action-list li { padding: 0.6rem 0; border-bottom: 1px solid rgba(204,53,98,0.1); font-size: 0.95rem; }
+    ul.action-list li:last-child { border-bottom: none; }
+    .cta-block { border: 1px solid var(--border); background: rgba(204,53,98,0.04); padding: 2.5rem; margin-top: 4rem; text-align: center; }
+    .cta-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
+    .cta-about { font-size: 0.9rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn-primary { background: linear-gradient(135deg, var(--rose-dark), var(--rose)); color: var(--text); border: none; padding: 0.9rem 2.4rem; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: opacity 0.3s; }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-outline { background: transparent; color: var(--gold); border: 1px solid rgba(201,169,110,0.4); padding: 0.9rem 2.4rem; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: border-color 0.3s; }
+    .btn-outline:hover { border-color: var(--gold); }
+    .ornament { text-align: center; padding: 2rem 0; color: var(--rose-dark); letter-spacing: 0.8em; opacity: 0.45; }
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 3rem; text-align: center; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); opacity: 0.55; }
+    @media(max-width:600px){ .nav-bar{padding:1rem 1.5rem;} .paper-wrap{padding:3rem 1.5rem 6rem;} .timeline-grid{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+<div class="top-rule"></div>
+<nav class="nav-bar">
+  <a href="index.html" class="nav-back">← ROSÉ Partnership</a>
+  <span class="nav-wordmark">ROSÉ</span>
+</nav>
+
+<div class="paper-wrap">
+  <p class="eyebrow">White Paper · ROSÉ Partnership · Q1 2026 · Privileged and Confidential</p>
+  <h1>The EU AI Act &amp; High-Risk AI in<br><em>HR and Talent Acquisition</em></h1>
+  <p class="subtitle">What Every HR Executive, TA Leader, and Enterprise Technology Leader Must Understand — Now</p>
+  <div class="rule"></div>
+
+  <div class="body-text">
+    <h2>Executive Summary</h2>
+    <p class="lead">The European Union's Artificial Intelligence Act — Regulation (EU) 2024/1689 — is not a distant regulatory horizon. It is a present and accelerating obligation that has already begun to reshape how organizations may lawfully deploy artificial intelligence in their most consequential human decisions: who gets hired, who advances, and who is turned away.</p>
+    <p>This white paper is written for HR executives, talent acquisition leaders, legal counsel, and the enterprise technology leaders who serve them. Its purpose is threefold: to illuminate precisely what the EU AI Act demands of organizations using AI in employment decisions; to expose the dangerous gap between ordinary logging and what regulators, courts, and auditors will increasingly require; and to introduce ROSÉ as the infrastructure layer purpose-built to close that gap.</p>
+    <div class="pullquote">Organizations that have not yet mapped their AI systems, established non-repudiable proof of execution, or implemented human oversight infrastructure are not merely unprepared — they are exposed. ROSÉ was built for precisely this moment.</div>
+
+    <h2>I. The Regulatory Storm</h2>
+    <p>There is a temptation, particularly among organizations headquartered outside Europe, to regard the EU AI Act as a compliance consideration belonging to European subsidiaries and European counsel. That temptation is a trap of the first order.</p>
+    <p>The AI Act carries unambiguous extraterritorial reach. Any organization — regardless of where it is incorporated, where its servers reside, or where its hiring team sits — is subject to its obligations if the AI system's output is used in the context of EU-based candidates, workers, or employment decisions. The regulatory geometry deliberately mirrors GDPR, which proved far more far-reaching in practice than many initially imagined.</p>
+    <p>The Act's Annex III explicitly lists employment and human resources as a high-risk domain. Any AI system used to screen candidates, rank applications, assess competencies, predict success, evaluate performance, or support decisions about advancement or separation falls within this designation — categorically, not as a matter of interpretation.</p>
+
+    <h2>II. The Timeline — Where We Stand in 2026</h2>
+    <div class="timeline-grid">
+      <div>
+        <p class="timeline-label">Feb 2025 — Already In Force</p>
+        <p class="timeline-text">Prohibited AI practices in hiring must have already ceased. Emotion recognition in employment settings, social scoring, biometric trait inference — all banned. No grace period exists.</p>
+      </div>
+      <div>
+        <p class="timeline-label">Dec 2027 — High-Risk Obligations</p>
+        <p class="timeline-text">Full weight of high-risk AI obligations applies. The enforcement clock is running. Organisations that delay risk being caught without time to remediate findings.</p>
+      </div>
+    </div>
+    <p>Organizations that anchor their compliance strategy to an uncertain extension rather than actively preparing do so at considerable risk. The moment to begin is not when enforcement arrives — it is now.</p>
+
+    <h2>III. What the Act Requires</h2>
+    <ul class="req-list">
+      <li>
+        <strong>◈ Documentation &amp; Technical Records</strong>
+        <span>Comprehensive technical documentation sufficient to demonstrate compliance and enable regulatory assessment — continuously maintained, not a one-time filing.</span>
+      </li>
+      <li>
+        <strong>◈ Automatic Logging — The Record-Keeping Imperative</strong>
+        <span>High-risk AI systems must automatically record events relevant to identifying risks. These logs must be retained and available upon regulatory request. Server logs do not satisfy this standard.</span>
+      </li>
+      <li>
+        <strong>◈ Human Oversight — Genuine, Not Performative</strong>
+        <span>The Act requires that supervisors have the effective capacity to intervene in and modify AI decisions. A human who cannot understand, question, or override a decision does not constitute lawful oversight.</span>
+      </li>
+      <li>
+        <strong>◈ Transparency &amp; Worker Notification</strong>
+        <span>Article 26(7) already requires employers to inform and consult employee representative bodies prior to deploying high-risk AI systems. This is in force now.</span>
+      </li>
+      <li>
+        <strong>◈ Bias Testing &amp; Data Governance</strong>
+        <span>Training datasets must be relevant, representative, and free of errors and bias. Ongoing monitoring and documentation of bias assessments is mandatory.</span>
+      </li>
+    </ul>
+
+    <h2>IV. The Proof Gap — Why Logs Will Not Save You</h2>
+    <p>There is a seductive comfort in the belief that existing enterprise infrastructure — server logs, audit tables, HRIS records — constitutes a sufficient evidentiary foundation for AI Act compliance. It does not. The gap between what organizations currently have and what regulators will require is not a gap of degree. It is a gap of kind.</p>
+    <div class="pullquote">A candidate who was denied employment alleges that the AI system that screened her application was biased against candidates of her demographic. Her counsel subpoenas the execution records. What can your organization produce? A log entry with a server timestamp and a binary outcome? That is not a defence. That is, in the present regulatory climate, very nearly an invitation to a finding of non-compliance.</div>
+    <p>When an AI system decides — in a fraction of a second — that a particular candidate does not advance, these questions become legally and operationally material: What specific rules governed that decision at the precise moment it was made? Was the decision immutable from the moment it was made, or could it have been altered retroactively without detection? Can the organization produce cryptographic proof of what happened?</p>
+    <p>For the overwhelming majority of enterprise AI hiring systems currently deployed, the honest answer is: no. The logs exist. The proof does not.</p>
+
+    <h2>V. The ROSÉ Solution</h2>
+    <p>ROSÉ — the Regulated Ordered and Signed Execution partnership — was not adapted from existing cloud infrastructure or assembled from compliance modules bolted onto a platform built for different purposes. It was designed from first principles for the specific and irreversible reality that AI agents are now executing consequential decisions at scale — and that those decisions must be provable.</p>
+    <p>ROSÉ operates as a partnership of six purpose-built systems, each contributing a distinct and essential capability to the execution proof lifecycle. Every AI hiring decision processed through ROSÉ arrives with a proof bundle that can be produced, verified, and tendered as evidence.</p>
+    <div class="pullquote">For organizations that have accepted the EU AI Act as the new compliance floor — and for any organization operating at scale in or touching EU hiring markets, that acceptance is not optional — ROSÉ is not a cost center. It is liability mitigation infrastructure.</div>
+
+    <h2>VI. Practical Implications — Immediate Actions</h2>
+    <ul class="action-list">
+      <li>→ &nbsp; Audit and inventory every AI system used in recruitment, screening, scheduling, assessment, and workforce decisions</li>
+      <li>→ &nbsp; Classify each system against the Act's risk tiers — Annex III high-risk designations are categorical, not interpretive</li>
+      <li>→ &nbsp; Verify that prohibited practices have already ceased as of February 2025</li>
+      <li>→ &nbsp; Begin employee representative body consultation under Article 26(7) — already in force</li>
+      <li>→ &nbsp; Evaluate current logging infrastructure against the standard of non-repudiable proof, not mere record-keeping</li>
+      <li>→ &nbsp; Evaluate ROSÉ as the execution proof infrastructure for your AI hiring stack — before December 2027</li>
+    </ul>
+
+    <h2>VII. The Regulatory Tailwind — Beyond the EU</h2>
+    <p>The EU AI Act is the most comprehensive AI regulation in force today, but it will not long stand alone. Several U.S. states — including New York, Colorado, and Illinois — have enacted or are actively advancing AI-specific legislation that imposes disclosure, auditing, and anti-discrimination requirements on algorithmic employment decision tools. International frameworks in the United Kingdom, Canada, Singapore, and Brazil are converging on similar requirements.</p>
+    <p>The EU AI Act carries meaningful financial consequences: fines for non-compliance with high-risk AI system obligations can reach 3% of global annual turnover, with fines for violations of prohibited practices reaching 7%. For a mid-market global enterprise, a single significant enforcement action can represent an existential financial event.</p>
+    <div class="pullquote">The cost of governed execution infrastructure is not a compliance expense. It is risk capital — deployed to protect assets far larger than the investment required to protect them.</div>
+
+    <h2>VIII. Conclusion</h2>
+    <p>The EU AI Act names this problem. ISO 42001 operationalizes it. ROSÉ solves it.</p>
+    <p>The organizations that will navigate the next five years of AI governance with confidence are not those that wait for enforcement to make compliance urgent. They are those that understand, now, that every AI hiring decision made without cryptographic proof of execution is a liability held in trust against a future that is arriving faster than most compliance calendars acknowledge.</p>
+
+    <div class="cta-block">
+      <p class="cta-label">About ROSÉ &amp; Selfient.xyz</p>
+      <p class="cta-about">ROSÉ is the Regulated Ordered and Signed Execution partnership — the first and only infrastructure layer purpose-built for governed, provable, auditable AI execution. Led by Helen Sharron, CEO and Co-Founder of Selfient.xyz, a 25-year veteran of enterprise technology and two-time founder. The partnership includes Selfient.xyz · Matric · ROKO.Network · Latitude.sh · Fortémi · TimeBeat</p>
+      <div class="btn-row">
+        <a href="index.html#contact" class="btn-primary">Request an EU AI Act Briefing</a>
+        <button onclick="downloadPaper()" class="btn-outline">↓ &nbsp; Download PDF</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+<footer>© 2026 ROSÉ Partnership &nbsp;·&nbsp; Selfient · Matric · Roko.network · Latitude.sh · Fortémi · TimeBeat &nbsp;·&nbsp; This paper does not constitute legal advice.</footer>
+
+<script>
+function downloadPaper() {
+  const content = `ROSÉ PARTNERSHIP
+The EU AI Act & High-Risk AI in HR and Talent Acquisition
+What Every HR Executive, TA Leader, and Enterprise Technology Leader Must Understand — Now
+Q1 2026 · Privileged and Confidential
+selfient.xyz · info@selfient.com
+
+────────────────────────────────────────────
+
+EXECUTIVE SUMMARY
+
+The EU AI Act is not a distant regulatory horizon. It is a present and accelerating obligation that has already begun to reshape how organizations may lawfully deploy AI in their most consequential human decisions: who gets hired, who advances, and who is turned away.
+
+Organizations that have not yet mapped their AI systems, established non-repudiable proof of execution, or implemented human oversight infrastructure are not merely unprepared — they are exposed.
+
+I. THE REGULATORY STORM
+
+The AI Act carries unambiguous extraterritorial reach. Any organization is subject to its obligations if the AI system's output is used in the context of EU-based candidates, workers, or employment decisions.
+
+The Act's Annex III explicitly lists employment and human resources as a high-risk domain. Any AI system used to screen candidates, rank applications, assess competencies, predict success, or evaluate performance falls within this designation — categorically.
+
+II. THE TIMELINE
+
+Feb 2025 — Already In Force: Prohibited AI practices in hiring must have already ceased. Emotion recognition, social scoring, biometric trait inference — all banned.
+
+Dec 2027 — High-Risk Obligations: Full weight of high-risk AI obligations applies.
+
+III. WHAT THE ACT REQUIRES
+
+• Documentation & Technical Records: Continuously maintained, not a one-time filing.
+• Automatic Logging: High-risk AI systems must automatically record events. Server logs do not satisfy this standard.
+• Human Oversight: Genuine capacity to intervene and modify AI decisions — not nominal oversight.
+• Transparency & Worker Notification: Article 26(7) already requires employer consultation with employee representative bodies.
+• Bias Testing & Data Governance: Ongoing monitoring and documentation is mandatory.
+
+IV. THE PROOF GAP — WHY LOGS WILL NOT SAVE YOU
+
+The gap between what organizations currently have and what regulators will require is not a gap of degree. It is a gap of kind.
+
+For the overwhelming majority of enterprise AI hiring systems currently deployed: the logs exist. The proof does not.
+
+V. THE ROSÉ SOLUTION
+
+ROSÉ was designed from first principles for the irreversible reality that AI agents are now executing consequential decisions at scale — and those decisions must be provable.
+
+Every AI hiring decision processed through ROSÉ arrives with a proof bundle that can be produced, verified, and tendered as evidence.
+
+VI. IMMEDIATE ACTIONS
+
+• Audit every AI system used in recruitment, screening, and workforce decisions
+• Classify each system against the Act's risk tiers
+• Verify prohibited practices have ceased as of February 2025
+• Begin employee representative body consultation under Article 26(7) — already in force
+• Evaluate logging infrastructure against non-repudiable proof, not mere record-keeping
+• Evaluate ROSÉ as the execution proof infrastructure for your AI hiring stack
+
+VII. CONCLUSION
+
+The EU AI Act names this problem. ISO 42001 operationalizes it. ROSÉ solves it.
+
+Every AI hiring decision made without cryptographic proof of execution is a liability held in trust against a future that is arriving faster than most compliance calendars acknowledge.
+
+────────────────────────────────────────────
+
+ABOUT ROSÉ & SELFIENT.XYZ
+ROSÉ is the Regulated Ordered and Signed Execution partnership.
+The partnership includes Selfient.xyz · Matric · ROKO.Network · Latitude.sh · Fortémi · TimeBeat
+info@selfient.com · selfient.xyz
+© 2026 ROSÉ Partnership. All rights reserved.`;
+
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'ROSE-EU-AI-Act-HR-White-Paper-2026.txt'; a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
