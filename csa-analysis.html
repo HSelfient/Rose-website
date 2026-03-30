@@ -244,7 +244,7 @@
       <p style="font-family:'Cormorant Garamond',serif;font-size:0.82rem;color:var(--muted);margin-bottom:1.5rem;font-style:italic;">References: CSA, <em>Identity and Access Gaps in the Age of Autonomous AI</em> (March 2026, n=228); CSA/Strata Identity research (February 2026); Gartner Agentic AI Forecast 2027.</p>
       <div class="btn-row">
         <a href="index.html#contact" class="btn-primary">Request a Briefing</a>
-        <button onclick="downloadPaper()" class="btn-outline">↓ &nbsp; Download PDF</button>
+        <a href="ROSE_IAM_WhitePaper_Q1_2026.docx" download class="btn-outline">↓ &nbsp; Download White Paper</a>
       </div>
     </div>
 
@@ -254,89 +254,5 @@
 <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
 <footer>© 2026 ROSÉ Partnership &nbsp;·&nbsp; Selfient · Matric · Roko.network · Latitude.sh · Fortémi · TimeBeat &nbsp;·&nbsp; This paper does not constitute legal advice.</footer>
 
-<script>
-function downloadPaper() {
-  // Read full text directly from the page so the download always matches what was read
-  const titleEl   = document.querySelector('h1');
-  const subtitleEl = document.querySelector('.subtitle');
-  const bodyEl    = document.querySelector('.body-text');
-
-  // Convert the body HTML to clean plain text
-  function nodeToText(node) {
-    let out = '';
-    node.childNodes.forEach(child => {
-      if (child.nodeType === 3) {
-        out += child.textContent;
-      } else if (child.nodeType === 1) {
-        const tag = child.tagName.toLowerCase();
-        if (tag === 'h2') {
-          out += '\n\n' + child.textContent.trim().toUpperCase() + '\n' + '─'.repeat(60) + '\n\n';
-        } else if (tag === 'h3') {
-          out += '\n' + child.textContent.trim() + '\n\n';
-        } else if (tag === 'table') {
-          child.querySelectorAll('tr').forEach(row => {
-            const cells = [...row.querySelectorAll('th,td')].map(c => c.textContent.trim().replace(/\s+/g,' '));
-            out += cells.join('  |  ') + '\n';
-          });
-          out += '\n';
-        } else if (tag === 'li') {
-          out += '  • ' + child.textContent.trim().replace(/\s+/g,' ') + '\n';
-        } else if (tag === 'ul') {
-          nodeToText(child).split('\n').forEach(l => { if(l.trim()) out += l + '\n'; });
-          out += '\n';
-        } else if (tag === 'div' && child.classList.contains('stat-grid')) {
-          child.querySelectorAll('.stat-cell').forEach(cell => {
-            const num   = cell.querySelector('.stat-num')?.textContent.trim() || '';
-            const label = cell.querySelector('.stat-label')?.textContent.trim() || '';
-            const src   = cell.querySelector('.stat-source')?.textContent.trim() || '';
-            out += `  ${num}  ${label}  ${src ? '(' + src + ')' : ''}\n`;
-          });
-          out += '\n';
-        } else if (tag === 'div' && child.classList.contains('obs-box')) {
-          out += '\n[' + (child.querySelector('.obs-label')?.textContent.trim() || 'NOTE') + ']\n';
-          out += child.querySelector('.obs-text')?.textContent.trim() + '\n\n';
-        } else if (tag === 'div' && child.classList.contains('property')) {
-          const num   = child.querySelector('.property-num')?.textContent.trim() || '';
-          const title = child.querySelector('.property-title')?.textContent.trim() || '';
-          out += '\n' + num + '. ' + title + '\n';
-          child.querySelectorAll('p').forEach(p => { out += p.textContent.trim().replace(/\s+/g,' ') + '\n'; });
-          out += '\n';
-        } else if (tag === 'div' && child.classList.contains('cta-block')) {
-          out += '\n────────────────────────────────────────────\n\n';
-          out += 'ABOUT ROSÉ & SELFIENT.XYZ\n';
-          out += child.querySelector('.cta-about')?.textContent.trim() + '\n';
-          out += 'info@selfient.com · selfient.xyz\n';
-          out += '© 2026 ROSÉ Partnership. All rights reserved. Privileged and Confidential.\n';
-        } else {
-          out += nodeToText(child);
-        }
-      }
-    });
-    return out;
-  }
-
-  const header = [
-    'ROSÉ PARTNERSHIP — WHITE PAPER',
-    (titleEl?.textContent.trim() || '').replace(/\s+/g,' '),
-    (subtitleEl?.textContent.trim() || '').replace(/\s+/g,' '),
-    'Q1 2026 · Privileged and Confidential',
-    'selfient.xyz · info@selfient.com',
-    '',
-    '════════════════════════════════════════════════════════════',
-    ''
-  ].join('\n');
-
-  const body = bodyEl ? nodeToText(bodyEl) : '';
-  const content = header + body;
-
-  const blob = new Blob([content], { type: 'text/plain' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url;
-  a.download = 'ROSE-Proof-Not-Promise-Cryptographic-Execution-Identity-2026.txt';
-  a.click();
-  URL.revokeObjectURL(url);
-}
-</script>
 </body>
 </html>
