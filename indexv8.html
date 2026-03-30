@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSÉ Partnership — The Inevitable Execution Primitive for AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Cinzel:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rose:       #CC3562;
+      --rose-light: #E05080;
+      --rose-dark:  #8B1030;
+      --gold:       #C9A96E;
+      --ink:        #040104;
+      --ink-2:      #0A0208;
+      --ink-3:      #12050D;
+      --text:       #EDE8E3;
+      --muted:      #9A8A90;
+      --border:     rgba(204,53,98,0.2);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--ink);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* STARFIELD */
+    #starfield { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 3rem;
+      background: linear-gradient(to bottom, rgba(4,1,4,0.97), transparent);
+    }
+    /* Nav logo = just the crescent smile mark, top-left, small */
+    .nav-logo { text-decoration: none; display: flex; align-items: center; }
+    .nav-logo svg { width: 52px; height: 52px; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; align-items: center; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.76rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--rose-light); }
+    .nav-cta {
+      border: 1px solid var(--rose-dark) !important;
+      color: var(--rose-light) !important;
+      padding: 0.45rem 1.3rem;
+      transition: background 0.3s !important;
+    }
+    .nav-cta:hover { background: rgba(139,16,48,0.4) !important; }
+
+    /* ── HERO ── */
+    section { position: relative; z-index: 1; }
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10rem 2rem 10rem;
+    }
+    .hero-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.55em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+    /* Full ROSÉ wordmark — hero center, well clear of subtitle */
+    .hero-logo {
+      width: min(420px, 68vw);
+      height: auto;
+      margin-bottom: 3rem;
+      display: block;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text);
+      max-width: 700px;
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.95rem, 1.8vw, 1.2rem);
+      color: var(--muted);
+      max-width: 620px;
+      line-height: 1.9;
+      margin-bottom: 3.5rem;
+    }
+    .hero-actions { display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--rose-dark), var(--rose));
+      color: var(--text);
+      border: none;
+      padding: 0.9rem 2.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .btn-primary:hover { opacity: 0.82; transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid rgba(204,53,98,0.35);
+      padding: 0.9rem 2.4rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: border-color 0.3s, color 0.3s;
+    }
+    .btn-outline:hover { border-color: var(--rose); color: var(--rose-light); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      z-index: 10;
+    }
+    .hero-scroll span { font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--muted); }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--rose), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ORNAMENT */
+    .ornament {
+      text-align: center; padding: 2rem 0;
+      color: var(--rose-dark); font-size: 1rem;
+      letter-spacing: 1em; opacity: 0.5;
+      position: relative; z-index: 1;
+    }
+
+    /* SHARED */
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.66rem; letter-spacing: 0.5em;
+      color: var(--gold); text-transform: uppercase; margin-bottom: 1.2rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4.5vw, 3.6rem);
+      font-weight: 300; line-height: 1.15;
+      margin-bottom: 2rem; color: var(--text);
+    }
+    .section-title em { font-style: italic; color: var(--rose-light); }
+
+    /* ── EU AI ACT ── */
+    #eu-act {
+      padding: 8rem 4rem;
+      background: var(--ink-3);
+      position: relative;
+      z-index: 1;
+    }
+    #eu-act::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--rose-dark), transparent);
+    }
+    #eu-act::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--rose-dark), transparent);
+    }
+    .euact-inner { max-width: 1200px; margin: 0 auto; }
+    .euact-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; margin-bottom: 5rem; align-items: end;
+    }
+    .euact-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem; font-style: italic;
+      line-height: 1.9; color: var(--muted);
+    }
+    .euact-intro em { color: var(--rose-light); font-style: normal; }
+    .euact-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5px; background: var(--border); margin-bottom: 5rem;
+    }
+    .euact-fine {
+      background: var(--ink-3);
+      padding: 3rem 2.5rem;
+      text-align: center;
+      transition: background 0.4s;
+    }
+    .euact-fine:hover { background: rgba(204,53,98,0.06); }
+    .fine-amount {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      font-weight: 300;
+      color: var(--rose);
+      line-height: 1;
+      margin-bottom: 0.4rem;
+      text-shadow: 0 0 40px rgba(204,53,98,0.3);
+    }
+    .fine-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem; letter-spacing: 0.3em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+    .euact-fine p { font-size: 0.83rem; line-height: 1.8; color: var(--muted); }
+    .euact-obligations { margin-bottom: 4rem; }
+    .obligation-list {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+    .obligation {
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      padding: 2rem; border: 1px solid var(--border);
+      transition: border-color 0.4s, background 0.4s;
+    }
+    .obligation:hover { border-color: var(--rose); background: rgba(204,53,98,0.04); }
+    .ob-icon {
+      color: var(--rose); font-size: 1.2rem;
+      flex-shrink: 0; margin-top: 0.15rem;
+      opacity: 0.8;
+    }
+    .obligation h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 400;
+      color: var(--text); margin-bottom: 0.5rem;
+    }
+    .obligation p { font-size: 0.83rem; line-height: 1.8; color: var(--muted); }
+    .euact-cta {
+      text-align: center;
+      padding: 3.5rem;
+      border: 1px solid var(--border);
+      background: rgba(204,53,98,0.03);
+    }
+    .euact-cta-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem; font-style: italic;
+      line-height: 1.75; color: var(--text);
+      max-width: 780px; margin: 0 auto 2.5rem;
+    }
+
+    /* ── VALUE ── */
+    #value { padding: 8rem 4rem; max-width: 1200px; margin: 0 auto; }
+    .value-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0; margin-top: 4rem;
+      border: 1px solid var(--border);
+    }
+    .value-card {
+      padding: 2.8rem;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.4s;
+    }
+    .value-card:hover { background: rgba(204,53,98,0.04); }
+    .value-card:nth-child(even) { border-right: none; }
+    .value-card:nth-child(3), .value-card:nth-child(4) { border-bottom: none; }
+    .value-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; font-weight: 300;
+      color: var(--rose-dark); line-height: 1; margin-bottom: 0.8rem;
+    }
+    .value-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.45rem; font-weight: 400;
+      color: var(--text); margin-bottom: 0.7rem;
+    }
+    .value-card p { font-size: 0.88rem; line-height: 1.85; color: var(--muted); }
+
+    /* ── MEMBERS ── */
+    #members {
+      padding: 8rem 4rem;
+      background: var(--ink-2);
+      position: relative;
+    }
+    #members::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--rose-dark), transparent);
+    }
+    .members-inner { max-width: 1200px; margin: 0 auto; }
+    .members-header {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; margin-bottom: 4rem; align-items: end;
+    }
+    .members-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-style: italic;
+      line-height: 1.9; color: var(--muted);
+    }
+    /* 3-column grid for 6 members */
+    .member-cards {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5px; background: var(--border);
+    }
+    .member-card {
+      background: var(--ink-2);
+      padding: 2.5rem 2.5rem 2rem;
+      position: relative; overflow: hidden;
+      transition: background 0.4s;
+    }
+    .member-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: linear-gradient(to right, var(--rose), var(--gold));
+      transition: width 0.5s ease;
+    }
+    .member-card:hover { background: var(--ink-3); }
+    .member-card:hover::after { width: 100%; }
+    .member-glyph {
+      position: absolute; top: 1.5rem; right: 2rem;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 4.5rem; font-weight: 300;
+      color: rgba(204,53,98,0.06); line-height: 1;
+      pointer-events: none; user-select: none;
+    }
+    .member-tag {
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem; letter-spacing: 0.4em;
+      color: var(--gold); text-transform: uppercase; margin-bottom: 0.9rem;
+    }
+    .member-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.85rem; font-weight: 300;
+      color: var(--text); margin-bottom: 0.85rem; line-height: 1;
+    }
+    .member-name em { font-style: italic; color: var(--rose-light); }
+    .member-desc { font-size: 0.83rem; line-height: 1.85; color: var(--muted); margin-bottom: 1.4rem; }
+    .member-link {
+      font-size: 0.7rem; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--rose);
+      text-decoration: none; border-bottom: 1px solid var(--rose-dark);
+      padding-bottom: 2px; transition: color 0.3s, border-color 0.3s;
+    }
+    .member-link:hover { color: var(--gold); border-color: var(--gold); }
+    /* Selfient gets a subtle highlight — it's the hub */
+    .member-card.anchor { background: rgba(204,53,98,0.04); }
+    .member-card.anchor .member-tag { color: var(--rose-light); }
+
+    /* ── QUOTE ── */
+    .quote-break {
+      padding: 7rem 4rem; text-align: center;
+      position: relative; z-index: 1;
+    }
+    .quote-break blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.45rem, 3.2vw, 2.6rem);
+      font-weight: 300; font-style: italic;
+      line-height: 1.55; max-width: 880px;
+      margin: 0 auto 1.5rem; color: var(--text);
+    }
+    .quote-break blockquote span { color: var(--rose-light); }
+    .quote-attr { font-size: 0.73rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
+
+    /* ── INSIGHTS ── */
+    #insights { padding: 8rem 4rem; max-width: 1200px; margin: 0 auto; }
+    .insights-grid {
+      display: grid; grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 2rem; margin-top: 4rem;
+    }
+    .insight-card {
+      border: 1px solid var(--border); padding: 2rem;
+      transition: border-color 0.4s, background 0.4s;
+      text-decoration: none; color: inherit; display: block;
+    }
+    .insight-card:hover { border-color: var(--rose); background: rgba(204,53,98,0.04); }
+    .insight-type {
+      font-family: 'Cinzel', serif;
+      font-size: 0.58rem; letter-spacing: 0.4em;
+      color: var(--gold); text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .insight-card.featured .insight-type { color: var(--rose); }
+    .insight-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.38rem; font-weight: 400;
+      line-height: 1.3; color: var(--text); margin-bottom: 0.8rem;
+    }
+    .insight-card.featured .insight-title { font-size: 1.82rem; }
+    .insight-excerpt { font-size: 0.82rem; line-height: 1.8; color: var(--muted); margin-bottom: 1.4rem; }
+    .insight-meta { font-size: 0.68rem; letter-spacing: 0.15em; color: var(--rose-dark); text-transform: uppercase; }
+    .podcast-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(204,53,98,0.12); border: 1px solid var(--rose-dark);
+      padding: 0.25rem 0.8rem;
+      font-size: 0.63rem; letter-spacing: 0.2em; color: var(--rose-light); margin-bottom: 1rem;
+    }
+    .podcast-badge::before { content: '▶'; font-size: 0.53rem; }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 10rem 4rem; background: var(--ink-2);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    #contact::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(to right, transparent, var(--rose-dark), transparent);
+    }
+    .cta-glow {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(139,16,48,0.14) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-inner p {
+      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-size: 1.05rem; line-height: 1.9; color: var(--muted);
+      max-width: 560px; margin: 0 auto 3rem;
+    }
+    .cta-form { display: flex; max-width: 460px; margin: 0 auto 1.5rem; }
+    .cta-form input {
+      flex: 1; background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border); border-right: none;
+      padding: 0.9rem 1.3rem; color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+      outline: none; transition: border-color 0.3s;
+    }
+    .cta-form input::placeholder { color: var(--muted); }
+    .cta-form input:focus { border-color: var(--rose); }
+    .cta-form button {
+      background: linear-gradient(135deg, var(--rose-dark), var(--rose));
+      color: var(--text); border: none; padding: 0.9rem 1.8rem;
+      font-family: 'DM Sans', sans-serif; font-size: 0.76rem;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      cursor: pointer; white-space: nowrap; transition: opacity 0.3s;
+    }
+    .cta-form button:hover { opacity: 0.85; }
+    .cta-note { font-size: 0.72rem; color: var(--muted); }
+    .cta-note a { color: var(--rose-light); text-decoration: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem 4rem; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; z-index: 1;
+    }
+    .footer-logo svg { width: 80px; height: auto; opacity: 0.55; }
+    .footer-links { display: flex; gap: 2rem; list-style: none; }
+    .footer-links a {
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none; transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--rose-light); }
+    .footer-copy { font-size: 0.68rem; color: var(--muted); opacity: 0.5; }
+
+    /* ANIMATIONS */
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; }
+      50%       { opacity: 1; }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 1000px) {
+      .member-cards { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 700px) {
+      nav { padding: 0.5rem 1.5rem; }
+      .nav-links { display: none; }
+      #value, #insights, #members, .quote-break, #contact { padding: 5rem 1.5rem; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1.5rem; text-align: center; }
+      .euact-header, .euact-grid, .obligation-list { grid-template-columns: 1fr; }
+      #lambda > div { grid-template-columns: 1fr !important; gap: 2rem !important; }
+      #lambda > div + div { grid-template-columns: 1fr !important; }
+      .members-header { grid-template-columns: 1fr; gap: 2rem; }
+      .value-card { border-right: 1px solid var(--border); }
+      .value-card:nth-child(3) { border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <!-- Nav: crescent smile mark only, upper left -->
+  <a href="#" class="nav-logo" aria-label="ROSÉ Partnership">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="150 480 500 220">
+      <defs>
+        <linearGradient id="sgN" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stop-color="#5A0C22"/>
+          <stop offset="50%" stop-color="#CC3562"/>
+          <stop offset="100%" stop-color="#5A0C22"/>
+        </linearGradient>
+        <filter id="cgN" x="-5%" y="-5%" width="110%" height="110%">
+          <feGaussianBlur stdDeviation="6" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="fgN" x="-2%" y="-2%" width="104%" height="104%">
+          <feGaussianBlur stdDeviation="1.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <path d="M 172,510 C 200,608 292,668 400,668 C 508,668 600,608 628,510 C 596,590 508,638 400,638 C 292,638 204,590 172,510 Z"
+            fill="#8B1030" opacity="0.4" filter="url(#cgN)"/>
+      <path d="M 172,510 C 200,608 292,668 400,668 C 508,668 600,608 628,510 C 598,594 510,645 400,645 C 290,645 202,594 172,510 Z"
+            fill="url(#sgN)" opacity="0.95" filter="url(#cgN)"/>
+      <ellipse cx="172" cy="510" rx="5" ry="5" fill="#CC3562" opacity="0.9"/>
+      <ellipse cx="628" cy="510" rx="5" ry="5" fill="#CC3562" opacity="0.9"/>
+      <g stroke="#9B1840" fill="none" opacity="0.6" filter="url(#fgN)">
+        <path d="M 172,510 C 150,530 138,550 142,568 C 146,582 158,585 162,575" stroke-width="1.2"/>
+        <path d="M 172,510 C 148,492 136,472 140,455 C 144,440 156,438 158,448" stroke-width="1"/>
+        <path d="M 628,510 C 650,530 662,550 658,568 C 654,582 642,585 638,575" stroke-width="1.2"/>
+        <path d="M 628,510 C 652,492 664,472 660,455 C 656,440 644,438 642,448" stroke-width="1"/>
+      </g>
+    </svg>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#value">About</a></li>
+    <li><a href="#execution">How It Works</a></li>
+    <li><a href="#eu-act">EU AI Act</a></li>
+    <li><a href="#members">Partnership</a></li>
+    <li><a href="compliance-assessment.html">Assessment</a></li>
+    <li><a href="#insights">Insights</a></li>
+    <li><a href="#contact" class="nav-cta">Connect</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <p class="hero-eyebrow">The Inevitable Execution Primitive for AI</p>
+
+  <!-- Hero: full ROSÉ wordmark, centered, NO overlapping subtitle -->
+  <svg xmlns="http://www.w3.org/2000/svg"
+       viewBox="50 75 700 620"
+       class="hero-logo"
+       aria-label="ROSÉ Partnership">
+    <defs>
+      <linearGradient id="sgH" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%"   stop-color="#5A0C22"/>
+        <stop offset="22%"  stop-color="#A02345"/>
+        <stop offset="50%"  stop-color="#CC3562"/>
+        <stop offset="78%"  stop-color="#A02345"/>
+        <stop offset="100%" stop-color="#5A0C22"/>
+      </linearGradient>
+      <filter id="cgH" x="-5%" y="-5%" width="110%" height="110%">
+        <feGaussianBlur stdDeviation="8" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="tgH" x="-5%" y="-10%" width="110%" height="120%">
+        <feGaussianBlur stdDeviation="5" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="fgH" x="-2%" y="-2%" width="104%" height="104%">
+        <feGaussianBlur stdDeviation="1.5" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <filter id="lgH" x="-1%" y="-5%" width="102%" height="110%">
+        <feGaussianBlur stdDeviation="1.5" result="b"/>
+        <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <!-- Crescent -->
+    <path d="M 172,510 C 200,608 292,668 400,668 C 508,668 600,608 628,510 C 596,590 508,638 400,638 C 292,638 204,590 172,510 Z"
+          fill="#8B1030" opacity="0.4" filter="url(#cgH)"/>
+    <path d="M 172,510 C 200,608 292,668 400,668 C 508,668 600,608 628,510 C 598,594 510,645 400,645 C 290,645 202,594 172,510 Z"
+          fill="url(#sgH)" opacity="0.95" filter="url(#cgH)"/>
+    <!-- Jewels -->
+    <ellipse cx="172" cy="510" rx="4" ry="4" fill="#CC3562" opacity="0.9"/>
+    <ellipse cx="628" cy="510" rx="4" ry="4" fill="#CC3562" opacity="0.9"/>
+    <!-- Tendrils -->
+    <g stroke="#9B1840" fill="none" opacity="0.6" filter="url(#fgH)">
+      <path d="M 172,510 C 150,530 138,550 142,568 C 146,582 158,585 162,575" stroke-width="1"/>
+      <path d="M 172,510 C 148,492 136,472 140,455 C 144,440 156,438 158,448" stroke-width="0.9"/>
+      <path d="M 628,510 C 650,530 662,550 658,568 C 654,582 642,585 638,575" stroke-width="1"/>
+      <path d="M 628,510 C 652,492 664,472 660,455 C 656,440 644,438 642,448" stroke-width="0.9"/>
+    </g>
+    <g stroke="#B02848" fill="none" opacity="0.75" filter="url(#fgH)">
+      <path d="M 400,155 C 398,136 406,120 412,108 C 416,98 411,89 404,93" stroke-width="1.4"/>
+      <path d="M 400,155 C 402,136 394,120 388,108 C 384,98 389,89 396,93" stroke-width="1.4"/>
+      <path d="M 375,162 C 360,144 350,128 354,114 C 357,102 368,101 370,110" stroke-width="1.2"/>
+      <path d="M 425,162 C 440,144 450,128 446,114 C 443,102 432,101 430,110" stroke-width="1.2"/>
+      <path d="M 354,114 C 358,106 366,104 368,110 C 370,116 364,121 359,117" stroke-width="1.0"/>
+      <path d="M 446,114 C 442,106 434,104 432,110 C 430,116 436,121 441,117" stroke-width="1.0"/>
+    </g>
+    <!-- Rule -->
+    <line x1="75" y1="390" x2="725" y2="390" stroke="#CC3060" stroke-width="0.6" opacity="0.82" filter="url(#lgH)"/>
+    <polygon points="75,390 83,383 91,390 83,397"    fill="#B02850" opacity="0.85"/>
+    <polygon points="725,390 717,383 709,390 717,397" fill="#B02850" opacity="0.85"/>
+    <line x1="312" y1="384" x2="312" y2="396" stroke="#CC3060" stroke-width="0.9" opacity="0.6"/>
+    <line x1="488" y1="384" x2="488" y2="396" stroke="#CC3060" stroke-width="0.9" opacity="0.6"/>
+    <!-- Wordmark -->
+    <text x="400" y="410" font-family="Georgia,serif" font-size="92" font-weight="400"
+          letter-spacing="15" text-anchor="middle"
+          fill="#CC3062" filter="url(#tgH)" opacity="0.97">ROSÉ</text>
+    <text x="400" y="452" font-family="Georgia,serif" font-size="14" letter-spacing="12"
+          text-anchor="middle" fill="#9A2240" opacity="0.9">PARTNERSHIP</text>
+    <line x1="305" y1="460" x2="495" y2="460" stroke="#6A1020" stroke-width="0.4" opacity="0.5"/>
+    <circle cx="305" cy="460" r="1.2" fill="#8B1535" opacity="0.5"/>
+    <circle cx="495" cy="460" r="1.2" fill="#8B1535" opacity="0.5"/>
+  </svg>
+
+  <!-- Subtitle sits BELOW the logo, not inside it -->
+  <h2 class="hero-title">The infrastructure with the ability to prove the work of AI agents.</h2>
+  <p class="hero-sub">Six specialized systems. One federated execution architecture.
+ROSÉ runs consequential AI workflows and produces immutable compliance proof
+at the moment an action occurs — trusted, ordered, and enterprise-ready.</p>
+
+  <div class="hero-actions">
+    <a href="#members" class="btn-primary">Explore the Partnership</a>
+    <a href="#contact" class="btn-outline">Request a Briefing</a>
+  </div>
+
+  <p class="hero-sub" style="font-size:0.9rem;margin-top:1.5rem;margin-bottom:0;opacity:0.7;">Serverless execution. &nbsp;·&nbsp; Immutable proof. &nbsp;·&nbsp; Trusted AI decisions.</p>
+
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+<!-- ══ VALUE PROPOSITION ══ -->
+<section id="value">
+  <p class="section-label">Why ROSÉ</p>
+  <h2 class="section-title">The power of <em>partnership</em><br>is the power of one.</h2>
+  <div class="value-grid">
+    <div class="value-card">
+      <div class="value-num">01</div>
+      <h3>Proof, Not Promise</h3>
+      <p>ROSÉ does not merely tell enterprises their AI systems are compliant — it produces cryptographic proof at the moment of execution, in a form no one can alter after the fact. Compliance tools tell you the rules. ROSÉ proves the rules were followed.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-num">02</div>
+      <h3>Sovereign Architecture</h3>
+      <p>Built for enterprises that cannot afford compromise. The federated model ensures your data, your workflows, and your audit trail remain unequivocally yours — no platform lock-in, no third-party custody of evidence.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-num">03</div>
+      <h3>Why Now Is Structural</h3>
+      <p>The EU AI Act is in force. Financial regulators are demanding AI execution logs. Enterprise buyers are signing procurement requirements that did not exist eighteen months ago. The window is open — and it is closing for those who wait.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-num">04</div>
+      <h3>Executive-Grade Accountability</h3>
+      <p>A single relationship. A single point of escalation. You speak to ROSÉ; ROSÉ moves the entire partnership on your behalf — six systems operating as one, because your time is worth too much for anything less.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EXECUTE PROVE SETTLE ══ -->
+<section id="execution" style="padding:8rem 4rem;max-width:1200px;margin:0 auto;position:relative;z-index:1;">
+  <p class="section-label">How ROSÉ Works</p>
+  <h2 class="section-title">Execute.<br><em>Prove.</em><br>Settle.</h2>
+  <div class="value-grid">
+    <div class="value-card">
+      <div class="value-num">01</div>
+      <h3>Serverless Execution</h3>
+      <p>ROSÉ runs consequential AI workflows as event-driven, serverless actions. No infrastructure management, no workflow orchestration complexity — simply execute when the decision matters.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-num">02</div>
+      <h3>Proof at the Moment of Action</h3>
+      <p>Every execution produces cryptographic proof at the moment the action occurs. Immutable execution records ensure enterprises can demonstrate what happened, when it happened, and under which governing rules.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-num">03</div>
+      <h3>Trusted Ordering &amp; Time</h3>
+      <p>Through precision timing infrastructure and ordered execution, ROSÉ anchors every AI action to a verifiable moment in time. Decisions cannot be replayed, reordered, or disputed after they occur.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-num">04</div>
+      <h3>Transaction-Based Infrastructure</h3>
+      <p>ROSÉ scales with usage. Enterprises can run millions of AI-driven decisions while paying only for the execution events that matter — making governed AI economically viable at enterprise scale.</p>
+    </div>
+  </div>
+</section>
+
+<div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+<!-- ══ GOT LAMBDA? ══ -->
+<section id="lambda" style="padding:7rem 4rem;background:var(--ink-2);position:relative;z-index:1;">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;">
+    <div>
+      <p class="section-label">Execution Infrastructure</p>
+      <h2 class="section-title">Got Lambda?<br><em>Let's execute.</em></h2>
+    </div>
+    <div>
+      <p class="members-intro" style="margin-bottom:2rem;">Serverless computing made it easy to run code without managing infrastructure. ROSÉ extends that idea to governed AI execution.</p>
+      <p class="members-intro">Where traditional serverless platforms execute functions, ROSÉ executes consequential AI decisions — with proof, trusted time, and immutable execution records produced automatically.</p>
+    </div>
+  </div>
+  <div style="max-width:1200px;margin:3.5rem auto 0;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.5px;background:var(--border);">
+    <div style="background:var(--ink-2);padding:2rem 2rem 1.8rem;text-align:center;">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--rose);line-height:1;margin-bottom:0.5rem;">Event-driven</p>
+      <p style="font-size:0.8rem;color:var(--muted);letter-spacing:0.1em;">Trigger on any AI action</p>
+    </div>
+    <div style="background:var(--ink-2);padding:2rem 2rem 1.8rem;text-align:center;">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--rose);line-height:1;margin-bottom:0.5rem;">Cryptographic</p>
+      <p style="font-size:0.8rem;color:var(--muted);letter-spacing:0.1em;">Proof sealed at execution</p>
+    </div>
+    <div style="background:var(--ink-2);padding:2rem 2rem 1.8rem;text-align:center;">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--rose);line-height:1;margin-bottom:0.5rem;">Per-transaction</p>
+      <p style="font-size:0.8rem;color:var(--muted);letter-spacing:0.1em;">Scale without overhead</p>
+    </div>
+  </div>
+</section>
+
+<div class="ornament" style="background:var(--ink-2);">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+<!-- ══ EU AI ACT ══ -->
+<section id="eu-act">
+  <div class="euact-inner">
+    <div class="euact-header">
+      <div>
+        <p class="section-label">The Regulatory Moment</p>
+        <h2 class="section-title">The EU AI Act is in force.<br><em>The clock is running.</em></h2>
+      </div>
+      <p class="euact-intro">For the first time in history, enterprises deploying AI systems face binding legal obligations — with fines that dwarf GDPR penalties. The question is no longer whether to comply. It is whether you can <em>prove</em> you did.</p>
+    </div>
+
+    <div class="euact-grid">
+      <div class="euact-fine">
+        <div class="fine-amount">€35M</div>
+        <div class="fine-label">or 7% of global annual turnover</div>
+        <p class="fine-desc">Maximum penalty for violations involving prohibited AI practices — the highest tier of EU AI Act enforcement, applicable to the most serious misuse of artificial intelligence.</p>
+      </div>
+      <div class="euact-fine">
+        <div class="fine-amount">€15M</div>
+        <div class="fine-label">or 3% of global annual turnover</div>
+        <p class="fine-desc">Penalties for non-compliance with obligations for high-risk AI systems — the category that captures most enterprise deployments in financial services, healthcare, hiring, and critical infrastructure.</p>
+      </div>
+      <div class="euact-fine">
+        <div class="fine-amount">€7.5M</div>
+        <div class="fine-label">or 1.5% of global annual turnover</div>
+        <p class="fine-desc">Fines for supplying incorrect, incomplete, or misleading information to regulators — including audit trails and compliance documentation that cannot withstand scrutiny.</p>
+      </div>
+    </div>
+
+    <div class="euact-obligations">
+      <p class="section-label" style="margin-bottom:2rem;">What High-Risk AI Systems Must Now Demonstrate</p>
+      <div class="obligation-list">
+        <div class="obligation">
+          <span class="ob-icon">◈</span>
+          <div>
+            <h4>Immutable Audit Logs</h4>
+            <p>Every decision made by a high-risk AI system must be logged in a form that cannot be altered after the fact. A database entry is not sufficient. Cryptographic proof is.</p>
+          </div>
+        </div>
+        <div class="obligation">
+          <span class="ob-icon">◈</span>
+          <div>
+            <h4>Human Oversight Evidence</h4>
+            <p>Enterprises must demonstrate that meaningful human oversight was in place — and exercised — at the moment of consequential AI decisions. Attestation alone will not satisfy regulators.</p>
+          </div>
+        </div>
+        <div class="obligation">
+          <span class="ob-icon">◈</span>
+          <div>
+            <h4>Timestamped Execution Records</h4>
+            <p>Compliance documentation must be anchored to verified, tamper-proof timestamps. An execution record without a trusted time reference is not evidence — it is a story that can be challenged.</p>
+          </div>
+        </div>
+        <div class="obligation">
+          <span class="ob-icon">◈</span>
+          <div>
+            <h4>Data Governance Transparency</h4>
+            <p>Training data provenance, model versioning, and the conditions under which AI systems operated must be documented and producible on demand — not reconstructed after the fact under regulatory pressure.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="euact-cta">
+      <p class="euact-cta-text">ROSÉ produces every one of these requirements as a native output of its federated architecture — not as a compliance add-on, but as a consequence of how the system was designed from the first day.</p>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;align-items:center;">
+        <a href="#contact" class="btn-primary">Request the EU AI Act Briefing</a>
+        <a href="#" class="btn-outline" onclick="document.getElementById('euact-modal').style.display='flex';return false;">Download White Paper</a>
+        <a href="#" class="btn-outline" onclick="document.getElementById('juris-modal').style.display='flex';return false;"
+           style="border-color:rgba(201,169,110,0.4);color:#C9A96E;">
+          ◈ &nbsp; AI Governance by Jurisdiction
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ JURISDICTIONS MODAL ══ -->
+<div id="juris-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(4,1,4,0.97);overflow-y:auto;align-items:flex-start;justify-content:center;padding:4rem 2rem;">
+  <div style="max-width:900px;width:100%;margin:0 auto;position:relative;">
+    <button onclick="document.getElementById('juris-modal').style.display='none'"
+            style="position:fixed;top:2rem;right:2rem;background:transparent;border:1px solid var(--rose-dark);color:var(--muted);padding:0.5rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;"
+            onmouseover="this.style.color='#E05080'" onmouseout="this.style.color=''">✕ &nbsp; Close</button>
+
+    <p style="font-family:'Cinzel',serif;font-size:0.63rem;letter-spacing:0.5em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.2rem;">Reference · ROSÉ Partnership · Q1 2026</p>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;color:#EDE8E3;margin-bottom:0.5rem;">AI Governance<br><em style="color:#E05080;">by Jurisdiction</em></h1>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--muted);margin-bottom:0.5rem;">Current standing as of Q1 2026 — subject to ongoing legislative developments</p>
+    <div style="width:60px;height:1px;background:var(--rose-dark);margin:1.8rem 0;"></div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:rgba(204,53,98,0.15);margin-bottom:2rem;">
+
+      <!-- EU -->
+      <div style="background:#0A0208;padding:2rem 2.2rem;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+          <span style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.35em;color:#CC3562;text-transform:uppercase;background:rgba(204,53,98,0.12);border:1px solid rgba(204,53,98,0.3);padding:0.2rem 0.7rem;">In Force</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:#EDE8E3;">European Union</span>
+        </div>
+        <p style="font-size:0.83rem;line-height:1.8;color:#9A8A90;margin-bottom:0.8rem;">The EU AI Act (Regulation 2024/1689) is the world's most comprehensive AI governance framework. Phased implementation began February 2025 with prohibited practices. Full high-risk AI obligations — covering HR, finance, healthcare, and critical infrastructure — apply from August 2026. Fines reach €35M or 7% of global annual turnover.</p>
+        <p style="font-size:0.75rem;color:#CC3562;letter-spacing:0.1em;">Key obligation: Non-repudiable proof of execution for all high-risk AI decisions.</p>
+      </div>
+
+      <!-- USA -->
+      <div style="background:#0A0208;padding:2rem 2.2rem;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+          <span style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.35em;color:#C9A96E;text-transform:uppercase;background:rgba(201,169,110,0.1);border:1px solid rgba(201,169,110,0.25);padding:0.2rem 0.7rem;">Evolving</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:#EDE8E3;">United States</span>
+        </div>
+        <p style="font-size:0.83rem;line-height:1.8;color:#9A8A90;margin-bottom:0.8rem;">Federal AI legislation remains fragmented. The 2023 Executive Order on AI established voluntary guidance and agency-specific requirements. State-level legislation is accelerating: New York's Local Law 144 mandates bias audits for AI hiring tools. Colorado, Illinois, and California have enacted or are advancing AI-specific employment and consumer protection statutes. Federal comprehensive legislation remains pending.</p>
+        <p style="font-size:0.75rem;color:#C9A96E;letter-spacing:0.1em;">Key risk: State-level patchwork compliance requirements for AI in employment decisions.</p>
+      </div>
+
+      <!-- UK -->
+      <div style="background:#0A0208;padding:2rem 2.2rem;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+          <span style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.35em;color:#C9A96E;text-transform:uppercase;background:rgba(201,169,110,0.1);border:1px solid rgba(201,169,110,0.25);padding:0.2rem 0.7rem;">Developing</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:#EDE8E3;">United Kingdom</span>
+        </div>
+        <p style="font-size:0.83rem;line-height:1.8;color:#9A8A90;margin-bottom:0.8rem;">The UK has adopted a principles-based, sector-led approach rather than comprehensive AI legislation. The AI Safety Institute operates as a global evaluation body. Sector regulators — FCA, ICO, CMA — are issuing AI-specific guidance within existing frameworks. The government has signalled intent to introduce targeted AI legislation, though timing remains uncertain. The UK GDPR continues to apply to AI data processing.</p>
+        <p style="font-size:0.75rem;color:#C9A96E;letter-spacing:0.1em;">Key risk: Regulatory uncertainty; sector-specific obligations diverging from EU standards.</p>
+      </div>
+
+      <!-- Canada -->
+      <div style="background:#0A0208;padding:2rem 2.2rem;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+          <span style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.35em;color:#C9A96E;text-transform:uppercase;background:rgba(201,169,110,0.1);border:1px solid rgba(201,169,110,0.25);padding:0.2rem 0.7rem;">Advancing</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:#EDE8E3;">Canada</span>
+        </div>
+        <p style="font-size:0.83rem;line-height:1.8;color:#9A8A90;margin-bottom:0.8rem;">Bill C-27, which includes the Artificial Intelligence and Data Act (AIDA), has advanced through Parliament. AIDA would impose requirements on high-impact AI systems, including impact assessments, human oversight, and transparency obligations. The framework broadly aligns with the EU AI Act's risk-tiered approach. Canada's existing PIPEDA and provincial privacy laws continue to govern AI data processing.</p>
+        <p style="font-size:0.75rem;color:#C9A96E;letter-spacing:0.1em;">Key obligation: Impact assessments and human oversight for high-impact AI systems.</p>
+      </div>
+
+      <!-- Singapore -->
+      <div style="background:#0A0208;padding:2rem 2.2rem;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+          <span style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.35em;color:#9A8A90;text-transform:uppercase;background:rgba(154,138,144,0.1);border:1px solid rgba(154,138,144,0.2);padding:0.2rem 0.7rem;">Voluntary</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:#EDE8E3;">Singapore</span>
+        </div>
+        <p style="font-size:0.83rem;line-height:1.8;color:#9A8A90;margin-bottom:0.8rem;">Singapore's Model AI Governance Framework and AI Verify toolkit provide voluntary guidance emphasizing transparency, explainability, and accountability. The PDPC actively enforces data protection obligations applicable to AI systems. Singapore positions itself as a pro-innovation AI hub while signalling that binding requirements may follow as international standards mature. MAS has issued specific guidance on AI use in financial services.</p>
+        <p style="font-size:0.75rem;color:#9A8A90;letter-spacing:0.1em;">Key focus: Voluntary governance with strong regulatory engagement in financial services.</p>
+      </div>
+
+      <!-- Brazil -->
+      <div style="background:#0A0208;padding:2rem 2.2rem;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+          <span style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.35em;color:#C9A96E;text-transform:uppercase;background:rgba(201,169,110,0.1);border:1px solid rgba(201,169,110,0.25);padding:0.2rem 0.7rem;">Advancing</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:#EDE8E3;">Brazil</span>
+        </div>
+        <p style="font-size:0.83rem;line-height:1.8;color:#9A8A90;margin-bottom:0.8rem;">Brazil's AI Bill (PL 2338/2023), modelled significantly on the EU AI Act, passed the Senate in 2024 and is advancing in the Chamber of Deputies. It establishes a risk-tiered framework with high-risk AI categories encompassing employment, credit, and public services. Brazil's LGPD (General Data Protection Law) already applies to AI data processing. Brazil is positioned to become the most EU-aligned AI regulatory regime outside Europe.</p>
+        <p style="font-size:0.75rem;color:#C9A96E;letter-spacing:0.1em;">Key alignment: Closely mirrors EU AI Act risk tiers and high-risk category definitions.</p>
+      </div>
+
+      <!-- Australia -->
+      <div style="background:#0A0208;padding:2rem 2.2rem;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+          <span style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.35em;color:#9A8A90;text-transform:uppercase;background:rgba(154,138,144,0.1);border:1px solid rgba(154,138,144,0.2);padding:0.2rem 0.7rem;">Consulting</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:#EDE8E3;">Australia</span>
+        </div>
+        <p style="font-size:0.83rem;line-height:1.8;color:#9A8A90;margin-bottom:0.8rem;">Australia has published an Interim Response to its AI Safety consultation and is developing a mandatory guardrails framework for high-risk AI. The government's Safe and Responsible AI discussion paper signals movement toward binding requirements, particularly for AI in government, financial services, and employment decisions. The Privacy Act review has also addressed AI data processing obligations. Comprehensive legislation is expected within the current parliamentary cycle.</p>
+        <p style="font-size:0.75rem;color:#9A8A90;letter-spacing:0.1em;">Key signal: Moving from voluntary guidance toward mandatory guardrails for high-risk AI.</p>
+      </div>
+
+      <!-- Japan -->
+      <div style="background:#0A0208;padding:2rem 2.2rem;">
+        <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1rem;">
+          <span style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.35em;color:#9A8A90;text-transform:uppercase;background:rgba(154,138,144,0.1);border:1px solid rgba(154,138,144,0.2);padding:0.2rem 0.7rem;">Principled</span>
+          <span style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:300;color:#EDE8E3;">Japan</span>
+        </div>
+        <p style="font-size:0.83rem;line-height:1.8;color:#9A8A90;margin-bottom:0.8rem;">Japan's approach to AI governance emphasises agile, principles-based guidelines rather than prescriptive legislation, reflecting a deliberate pro-innovation stance. METI and the Cabinet Office have published AI governance guidelines aligned with the OECD AI Principles. Japan has been an active participant in international AI standards development through G7 Hiroshima AI Process commitments. Binding sector-specific requirements are emerging in financial services and healthcare.</p>
+        <p style="font-size:0.75rem;color:#9A8A90;letter-spacing:0.1em;">Key stance: Innovation-first with sector-specific binding requirements emerging.</p>
+      </div>
+
+    </div>
+
+    <div style="border:1px solid rgba(204,53,98,0.2);padding:2rem;background:rgba(204,53,98,0.04);text-align:center;">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:#EDE8E3;margin-bottom:1.5rem;">Organizations operating across multiple jurisdictions face compounding compliance obligations. ROSÉ's execution proof layer is designed to satisfy the most demanding regime — meaning compliance with the EU AI Act typically satisfies the requirements of all others simultaneously.</p>
+      <a href="#contact" onclick="document.getElementById('juris-modal').style.display='none'"
+         style="display:inline-block;background:linear-gradient(135deg,#8B1030,#CC3562);color:#EDE8E3;padding:0.9rem 2.4rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;">
+        Discuss Your Jurisdictional Exposure
+      </a>
+    </div>
+    <p style="font-size:0.68rem;color:var(--muted);text-align:center;margin-top:1.5rem;opacity:0.6;">This overview is provided for informational purposes only and does not constitute legal advice. Regulatory landscapes evolve rapidly — consult qualified legal counsel for jurisdiction-specific compliance guidance.</p>
+  </div>
+</div>
+
+<!-- ══ EU AI ACT WHITE PAPER MODAL ══ -->
+<div id="euact-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(4,1,4,0.97);overflow-y:auto;align-items:flex-start;justify-content:center;padding:4rem 2rem;">
+  <div style="max-width:800px;width:100%;margin:0 auto;position:relative;">
+
+    <button onclick="document.getElementById('euact-modal').style.display='none'"
+            style="position:fixed;top:2rem;right:2rem;background:transparent;border:1px solid var(--rose-dark);color:var(--muted);padding:0.5rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;"
+            onmouseover="this.style.color='#E05080'" onmouseout="this.style.color=''">✕ &nbsp; Close</button>
+
+    <!-- Masthead -->
+    <p style="font-family:'Cinzel',serif;font-size:0.63rem;letter-spacing:0.5em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.2rem;">White Paper · ROSÉ Partnership · Q1 2026 · Privileged and Confidential</p>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4.5vw,3rem);font-weight:300;line-height:1.15;color:#EDE8E3;margin-bottom:0.5rem;">The EU AI Act &amp; High-Risk AI in<br><em style="color:#E05080;">HR and Talent Acquisition</em></h1>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--muted);margin-bottom:0.5rem;">What Every HR Executive, TA Leader, and Enterprise Technology Leader Must Understand — Now</p>
+    <div style="width:60px;height:1px;background:var(--rose-dark);margin:1.8rem 0;"></div>
+
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.9;color:#9A8A90;">
+
+      <!-- Executive Summary -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.2rem;">Executive Summary</h2>
+      <p style="color:#EDE8E3;font-style:italic;font-size:1.12rem;margin-bottom:1.5rem;">The European Union's Artificial Intelligence Act — Regulation (EU) 2024/1689 — is not a distant regulatory horizon. It is a present and accelerating obligation that has already begun to reshape how organizations may lawfully deploy artificial intelligence in their most consequential human decisions: who gets hired, who advances, and who is turned away.</p>
+      <p style="margin-bottom:1.5rem;">This white paper is written for HR executives, talent acquisition leaders, legal counsel, and the enterprise technology leaders who serve them. Its purpose is threefold: to illuminate precisely what the EU AI Act demands of organizations using AI in employment decisions; to expose the dangerous gap between ordinary logging and what regulators, courts, and auditors will increasingly require; and to introduce ROSÉ as the infrastructure layer purpose-built to close that gap.</p>
+      <p style="font-size:1.05rem;color:#EDE8E3;border-left:2px solid #8B1030;padding-left:1.5rem;margin:2rem 0;">Organizations that have not yet mapped their AI systems, established non-repudiable proof of execution, or implemented human oversight infrastructure are not merely unprepared — they are exposed. ROSÉ was built for precisely this moment.</p>
+
+      <!-- Section I -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">I. The Regulatory Storm</h2>
+      <p style="margin-bottom:1.5rem;">There is a temptation, particularly among organizations headquartered outside Europe, to regard the EU AI Act as a compliance consideration belonging to European subsidiaries and European counsel. That temptation is a trap of the first order.</p>
+      <p style="margin-bottom:1.5rem;">The AI Act carries unambiguous extraterritorial reach. Any organization — regardless of where it is incorporated, where its servers reside, or where its hiring team sits — is subject to its obligations if the AI system's output is used in the context of EU-based candidates, workers, or employment decisions. The regulatory geometry deliberately mirrors GDPR, which proved far more far-reaching in practice than many initially imagined.</p>
+      <p style="margin-bottom:1.5rem;">The Act's Annex III explicitly lists employment and human resources as a high-risk domain. Any AI system used to screen candidates, rank applications, assess competencies, predict success, evaluate performance, or support decisions about advancement or separation falls within this designation — categorically, not as a matter of interpretation.</p>
+
+      <!-- Section II -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">II. The Timeline — Where We Stand in 2026</h2>
+      <div style="background:rgba(204,53,98,0.06);border:1px solid rgba(204,53,98,0.2);padding:2rem;margin-bottom:2rem;">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;">
+          <div>
+            <p style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.3em;color:#CC3562;text-transform:uppercase;margin-bottom:0.5rem;">Feb 2025 — Already In Force</p>
+            <p style="font-size:0.9rem;color:#EDE8E3;">Prohibited AI practices in hiring must have already ceased. Emotion recognition, social scoring, biometric trait inference — all banned.</p>
+          </div>
+          <div>
+            <p style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.3em;color:#CC3562;text-transform:uppercase;margin-bottom:0.5rem;">Aug 2026 — High-Risk Obligations</p>
+            <p style="font-size:0.9rem;color:#EDE8E3;">Full weight of high-risk AI obligations applies. The enforcement clock is running. The Digital Omnibus extension is not confirmed.</p>
+          </div>
+        </div>
+      </div>
+      <p style="margin-bottom:1.5rem;">Organizations that anchor their compliance strategy to an uncertain extension rather than the confirmed August 2026 deadline do so at considerable risk.</p>
+
+      <!-- Section III -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">III. What the Act Requires</h2>
+      <ul style="list-style:none;margin-bottom:2rem;">
+        <li style="padding:1rem 0 1rem 0;border-bottom:1px solid rgba(204,53,98,0.12);">
+          <span style="color:#CC3562;margin-right:0.8rem;">◈</span>
+          <strong style="color:#EDE8E3;">Documentation &amp; Technical Records</strong>
+          <p style="margin-top:0.5rem;padding-left:1.6rem;font-size:0.95rem;">Comprehensive technical documentation sufficient to demonstrate compliance and enable regulatory assessment — continuously maintained, not a one-time filing.</p>
+        </li>
+        <li style="padding:1rem 0 1rem 0;border-bottom:1px solid rgba(204,53,98,0.12);">
+          <span style="color:#CC3562;margin-right:0.8rem;">◈</span>
+          <strong style="color:#EDE8E3;">Automatic Logging — The Record-Keeping Imperative</strong>
+          <p style="margin-top:0.5rem;padding-left:1.6rem;font-size:0.95rem;">High-risk AI systems must automatically record events relevant to identifying risks. These logs must be retained and available upon regulatory request. Server logs do not satisfy this standard.</p>
+        </li>
+        <li style="padding:1rem 0 1rem 0;border-bottom:1px solid rgba(204,53,98,0.12);">
+          <span style="color:#CC3562;margin-right:0.8rem;">◈</span>
+          <strong style="color:#EDE8E3;">Human Oversight — Genuine, Not Performative</strong>
+          <p style="margin-top:0.5rem;padding-left:1.6rem;font-size:0.95rem;">The Act requires that supervisors have the effective capacity to intervene in and modify AI decisions. A human who cannot understand, question, or override a decision does not constitute lawful oversight.</p>
+        </li>
+        <li style="padding:1rem 0 1rem 0;border-bottom:1px solid rgba(204,53,98,0.12);">
+          <span style="color:#CC3562;margin-right:0.8rem;">◈</span>
+          <strong style="color:#EDE8E3;">Transparency &amp; Worker Notification</strong>
+          <p style="margin-top:0.5rem;padding-left:1.6rem;font-size:0.95rem;">Article 26(7) already requires employers to inform and consult employee representative bodies prior to deploying high-risk AI systems. This is in force now.</p>
+        </li>
+        <li style="padding:1rem 0;">
+          <span style="color:#CC3562;margin-right:0.8rem;">◈</span>
+          <strong style="color:#EDE8E3;">Bias Testing &amp; Data Governance</strong>
+          <p style="margin-top:0.5rem;padding-left:1.6rem;font-size:0.95rem;">Training datasets must be relevant, representative, and free of errors and bias. Ongoing monitoring and documentation of bias assessments is mandatory.</p>
+        </li>
+      </ul>
+
+      <!-- Section IV -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">IV. The Proof Gap — Why Logs Will Not Save You</h2>
+      <p style="margin-bottom:1.5rem;">There is a seductive comfort in the belief that existing enterprise infrastructure — server logs, audit tables, HRIS records — constitutes a sufficient evidentiary foundation for AI Act compliance. It does not. The gap between what organizations currently have and what regulators will require is not a gap of degree. It is a gap of kind.</p>
+      <p style="font-size:1.05rem;color:#EDE8E3;border-left:2px solid #8B1030;padding-left:1.5rem;margin:2rem 0;">A candidate who was denied employment alleges that the AI system that screened her application was biased against candidates of her demographic. Her counsel subpoenas the execution records. What can your organization produce? A log entry with a server timestamp and a binary outcome? That is not a defense. That is, in the present regulatory climate, very nearly an invitation to a finding of non-compliance.</p>
+      <p style="margin-bottom:1.5rem;">When an AI system decides — in a fraction of a second — that a particular candidate does not advance, these questions become legally and operationally material: What specific rules governed that decision at the precise moment it was made? Was the decision immutable from the moment it was made, or could it have been altered retroactively without detection? Can the organization produce cryptographic proof of what happened?</p>
+      <p style="margin-bottom:1.5rem;">For the overwhelming majority of enterprise AI hiring systems currently deployed, the honest answer is: no. The logs exist. The proof does not.</p>
+
+      <!-- Section V -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">V. The ROSÉ Solution</h2>
+      <p style="margin-bottom:1.5rem;">ROSÉ — the Regulated Ordered and Signed Execution partnership — was not adapted from existing cloud infrastructure or assembled from compliance modules bolted onto a platform built for different purposes. It was designed, over four years of development, from first principles, for the specific and irreversible reality that AI agents are now executing consequential decisions at scale — and that those decisions must be provable.</p>
+      <p style="margin-bottom:1.5rem;">ROSÉ operates as a partnership of six purpose-built systems, each contributing a distinct and essential capability to the execution proof lifecycle. For HR and talent acquisition leaders, understanding the partnership is less important than understanding its effect: every AI hiring decision processed through ROSÉ arrives with a proof bundle that can be produced, verified, and tendered as evidence.</p>
+      <p style="font-size:1.05rem;color:#EDE8E3;border-left:2px solid #8B1030;padding-left:1.5rem;margin:2rem 0;">For organizations that have accepted the EU AI Act as the new compliance floor — and for any organization operating at scale in or touching EU hiring markets, that acceptance is not optional — ROSÉ is not a cost center. It is liability mitigation infrastructure.</p>
+
+      <!-- Section VI -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">VI. Practical Implications — Immediate Actions</h2>
+      <ul style="list-style:none;margin-bottom:2rem;">
+        <li style="padding:0.6rem 0;border-bottom:1px solid rgba(204,53,98,0.1);font-size:0.95rem;"><span style="color:#CC3562;margin-right:0.8rem;">→</span> Audit and inventory every AI system used in recruitment, screening, scheduling, assessment, and workforce decisions</li>
+        <li style="padding:0.6rem 0;border-bottom:1px solid rgba(204,53,98,0.1);font-size:0.95rem;"><span style="color:#CC3562;margin-right:0.8rem;">→</span> Classify each system against the Act's risk tiers — Annex III high-risk designations are categorical, not interpretive</li>
+        <li style="padding:0.6rem 0;border-bottom:1px solid rgba(204,53,98,0.1);font-size:0.95rem;"><span style="color:#CC3562;margin-right:0.8rem;">→</span> Verify that prohibited practices have already ceased as of February 2025</li>
+        <li style="padding:0.6rem 0;border-bottom:1px solid rgba(204,53,98,0.1);font-size:0.95rem;"><span style="color:#CC3562;margin-right:0.8rem;">→</span> Begin employee representative body consultation under Article 26(7) — already in force</li>
+        <li style="padding:0.6rem 0;border-bottom:1px solid rgba(204,53,98,0.1);font-size:0.95rem;"><span style="color:#CC3562;margin-right:0.8rem;">→</span> Evaluate current logging infrastructure against the standard of non-repudiable proof, not mere record-keeping</li>
+        <li style="padding:0.6rem 0;font-size:0.95rem;"><span style="color:#CC3562;margin-right:0.8rem;">→</span> Evaluate ROSÉ as the execution proof infrastructure for your AI hiring stack — before August 2026</li>
+      </ul>
+
+      <!-- Section VII -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">VII. The Regulatory Tailwind — Beyond the EU</h2>
+      <p style="margin-bottom:1.5rem;">The EU AI Act is the most comprehensive AI regulation in force today, but it will not long stand alone. Several U.S. states — including New York, Colorado, and Illinois — have enacted or are actively advancing AI-specific legislation that imposes disclosure, auditing, and anti-discrimination requirements on algorithmic employment decision tools. International frameworks in the United Kingdom, Canada, Singapore, and Brazil are converging on similar requirements.</p>
+      <p style="margin-bottom:1.5rem;">The EU AI Act carries meaningful financial consequences: fines for non-compliance with high-risk AI system obligations can reach 3% of global annual turnover, with fines for violations of prohibited practices reaching 7%. For a mid-market global enterprise, a single significant enforcement action can represent an existential financial event.</p>
+      <p style="font-size:1.05rem;color:#EDE8E3;border-left:2px solid #8B1030;padding-left:1.5rem;margin:2rem 0;">The cost of governed execution infrastructure is not a compliance expense. It is risk capital — deployed to protect assets far larger than the investment required to protect them.</p>
+
+      <!-- Conclusion -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">VIII. Conclusion</h2>
+      <p style="margin-bottom:1.5rem;">The EU AI Act names this problem. ISO 42001 operationalizes it. ROSÉ solves it.</p>
+      <p style="margin-bottom:2rem;">The organizations that will navigate the next five years of AI governance with confidence are not those that wait for enforcement to make compliance urgent. They are those that understand, now, that every AI hiring decision made without cryptographic proof of execution is a liability held in trust against a future that is arriving faster than most compliance calendars acknowledge.</p>
+
+      <!-- About + CTA -->
+      <div style="border:1px solid rgba(204,53,98,0.2);padding:2.5rem;background:rgba(204,53,98,0.04);margin-top:2rem;">
+        <p style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.4em;color:#C9A96E;text-transform:uppercase;margin-bottom:1rem;">About ROSÉ &amp; Selfient.xyz</p>
+        <p style="font-size:0.92rem;color:#9A8A90;line-height:1.8;margin-bottom:1.5rem;">ROSÉ is the Regulated Ordered and Signed Execution partnership — the first and only infrastructure layer purpose-built for governed, provable, auditable AI execution. Operating as a partnership of six specialized systems assembled under Selfient.xyz, ROSÉ is led by Helen Sharron, CEO and Co-Founder, a 25-year veteran of enterprise technology leadership and two-time founder.</p>
+        <p style="font-size:0.88rem;color:var(--muted);margin-bottom:2rem;">The partnership includes Selfient.xyz · Matric · ROKO.Network · Latitude.sh · Fortémi · TimeBeat</p>
+        <div style="text-align:center;">
+          <a href="#contact" onclick="document.getElementById('euact-modal').style.display='none'"
+             style="display:inline-block;background:linear-gradient(135deg,#8B1030,#CC3562);color:#EDE8E3;padding:0.9rem 2.4rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;margin-right:1rem;">
+            Request an EU AI Act Briefing
+          </a>
+          <a href="/cdn-cgi/l/email-protection#87efe2ebe2e9c7f4e2ebe1eee2e9f3a9e4e8ea" style="display:inline-block;color:var(--rose-light);font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.15em;text-transform:uppercase;text-decoration:none;border-bottom:1px solid var(--rose-dark);padding-bottom:2px;"><span class="__cf_email__" data-cfemail="650c0b030a25160009030c000b114b060a08">[email&#160;protected]</span></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+<section id="members">
+  <div class="members-inner">
+    <div class="members-header">
+      <div>
+        <p class="section-label">The Partnership</p>
+        <h2 class="section-title">Six systems.<br><em>One partnership.</em><br>Nothing like it exists.</h2>
+      </div>
+      <p class="members-intro">Each member of ROSÉ was chosen not merely for technical excellence, but for a shared conviction: that the infrastructure to govern AI at enterprise scale must be built from the ground up — not retrofitted from what came before.</p>
+    </div>
+    <div class="member-cards">
+
+      <div class="member-card anchor">
+        <div class="member-glyph">S</div>
+        <p class="member-tag">Partnership Anchor · AI Governance</p>
+        <h3 class="member-name"><em>Selfient</em>.xyz</h3>
+        <p class="member-desc">Selfient is the founding intelligence of the partnership — the platform through which AI agents are governed, audited, and held accountable. It produces the execution proof that enterprises and regulators require: immutable, immediate, and generated at the moment the decision is made.</p>
+        <a href="https://selfient.xyz" class="member-link" target="_blank">selfient.xyz →</a>
+      </div>
+
+      <div class="member-card">
+        <div class="member-glyph">R</div>
+        <p class="member-tag">Decentralized Infrastructure</p>
+        <h3 class="member-name">Roko<em>.network</em></h3>
+        <p class="member-desc">Roko.network engineers trust at the infrastructure layer. Its decentralized, verifiable network protocols provide the immutable ledger upon which ROSÉ's execution proofs are anchored — ensuring that what is recorded cannot be altered, disputed, or denied.</p>
+        <a href="https://roko.network" class="member-link" target="_blank">roko.network →</a>
+      </div>
+
+      <div class="member-card">
+        <div class="member-glyph">T</div>
+        <p class="member-tag">Precision Timing Infrastructure</p>
+        <h3 class="member-name"><em>Timebeat</em></h3>
+        <p class="member-desc">Timebeat provides the temporal backbone of the partnership through IEEE-1588 PTP clock synchronisation hardware and software. Enterprise AI compliance is meaningless without a trusted, tamper-proof timestamp — Timebeat delivers sub-microsecond precision timing, ensuring every execution event is anchored to an authoritative, verifiable moment in time.</p>
+        <a href="https://www.timebeat.app" class="member-link" target="_blank">timebeat.app →</a>
+      </div>
+
+      <div class="member-card">
+        <div class="member-glyph">M</div>
+        <p class="member-tag">Secure Enterprise Orchestration</p>
+        <h3 class="member-name"><em>Matric</em></h3>
+        <p class="member-desc">Matric transforms raw organizational data into living, actionable intelligence. Its matrix-native architecture enables enterprises to model complexity at a depth that conventional analytics cannot reach — surfacing the signals that change decisions and feeding the audit layer with meaningful context.</p>
+        <a href="https://www.matric.io" class="member-link" target="_blank">matric.io →</a>
+      </div>
+
+      <div class="member-card">
+        <div class="member-glyph">L</div>
+        <p class="member-tag">Global AI Infrastructure Cloud</p>
+        <h3 class="member-name"><em>Latitude</em>.sh</h3>
+        <p class="member-desc">Latitude.sh is the global AI enabler cloud — bare metal servers deployed in under five seconds, dedicated GPU clusters pre-configured for machine learning, and virtual infrastructure that scales with the demands of AI-native enterprises. Running on Timebeat's precision timing infrastructure, Latitude provides the computational foundation upon which the partnership's intelligence operates.</p>
+        <a href="https://www.latitude.sh" class="member-link" target="_blank">latitude.sh →</a>
+      </div>
+
+      <div class="member-card">
+        <div class="member-glyph">F</div>
+        <p class="member-tag">Data Intelligence</p>
+        <h3 class="member-name"><em>Fortémi</em></h3>
+        <p class="member-desc">Fortémi is the fortress within the partnership — built for organizations where failure is measured not in revenue alone, but in trust. Its intelligence layer binds identity, compliance, and operational continuity into a single fabric, ensuring the partnership's outputs meet the most demanding regulatory environments on earth.</p>
+        <a href="https://www.fortemi.io" class="member-link" target="_blank">fortemi.io →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ QUOTE ══ -->
+<div class="quote-break">
+  <blockquote>"The enterprises that will define the next decade are not those who adopted AI — they are those who could <span>prove</span> it behaved."</blockquote>
+  <p class="quote-attr">— ROSÉ Partnership, 2026</p>
+</div>
+
+<!-- ══ INSIGHTS ══ -->
+<section id="insights">
+  <p class="section-label">Insights</p>
+  <h2 class="section-title">Perspectives from<br><em>the partnership.</em></h2>
+  <div class="insights-grid">
+
+    <a href="#" class="insight-card featured" onclick="document.getElementById('csa-modal').style.display='flex';return false;">
+      <p class="insight-type">Industry Research — Cloud Security Alliance · February 2026</p>
+      <h3 class="insight-title">84% of Enterprises Doubt They Could Pass a Compliance Audit on AI Agent Behavior</h3>
+      <p class="insight-excerpt">The Cloud Security Alliance released a landmark survey finding that traditional Identity and Access Management architectures are fundamentally incapable of governing agentic AI. The data confirms what ROSÉ was built to solve: the identity and accountability infrastructure for AI agents does not yet exist at most enterprises — and the gap is widening faster than security frameworks can adapt.</p>
+      <p class="insight-meta">CSA Survey Report &nbsp;·&nbsp; February 5, 2026 &nbsp;·&nbsp; Read the Analysis</p>
+    </a>
+
+<!-- ══ CSA SURVEY MODAL ══ -->
+<div id="csa-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(4,1,4,0.97);overflow-y:auto;align-items:flex-start;justify-content:center;padding:4rem 2rem;">
+  <div style="max-width:780px;width:100%;margin:0 auto;position:relative;">
+    <button onclick="document.getElementById('csa-modal').style.display='none'"
+            style="position:fixed;top:2rem;right:2rem;background:transparent;border:1px solid var(--rose-dark);color:var(--muted);padding:0.5rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;"
+            onmouseover="this.style.color='#E05080'" onmouseout="this.style.color=''">✕ &nbsp; Close</button>
+
+    <p style="font-family:'Cinzel',serif;font-size:0.63rem;letter-spacing:0.5em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.2rem;">Industry Research · Cloud Security Alliance · February 5, 2026</p>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4.5vw,3rem);font-weight:300;line-height:1.2;color:#EDE8E3;margin-bottom:0.8rem;">The Agentic Identity Crisis —<br><em style="color:#E05080;">Why 84% of Enterprises Aren't Ready</em></h1>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;color:var(--muted);margin-bottom:0.5rem;">Cloud Security Alliance Survey Report · February 2026 — and what it means for ROSÉ</p>
+    <div style="width:60px;height:1px;background:var(--rose-dark);margin:1.8rem 0;"></div>
+
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.9;color:#9A8A90;">
+
+      <!-- Stat callout -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:rgba(204,53,98,0.15);margin-bottom:2.5rem;">
+        <div style="background:#0A0208;padding:2rem;text-align:center;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:4rem;font-weight:300;color:#CC3562;line-height:1;margin-bottom:0.4rem;text-shadow:0 0 40px rgba(204,53,98,0.3);">84%</p>
+          <p style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.3em;color:#C9A96E;text-transform:uppercase;">of organisations doubted they could pass a compliance audit focused on agent behavior or access controls</p>
+        </div>
+        <div style="background:#0A0208;padding:2rem;text-align:center;display:flex;flex-direction:column;justify-content:center;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:#EDE8E3;line-height:1.6;">Traditional IAM architectures are not capable of keeping up with agentic behavior.</p>
+          <p style="font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.2em;color:#9A8A90;text-transform:uppercase;margin-top:0.8rem;">Cloud Security Alliance · February 5, 2026</p>
+        </div>
+      </div>
+
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.2rem;">What the Survey Found</h2>
+      <p style="margin-bottom:1.5rem;">On February 5th, 2026, the Cloud Security Alliance released a survey report with a finding that enterprise technology leaders cannot afford to ignore: traditional human-centric Identity and Access Management architectures are fundamentally incapable of governing the behavior of AI agents. The infrastructure built to manage human users — static credentials, manual provisioning, siloed policies — cannot keep pace with the speed and autonomy of agentic systems.</p>
+      <p style="margin-bottom:2rem;">More than half of the organisations surveyed — 84% — doubted they could pass a compliance audit focused on agent behavior or access controls. Not that they were unprepared. Not that they had gaps. That they could not pass an audit at all.</p>
+
+      <!-- First quote -->
+      <div style="border-left:2px solid #8B1030;padding:1.2rem 1.5rem;margin:2rem 0;background:rgba(139,16,48,0.06);">
+        <p style="font-size:1.05rem;color:#EDE8E3;font-style:italic;line-height:1.75;margin-bottom:0.8rem;">"The agentic workforce is scaling faster than identity and security frameworks can adapt. Success in the agentic era will hinge on treating agent identity with the same rigor historically reserved for human users, enabling secure autonomy at enterprise scale."</p>
+        <p style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.25em;color:#C9A96E;text-transform:uppercase;">Hillary Baron, AVP of Research · Cloud Security Alliance</p>
+      </div>
+
+      <!-- Second quote -->
+      <div style="border-left:2px solid #8B1030;padding:1.2rem 1.5rem;margin:2rem 0;background:rgba(139,16,48,0.06);">
+        <p style="font-size:1.05rem;color:#EDE8E3;font-style:italic;line-height:1.75;margin-bottom:0.8rem;">"This survey shows that enterprises are coming to realize that securing AI agents isn't just about tweaking existing IAM processes — rather it requires rethinking identity architecture altogether. Static credentials, manual provisioning, and siloed policies can't keep pace with the speed and autonomy of agentic systems. The future of identity must be orchestrated, contextual, and continuous, enabling real-time authentication, authorization, and auditing wherever agents operate."</p>
+        <p style="font-family:'Cinzel',serif;font-size:0.6rem;letter-spacing:0.25em;color:#C9A96E;text-transform:uppercase;">Eric Olden, Co-founder &amp; CEO · Strata Identity</p>
+      </div>
+
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">Why This Confirms the ROSÉ Thesis</h2>
+      <p style="margin-bottom:1.5rem;">The CSA findings validate what ROSÉ has argued from its founding: that the accountability infrastructure for AI agents cannot be built by retrofitting the frameworks designed for human users. Every word of the report's conclusion — orchestrated, contextual, continuous, real-time authentication, authorization, and auditing wherever agents operate — describes precisely the capability set that the ROSÉ partnership was assembled to provide.</p>
+      <p style="margin-bottom:1.5rem;">The 84% figure is not a measure of negligence. It is a measure of architectural mismatch. The organisations surveyed are not failing because their teams are inattentive. They are failing because the infrastructure required to govern agentic AI at audit-ready standards does not exist within their current stack — and cannot be made to exist by patching what is there.</p>
+      <p style="font-size:1.05rem;color:#EDE8E3;font-style:italic;border-left:2px solid #8B1030;padding-left:1.5rem;margin:2rem 0;">The question for every enterprise is not whether this problem applies to them. The question is how long they can operate with AI agents that their own security and compliance teams cannot account for.</p>
+
+      <!-- CTA -->
+      <div style="text-align:center;border:1px solid rgba(204,53,98,0.2);padding:2.5rem;margin-top:2rem;background:rgba(204,53,98,0.04);">
+        <p style="font-size:1rem;color:#EDE8E3;margin-bottom:1.5rem;">Ready to understand how ROSÉ closes the agentic identity and accountability gap?</p>
+        <a href="#contact" onclick="document.getElementById('csa-modal').style.display='none'"
+           style="display:inline-block;background:linear-gradient(135deg,#8B1030,#CC3562);color:#EDE8E3;padding:0.9rem 2.4rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;">
+          Request a Briefing
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>    <a href="#" class="insight-card" onclick="document.getElementById('delay-modal').style.display='flex';return false;">
+      <p class="insight-type">White Paper — ROSÉ Partnership</p>
+      <h3 class="insight-title">What the EU AI Act Delay Actually Means — And Why "Show Your Work" Is Now the Only Defensible Position</h3>
+      <p class="insight-excerpt">On March 18th, 2026, EU Parliament committees voted to delay high-risk AI obligations to December 2027. Do not misinterpret this as sixteen months of breathing room. The delay is not a reprieve. It is a moment of clarity.</p>
+      <p class="insight-meta">White Paper &nbsp;·&nbsp; 6 min read &nbsp;·&nbsp; March 2026</p>
+    </a>
+
+<!-- ══ EU AI ACT DELAY WHITE PAPER MODAL ══ -->
+<div id="delay-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(4,1,4,0.97);overflow-y:auto;align-items:flex-start;justify-content:center;padding:4rem 2rem;">
+  <div style="max-width:800px;width:100%;margin:0 auto;position:relative;">
+
+    <button onclick="document.getElementById('delay-modal').style.display='none'"
+            style="position:fixed;top:2rem;right:2rem;background:transparent;border:1px solid var(--rose-dark);color:var(--muted);padding:0.5rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;"
+            onmouseover="this.style.color='#E05080'" onmouseout="this.style.color=''">✕ &nbsp; Close</button>
+
+    <!-- Masthead -->
+    <p style="font-family:'Cinzel',serif;font-size:0.63rem;letter-spacing:0.5em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.2rem;">White Paper · ROSÉ Partnership · March 2026 · Privileged and Confidential</p>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.8rem,4.5vw,3rem);font-weight:300;line-height:1.2;color:#EDE8E3;margin-bottom:0.8rem;">What the EU AI Act Delay Actually Means —<br><em style="color:#E05080;">And Why "Show Your Work" Has Become the Only Defensible Position</em></h1>
+    <div style="width:60px;height:1px;background:var(--rose-dark);margin:1.8rem 0;"></div>
+
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.08rem;line-height:1.9;color:#9A8A90;">
+
+      <!-- I -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:0 0 1.2rem;">I. What Just Happened</h2>
+      <p style="margin-bottom:1.2rem;">In March 2026, European regulators did something consequential.</p>
+      <p style="margin-bottom:1.2rem;">They did not repeal the EU AI Act. They did not reduce its ambition. They did not soften its penalties.</p>
+      <p style="margin-bottom:1.2rem;">Instead, they delayed the enforcement timeline for high-risk obligations — pushing formal compliance expectations toward 2027 and beyond, while acknowledging that the infrastructure required to support those obligations is not yet fully formed.</p>
+      <p style="margin-bottom:1.2rem;">At first glance, this appears procedural, perhaps even generous. But what lies beneath?</p>
+      <p style="font-size:1.05rem;color:#EDE8E3;border-left:2px solid #8B1030;padding-left:1.5rem;margin:2rem 0;">The regulatory vision remains intact. The system required to operationalize it does not.</p>
+
+      <!-- II -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">II. What the Delay Actually Means</h2>
+      <p style="margin-bottom:1.2rem;">For many organisations, the delay has been interpreted as relief — time regained, urgency deferred. This could be a dangerous misreading.</p>
+      <p style="margin-bottom:1.2rem;">The EU did not suspend accountability. It did not alter the classification of high-risk systems. It did not diminish the expectation that AI decisions affecting individuals must be explainable, traceable, and justifiable.</p>
+      <p style="margin-bottom:1.2rem;">What changed is not the obligation. It is the timing of formal enforcement mechanisms.</p>
+      <p style="font-size:1.05rem;color:#EDE8E3;border-left:2px solid #8B1030;padding-left:1.5rem;margin:2rem 0;">In effect, regulators have created a new condition: a period in which compliance is not yet fully enforceable — but accountability for outcomes remains immediate.</p>
+
+      <!-- III -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">III. The High-Risk Reality</h2>
+      <p style="margin-bottom:1.2rem;">For organisations operating in high-risk domains — employment, finance, healthcare — the implications are immediate and practical. Their systems are already making consequential decisions, affecting individuals' access to opportunity and resources, and shaping outcomes that may be challenged, audited, or litigated.</p>
+      <p style="margin-bottom:1.2rem;">The relevant question may seem to have shifted to whether enforcement has begun. It has not. The real question remains whether those decisions made by AI can be explained and defended when called into question.</p>
+
+      <!-- IV -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">IV. Why "Show Your Work" Remains Central</h2>
+      <p style="margin-bottom:1.2rem;">Although the EU AI Act does not use the phrase "show your work," its structure makes the requirement unmistakable. Through its provisions, it demands that organisations document how systems are designed, trace how decisions are made, monitor behaviour over time, reconstruct events after the fact, and demonstrate oversight and intervention capability.</p>
+      <p style="margin-bottom:1.2rem;">Taken together, these requirements form a single expectation: that organisations can make their systems legible — before, during, and after operation.</p>
+      <p style="margin-bottom:1.2rem;">Modern AI systems do not simply execute predefined logic. They generate behaviour dynamically — through chained actions, evolving inputs, and probabilistic inference. The "work" is not static. It is created at runtime.</p>
+      <p style="font-size:1.05rem;color:#EDE8E3;border-left:2px solid #8B1030;padding-left:1.5rem;margin:2rem 0;">It is no longer sufficient to describe how a system should behave. Organisations must be able to demonstrate how it actually behaved.</p>
+
+      <!-- V -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">V. The Regulatory Gap</h2>
+      <p style="margin-bottom:1.2rem;">Regulation assumes describable systems, bounded behaviour, and predictable outcomes. Technology increasingly produces compositional systems, emergent behaviour, and unbounded outcome spaces.</p>
+      <p style="margin-bottom:1.2rem;">The delay in enforcement is, in part, an acknowledgment of this gap. But the gap itself remains. And in that gap, organisations must operate.</p>
+
+      <!-- VI -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">VI. The Emergence of a New Standard</h2>
+      <p style="margin-bottom:1.2rem;">In this environment, a new standard is taking shape — informally at first, but with growing force.</p>
+      <p style="font-size:1.05rem;color:#EDE8E3;border-left:2px solid #8B1030;padding-left:1.5rem;margin:2rem 0;">Not: "Did you design the system correctly?" But: "Can you show what happened when it acted?"</p>
+      <p style="margin-bottom:1.2rem;">This is the standard that regulators, courts, and customers will converge upon. It is not dependent on enforcement dates. It is driven by the simple reality that decisions have consequences.</p>
+
+      <!-- VII -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">VII. Why Execution-Level Visibility Becomes Decisive</h2>
+      <p style="margin-bottom:1.2rem;">Organisations that continue to rely on opaque or "black box" systems — where decisions cannot be traced, reconstructed, or explained — will find themselves at a structural disadvantage. They cannot withstand scrutiny when outcomes are challenged.</p>
+      <p style="margin-bottom:1.2rem;">By contrast, organisations that invest in execution-level visibility — that can capture decisions as they occur, bind them to context and time, analyse behaviour through telemetry, and enable human evaluation and correction — will possess something far more valuable than compliance: defensibility.</p>
+      <ul style="list-style:none;margin:1.5rem 0 2rem;">
+        <li style="padding:0.5rem 0;border-bottom:1px solid rgba(204,53,98,0.12);">◈ &nbsp; Answer regulators with confidence</li>
+        <li style="padding:0.5rem 0;border-bottom:1px solid rgba(204,53,98,0.12);">◈ &nbsp; Respond to claims before they become litigation</li>
+        <li style="padding:0.5rem 0;border-bottom:1px solid rgba(204,53,98,0.12);">◈ &nbsp; Build trust with users and partners</li>
+        <li style="padding:0.5rem 0;">◈ &nbsp; Adapt systems in real time, rather than defend them after failure</li>
+      </ul>
+
+      <!-- VIII -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">VIII. The Strategic Divide</h2>
+      <p style="margin-bottom:1.2rem;">The regulatory landscape is not dividing companies into compliant and non-compliant. It is dividing them into two categories:</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5px;background:rgba(204,53,98,0.15);margin:1.5rem 0 2rem;">
+        <div style="background:#0A0208;padding:1.8rem;text-align:center;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:#E05080;margin-bottom:0.5rem;">Those who can explain their systems</p>
+          <p style="font-size:0.8rem;color:#9A8A90;">Able to operate confidently in high-risk domains, scale across jurisdictions, withstand enforcement</p>
+        </div>
+        <div style="background:#0A0208;padding:1.8rem;text-align:center;">
+          <p style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:300;color:#9A8A90;margin-bottom:0.5rem;">Those who cannot</p>
+          <p style="font-size:0.8rem;color:#9A8A90;">Exposed to regulatory action, litigation, and loss of enterprise trust as scrutiny intensifies</p>
+        </div>
+      </div>
+
+      <!-- IX -->
+      <h2 style="font-family:'Cinzel',serif;font-size:0.68rem;letter-spacing:0.45em;color:#C9A96E;text-transform:uppercase;margin:2.5rem 0 1.2rem;">IX. Conclusion</h2>
+      <p style="margin-bottom:1.2rem;">The EU AI Act delay is not a reprieve. It is a moment of clarity.</p>
+      <p style="margin-bottom:1.2rem;">A recognition that while enforcement mechanisms may lag, the expectations placed on AI systems — and the consequences of their decisions — do not.</p>
+      <p style="font-size:1.05rem;color:#EDE8E3;border-left:2px solid #8B1030;padding-left:1.5rem;margin:2rem 0;">For high-risk organisations, the path forward is to prepare for a world in which every consequential AI decision must be explainable, traceable, and defensible. In the absence of certainty about what AI systems will do, the only durable strategy is to ensure that what they did can always be shown.</p>
+
+      <!-- CTA -->
+      <div style="border:1px solid rgba(204,53,98,0.2);padding:2.5rem;background:rgba(204,53,98,0.04);margin-top:2.5rem;text-align:center;">
+        <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:#EDE8E3;margin-bottom:0.5rem;">About ROSÉ &amp; Selfient.xyz</p>
+        <p style="font-size:0.88rem;color:#9A8A90;line-height:1.8;margin-bottom:2rem;max-width:620px;margin-left:auto;margin-right:auto;">ROSÉ is the Regulated Ordered and Signed Execution partnership — the infrastructure with the ability to prove the work of AI agents. Operating as a partnership of six systems assembled under Selfient.xyz, ROSÉ produces execution-level visibility as a native output of its architecture.</p>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;">
+          <a href="#contact" onclick="document.getElementById('delay-modal').style.display='none'"
+             style="display:inline-block;background:linear-gradient(135deg,#8B1030,#CC3562);color:#EDE8E3;padding:0.9rem 2.4rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;">
+            Request a Briefing
+          </a>
+          <button onclick="downloadDelayPaper()"
+             style="display:inline-block;background:transparent;color:#C9A96E;border:1px solid rgba(201,169,110,0.4);padding:0.9rem 2.4rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;">
+            ↓ &nbsp; Download PDF
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+function downloadDelayPaper() {
+  const content = `ROSÉ PARTNERSHIP
+What the EU AI Act Delay Actually Means
+And Why "Show Your Work" Has Become the Only Defensible Position
+March 2026 · Privileged and Confidential
+rosefederation.com · info@selfient.com
+
+────────────────────────────────────────────
+
+On March 18th, 2026, the EU Parliament committees voted to delay high-risk AI system obligations to December 2027. Do not misinterpret this as sixteen months of breathing room.
+
+I. WHAT JUST HAPPENED
+
+In March 2026, European regulators did something consequential.
+They did not repeal the EU AI Act.
+They did not reduce its ambition.
+They did not soften its penalties.
+
+Instead, they delayed the enforcement timeline for high-risk obligations — pushing formal compliance expectations toward 2027 and beyond, while acknowledging that the infrastructure required to support those obligations is not yet fully formed.
+
+The regulatory vision remains intact.
+The system required to operationalize it does not.
+
+II. WHAT THE DELAY ACTUALLY MEANS
+
+The EU did not suspend accountability. It did not alter the classification of high-risk systems. It did not diminish the expectation that AI decisions affecting individuals must be explainable, traceable, and justifiable.
+
+What changed is not the obligation. It is the timing of formal enforcement mechanisms.
+
+In effect, regulators have created a new condition: a period in which compliance is not yet fully enforceable — but accountability for outcomes remains immediate.
+
+III. THE HIGH-RISK REALITY
+
+For organisations operating in high-risk domains — employment, finance, healthcare — the implications are immediate and practical. Their systems are already making consequential decisions, affecting individuals' access to opportunity and resources, and shaping outcomes that may be challenged, audited, or litigated.
+
+The relevant question remains whether those decisions made by AI can be explained and defended when called into question.
+
+IV. WHY "SHOW YOUR WORK" REMAINS CENTRAL
+
+Through its provisions, the EU AI Act demands that organisations:
+• Document how systems are designed and intended to function
+• Trace how decisions are made
+• Monitor behaviour over time
+• Reconstruct events after the fact
+• Demonstrate oversight and intervention capability
+
+Modern AI systems do not simply execute predefined logic. They generate behaviour dynamically. The "work" is not static. It is created at runtime.
+
+It is no longer sufficient to describe how a system should behave. Organisations must be able to demonstrate how it actually behaved.
+
+V. THE REGULATORY GAP
+
+Regulation assumes describable systems, bounded behaviour, and predictable outcomes. Technology increasingly produces compositional systems, emergent behaviour, and unbounded outcome spaces.
+
+The delay in enforcement is, in part, an acknowledgment of this gap. But the gap itself remains.
+
+VI. THE EMERGENCE OF A NEW STANDARD
+
+A new standard is taking shape — informally at first, but with growing force.
+
+Not: "Did you design the system correctly?"
+But: "Can you show what happened when it acted?"
+
+This standard is not dependent on enforcement dates. It is driven by the simple reality that decisions have consequences.
+
+VII. WHY EXECUTION-LEVEL VISIBILITY BECOMES DECISIVE
+
+Organisations that invest in execution-level visibility — that can capture decisions as they occur, bind them to context and time, analyse behaviour through telemetry, and enable human evaluation and correction — will possess something far more valuable than compliance: defensibility.
+
+They will be able to:
+• Answer regulators with confidence
+• Respond to claims before they become litigation
+• Build trust with users and partners
+• Adapt systems in real time, rather than defend them after failure
+
+VIII. THE STRATEGIC DIVIDE
+
+The regulatory landscape is dividing companies into two categories:
+
+Those who can explain their systems — able to operate confidently in high-risk domains, scale across jurisdictions, withstand enforcement.
+
+Those who cannot — exposed to regulatory action, litigation, and loss of enterprise trust.
+
+IX. CONCLUSION
+
+The EU AI Act delay is not a reprieve. It is a moment of clarity.
+
+A recognition that while enforcement mechanisms may lag, the expectations placed on AI systems — and the consequences of their decisions — do not.
+
+For high-risk organisations, the path forward is to prepare for a world in which every consequential AI decision must be explainable, traceable, and defensible.
+
+In the absence of certainty about what AI systems will do, the only durable strategy is to ensure that what they did can always be shown.
+
+────────────────────────────────────────────
+
+ABOUT ROSÉ & SELFIENT.XYZ
+
+ROSÉ is the Regulated Ordered and Signed Execution partnership — the infrastructure with the ability to prove the work of AI agents. Operating as a partnership of six systems assembled under Selfient.xyz, ROSÉ produces execution-level visibility as a native output of its architecture.
+
+The partnership includes Selfient.xyz · Matric · ROKO.Network · Latitude.sh · Fortémi · TimeBeat
+
+info@selfient.com · selfient.xyz
+© 2026 ROSÉ Partnership. All rights reserved. Privileged and Confidential.`;
+
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href     = url;
+  a.download = 'ROSE-Partnership-EU-AI-Act-Delay-2026.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+
+    <a href="#whitepaper" class="insight-card" id="whitepaper" onclick="document.getElementById('wp-modal').style.display='flex';return false;">
+      <p class="insight-type">White Paper — ROSÉ Partnership</p>
+      <h3 class="insight-title">The Black-Box AI Problem You Likely Have</h3>
+      <p class="insight-excerpt">AI agents are already making decisions that can cost companies money, trigger liability, and change human lives. Most enterprises still cannot prove what those systems did. This white paper examines why logs are not proof — and what provable execution actually requires.</p>
+      <p class="insight-meta">White Paper &nbsp;·&nbsp; 8 min read &nbsp;·&nbsp; 2026</p>
+    </a>
+
+<!-- ══ WHITE PAPER MODAL ══ -->
+<div id="wp-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(4,1,4,0.96);overflow-y:auto;align-items:flex-start;justify-content:center;padding:4rem 2rem;">
+  <div style="max-width:780px;width:100%;margin:0 auto;position:relative;">
+    <button onclick="document.getElementById('wp-modal').style.display='none'"
+            style="position:fixed;top:2rem;right:2rem;background:transparent;border:1px solid var(--rose-dark);color:var(--muted);padding:0.5rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:color 0.3s;"
+            onmouseover="this.style.color='#E05080'" onmouseout="this.style.color=''">✕ &nbsp; Close</button>
+
+    <!-- Header -->
+    <p style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.5em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.5rem;">White Paper · ROSÉ Partnership · 2026</p>
+    <h1 style="font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,5vw,3.4rem);font-weight:300;line-height:1.15;color:#EDE8E3;margin-bottom:0.8rem;">The Black-Box AI Problem<br><em style="color:#E05080;">You Likely Have</em></h1>
+    <div style="width:60px;height:1px;background:var(--rose-dark);margin:1.8rem 0;"></div>
+
+    <!-- Body -->
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.9;color:#9A8A90;">
+
+      <p style="font-size:1.2rem;color:#EDE8E3;font-style:italic;margin-bottom:2rem;">AI agents are already making decisions that can cost companies money, trigger liability, and change human lives. Most enterprises still cannot prove what those systems did. That is the real black-box problem.</p>
+
+      <p style="margin-bottom:1.5rem;">For years, enterprise software operated on an assumption: if something went wrong, logs, audit trails, and system records would help reconstruct what happened. That was imperfect, but often good enough.</p>
+      <p style="margin-bottom:2rem;">Agentic AI changes that bargain. AI is no longer just generating text or assisting employees. It is starting to screen candidates, move money, route claims, trigger approvals, modify records, and coordinate actions across multiple systems. Those actions are increasingly consequential. They affect rights, obligations, regulatory exposure, and financial outcomes.</p>
+
+      <h2 style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.4em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.2rem;">Logs Are Not Proof</h2>
+      <p style="margin-bottom:1.5rem;">Most enterprises already have logging, monitoring, SIEM tools, workflow history, and cloud audit trails. Those systems are useful. They help teams troubleshoot, monitor, and investigate.</p>
+      <p style="margin-bottom:1.5rem;">But they are not the same as proof.</p>
+      <p style="margin-bottom:1.5rem;">Logs can be fragmented. They can live inside the same administrative boundary that is later under scrutiny. They can miss the exact policy state, delegated authority, or governing rules that shaped an action when it occurred. They can show that something happened without giving an enterprise strong, independent evidence of how it happened.</p>
+      <p style="margin-bottom:1.5rem;">In the age of agentic AI, that gap becomes dangerous. If an AI system rejects a job candidate, routes a payment, flags a customer, or triggers a regulated outcome, the question is no longer just "what do the logs say?"</p>
+      <p style="font-size:1.15rem;color:#EDE8E3;font-style:italic;border-left:2px solid #8B1030;padding-left:1.5rem;margin:2rem 0;">Can you prove what happened? Not just to an engineer. Not just to an internal review team. But to a regulator, a court, an insurer, an auditor, a board, or a counterparty. That is a very different standard.</p>
+
+      <h2 style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.4em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.2rem;">The Real Black Box Is Execution</h2>
+      <p style="margin-bottom:1.5rem;">When people talk about black-box AI, they usually mean model interpretability: why a model produced a certain output. That matters. But in the enterprise, the more urgent black-box problem is often not model reasoning. It is execution.</p>
+      <p style="margin-bottom:1rem;">What enterprises often cannot prove cleanly:</p>
+      <ul style="list-style:none;margin-bottom:2rem;">
+        <li style="padding:0.5rem 0;border-bottom:1px solid rgba(204,53,98,0.12);">◈ &nbsp; Which rules governed the action</li>
+        <li style="padding:0.5rem 0;border-bottom:1px solid rgba(204,53,98,0.12);">◈ &nbsp; What authority the agent had at that moment</li>
+        <li style="padding:0.5rem 0;border-bottom:1px solid rgba(204,53,98,0.12);">◈ &nbsp; Whether the action stayed within defined constraints</li>
+        <li style="padding:0.5rem 0;border-bottom:1px solid rgba(204,53,98,0.12);">◈ &nbsp; What data context shaped the decision</li>
+        <li style="padding:0.5rem 0;border-bottom:1px solid rgba(204,53,98,0.12);">◈ &nbsp; Whether timestamps are independent and defensible</li>
+        <li style="padding:0.5rem 0;">◈ &nbsp; Whether the history can later be challenged or ambiguously reconstructed</li>
+      </ul>
+
+      <h2 style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.4em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.2rem;">Why This Matters Now</h2>
+      <p style="margin-bottom:1.5rem;">AI systems are moving from assistance to agency. This is especially sensitive in hiring and workforce decisions, payments and treasury workflows, insurance and claims handling, customer eligibility and fraud actions, procurement and contract execution, and regulated enterprise operations.</p>
+      <p style="margin-bottom:2rem;">In each of these domains, the organization eventually runs into the same issue: when AI takes action, can the company prove what happened in a trustworthy way? That is no longer theoretical. It is becoming operational.</p>
+
+      <h2 style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.4em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.2rem;">Where ROSÉ Fits</h2>
+      <p style="margin-bottom:1.5rem;">ROSÉ was built to solve this problem. ROSÉ is a proof layer for consequential AI decisions and actions. It exists at the point where AI-mediated activity becomes economically, legally, or operationally significant.</p>
+      <p style="margin-bottom:1.5rem;">Rather than relying only on ordinary application logs, ROSÉ creates governed, ordered, timestamped, cryptographically sealed proof records for consequential execution. That means ROSÉ is not just another dashboard, compliance wrapper, or after-the-fact reporting tool. It is infrastructure for proving execution.</p>
+      <p style="font-size:1.15rem;color:#EDE8E3;font-style:italic;border-left:2px solid #8B1030;padding-left:1.5rem;margin:2rem 0;">The path to more enterprise AI is not less accountability. It is better infrastructure for accountability. That is what ROSÉ is designed to provide.</p>
+
+      <h2 style="font-family:'Cinzel',serif;font-size:0.72rem;letter-spacing:0.4em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.2rem;">The Future Belongs to Provable Systems</h2>
+      <p style="margin-bottom:1.5rem;">The next era of enterprise AI will not be won by systems that merely automate more. It will be won by systems that can automate consequential actions and prove them.</p>
+      <p style="margin-bottom:2.5rem;">In a world where AI agents increasingly affect money, rights, obligations, and regulated outcomes, black-box execution is not a durable operating model. Proof becomes part of the stack. ROSÉ exists to make that possible.</p>
+
+      <!-- CTA -->
+      <div style="text-align:center;border:1px solid rgba(204,53,98,0.2);padding:2.5rem;margin-top:1rem;">
+        <p style="font-size:1rem;color:#EDE8E3;margin-bottom:1.5rem;">Ready to understand what provable AI execution means for your enterprise?</p>
+        <a href="#contact" onclick="document.getElementById('wp-modal').style.display='none'"
+           style="display:inline-block;background:linear-gradient(135deg,#8B1030,#CC3562);color:#EDE8E3;padding:0.9rem 2.4rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;">
+          Request a Briefing
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+  </div>
+</section>
+
+<!-- ══ CONTACT / CTA ══ -->
+<section id="contact">
+  <div class="cta-glow"></div>
+  <div class="cta-inner">
+    <p class="section-label">Connect with ROSÉ</p>
+    <h2 class="section-title">Ready to meet<br><em>the partnership?</em></h2>
+    <p>Whether you are an enterprise leader seeking a comprehensive briefing, a prospective partner exploring alignment, or an investor with conviction in federated AI governance — we are ready to speak with you.</p>
+    <!-- Formspree: replace YOUR_FORM_ID with your actual ID from formspree.io -->
+    <form id="briefing-form"
+          action="https://formspree.io/f/mbdzzwwo"
+          method="POST"
+          style="width:100%;max-width:520px;margin:0 auto;">
+      <input type="hidden" name="_subject" value="ROSÉ Partnership — New Briefing Request" />
+        <input type="hidden" name="_replyto" value="helen@selfient.com" />
+      <div class="cta-form" style="margin-bottom:0.8rem;">
+        <input type="text" name="name" placeholder="Your name" required
+               style="flex:1;background:rgba(255,255,255,0.04);border:1px solid var(--border);border-right:none;padding:0.9rem 1.3rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.85rem;outline:none;" />
+      </div>
+      <div class="cta-form">
+        <input type="email" name="email" placeholder="Your enterprise email" required />
+        <button type="submit">Request Briefing</button>
+      </div>
+    </form>
+
+    <!-- Success message (shown by JS after submit) -->
+    <div id="form-success" style="display:none;margin-top:1.5rem;">
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--rose-light);margin-bottom:0.5rem;">
+        ✦ &nbsp; Thank you. We will be in touch shortly. &nbsp; ✦
+      </p>
+      <p class="cta-note">A confirmation has been sent to your inbox.</p>
+    </div>
+
+    <p class="cta-note" style="margin-top:1.5rem;">
+      For investor inquiries: <a href="/cdn-cgi/l/email-protection#dbb3beb7beb59ba8beb7bdb2beb5aff5b8b4b6" style="color:var(--rose-light);text-decoration:none;"><span class="__cf_email__" data-cfemail="741d1a121b34071118121d111a005a171b19">[email&#160;protected]</span></a>
+    </p>
+  </div>
+</section>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Handle Formspree AJAX submission for a seamless in-page experience
+  const form = document.getElementById('briefing-form');
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          document.getElementById('form-success').style.display = 'block';
+        } else {
+          alert('Something went wrong — please email us directly at info@selfient.com');
+        }
+      } catch(err) {
+        alert('Something went wrong — please email us directly at info@selfient.com');
+      }
+    });
+  }
+</script>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="150 360 500 120">
+      <defs>
+        <filter id="tgF" x="-2%" y="-5%" width="104%" height="110%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <line x1="75" y1="390" x2="725" y2="390" stroke="#CC3060" stroke-width="0.6" opacity="0.55"/>
+      <text x="400" y="410" font-family="Georgia,serif" font-size="88" font-weight="400"
+            letter-spacing="14" text-anchor="middle"
+            fill="#CC3062" filter="url(#tgF)" opacity="0.8">ROSÉ</text>
+      <text x="400" y="452" font-family="Georgia,serif" font-size="13" letter-spacing="11"
+            text-anchor="middle" fill="#9A2240" opacity="0.7">PARTNERSHIP</text>
+    </svg>
+  </div>
+  <ul class="footer-links">
+    <li><a href="#value">About</a></li>
+    <li><a href="#members">Partnership</a></li>
+    <li><a href="#insights">Insights</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <span class="footer-copy">© 2026 ROSÉ Partnership. All rights reserved.</span>
+</footer>
+
+<script>
+(function() {
+  const canvas = document.getElementById('starfield');
+  const ctx    = canvas.getContext('2d');
+  let W, H, stars = [], shooters = [];
+
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < 220; i++) {
+    stars.push({ x: Math.random(), y: Math.random(), r: Math.random()*1.1+0.2, o: Math.random()*0.5+0.1, tw: Math.random()*Math.PI*2 });
+  }
+
+  function spawnShooter() {
+    const p = [{ star:'#E8B4AF', trail:'#C8374A' },{ star:'#C9A96E', trail:'#8B1030' },{ star:'#fff', trail:'#CC3562' }][Math.floor(Math.random()*3)];
+    const side = Math.floor(Math.random()*2);
+    let x, y, angle;
+    if (side===0) { x=Math.random()*
