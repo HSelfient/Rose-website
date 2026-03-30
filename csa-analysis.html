@@ -256,96 +256,78 @@
 
 <script>
 function downloadPaper() {
-  const content = `ROSÉ PARTNERSHIP — WHITE PAPER
-Proof, Not Promise: Cryptographic Execution Identity for Autonomous AI
-Why Identity and Access Management Was Not Built for Agents — and What a Cryptographic Execution Ledger Changes
-Q1 2026 · Privileged and Confidential · selfient.xyz · info@selfient.com
+  // Read full text directly from the page so the download always matches what was read
+  const titleEl   = document.querySelector('h1');
+  const subtitleEl = document.querySelector('.subtitle');
+  const bodyEl    = document.querySelector('.body-text');
 
-────────────────────────────────────────────
+  // Convert the body HTML to clean plain text
+  function nodeToText(node) {
+    let out = '';
+    node.childNodes.forEach(child => {
+      if (child.nodeType === 3) {
+        out += child.textContent;
+      } else if (child.nodeType === 1) {
+        const tag = child.tagName.toLowerCase();
+        if (tag === 'h2') {
+          out += '\n\n' + child.textContent.trim().toUpperCase() + '\n' + '─'.repeat(60) + '\n\n';
+        } else if (tag === 'h3') {
+          out += '\n' + child.textContent.trim() + '\n\n';
+        } else if (tag === 'table') {
+          child.querySelectorAll('tr').forEach(row => {
+            const cells = [...row.querySelectorAll('th,td')].map(c => c.textContent.trim().replace(/\s+/g,' '));
+            out += cells.join('  |  ') + '\n';
+          });
+          out += '\n';
+        } else if (tag === 'li') {
+          out += '  • ' + child.textContent.trim().replace(/\s+/g,' ') + '\n';
+        } else if (tag === 'ul') {
+          nodeToText(child).split('\n').forEach(l => { if(l.trim()) out += l + '\n'; });
+          out += '\n';
+        } else if (tag === 'div' && child.classList.contains('stat-grid')) {
+          child.querySelectorAll('.stat-cell').forEach(cell => {
+            const num   = cell.querySelector('.stat-num')?.textContent.trim() || '';
+            const label = cell.querySelector('.stat-label')?.textContent.trim() || '';
+            const src   = cell.querySelector('.stat-source')?.textContent.trim() || '';
+            out += `  ${num}  ${label}  ${src ? '(' + src + ')' : ''}\n`;
+          });
+          out += '\n';
+        } else if (tag === 'div' && child.classList.contains('obs-box')) {
+          out += '\n[' + (child.querySelector('.obs-label')?.textContent.trim() || 'NOTE') + ']\n';
+          out += child.querySelector('.obs-text')?.textContent.trim() + '\n\n';
+        } else if (tag === 'div' && child.classList.contains('property')) {
+          const num   = child.querySelector('.property-num')?.textContent.trim() || '';
+          const title = child.querySelector('.property-title')?.textContent.trim() || '';
+          out += '\n' + num + '. ' + title + '\n';
+          child.querySelectorAll('p').forEach(p => { out += p.textContent.trim().replace(/\s+/g,' ') + '\n'; });
+          out += '\n';
+        } else if (tag === 'div' && child.classList.contains('cta-block')) {
+          out += '\n────────────────────────────────────────────\n\n';
+          out += 'ABOUT ROSÉ & SELFIENT.XYZ\n';
+          out += child.querySelector('.cta-about')?.textContent.trim() + '\n';
+          out += 'info@selfient.com · selfient.xyz\n';
+          out += '© 2026 ROSÉ Partnership. All rights reserved. Privileged and Confidential.\n';
+        } else {
+          out += nodeToText(child);
+        }
+      }
+    });
+    return out;
+  }
 
-ABSTRACT
+  const header = [
+    'ROSÉ PARTNERSHIP — WHITE PAPER',
+    (titleEl?.textContent.trim() || '').replace(/\s+/g,' '),
+    (subtitleEl?.textContent.trim() || '').replace(/\s+/g,' '),
+    'Q1 2026 · Privileged and Confidential',
+    'selfient.xyz · info@selfient.com',
+    '',
+    '════════════════════════════════════════════════════════════',
+    ''
+  ].join('\n');
 
-Autonomous AI agents are operating in production environments today, executing consequential decisions under borrowed identities, without any mechanism to produce non-repudiable proof of what they did, when, and under what rules.
-
-The central argument is architectural: the governance gap cannot be closed by extending existing IAM frameworks. It requires a cryptographic execution ledger.
-
-────────────────────────────────────────────
-
-I. THE PRODUCTION REALITY — CSA SURVEY DATA (March 2026, n=228)
-
-• 85% of organizations running agents in production
-• 68% cannot distinguish agent from human in logs
-• 18% highly confident in IAM for agent identities
-• 28% can reliably trace agent actions across environments
-
-II. WHY IAM WAS NOT BUILT FOR AGENTS
-
-Contemporary IAM frameworks share a design premise: the identity subject is a human. Autonomous AI agents break every assumption. Agent identity is almost universally borrowed — from service principals, shared workload identities, or human user accounts.
-
-FAILURE MODES FROM BORROWED IDENTITY:
-• Attribution loss — logs cannot establish which principal acted
-• Blast radius amplification — agent inherits full account privileges
-• Least privilege violation — access provisioned for identity, not task
-• Non-repudiation failure — consequential actions cannot be attributed to a specific agent
-
-LOG FIDELITY DEFICIENCIES:
-• Identity ambiguity — credential recorded, not agent
-• Timestamp unreliability — server clocks are manipulable
-• Context absence — governance rules not captured
-• Mutability — logs are not tamper-evident
-
-"A log entry is a record that something happened. Cryptographic proof is evidence of what happened, in what order, under what rules, at a verifiable point in time."
-
-III. THE REGULATORY CONVERGENCE
-
-EU AI Act: Requires automatic logging sufficient to identify risks and track modifications. When 68% of organizations cannot distinguish agent from human actions, satisfying an EU AI Act audit with those logs is not credible.
-
-Additional frameworks: NYC AEDT Law · Illinois AI Video Interview Act · Colorado AI Act · EU GDPR Article 22
-
-Each framework independently requires documentation the current log-based architecture cannot reliably produce. In combination, exposure compounds.
-
-IV. THE FIVE REQUIRED PROPERTIES OF AN EXECUTION LEDGER
-
-1. NATIVE CRYPTOGRAPHIC AGENT IDENTITY
-   Each agent carries a non-inherited, non-transferable cryptographic identity.
-
-2. HARDWARE-ATTESTED TIMESTAMPING
-   Timestamps derived from hardware-attested time (PTP/GPS) — not server clocks.
-
-3. IMMUTABLE EXECUTION ORDERING
-   Consensus-level ordering guarantees; sequence cannot be rewritten by privileged users.
-
-4. GOVERNANCE RULE IMMUTABILITY AT EXECUTION
-   Rules in force at execution time locked permanently as part of the proof bundle.
-
-5. AUDITABLE PROOF BUNDLES — SECONDS, NOT MONTHS
-   Verifiable proof produced on demand, not through weeks of forensic reconstruction.
-
-V. THE ROSÉ EXECUTION LEDGER
-
-Required Property → ROSÉ Implementation:
-• Native agent identity → Non-transferable cryptographic identity at execution (no shared accounts)
-• Hardware timestamps → TimeBeat HSM-grade precision timestamps
-• Immutable ordering → ROKO L1 substrate with consensus-level finality
-• Governance immutability → Selfient smart contracts lock rules at execution
-• On-demand proof bundles → Matric notary artifacts + Fortémi queryable records
-
-VI. CONCLUSION
-
-The architectural answer is not a better log. It is a cryptographic execution ledger that makes every agent action provably accountable — by identity, by sequence, by governance rule, by verified time.
-
-"Proof, Not Promise. The organizations that scale agentic AI with confidence will be those that can prove what their agents did — not merely assert that their logs suggest it probably happened correctly."
-
-────────────────────────────────────────────
-
-ABOUT ROSÉ & SELFIENT.XYZ
-ROSÉ is the Regulated Ordered and Signed Execution partnership.
-The partnership includes Selfient.xyz · Matric · ROKO.Network · Latitude.sh · Fortémi · TimeBeat
-info@selfient.com · selfient.xyz
-
-References: CSA, Identity and Access Gaps in the Age of Autonomous AI (March 2026, n=228);
-CSA/Strata Identity research (February 2026); Gartner Agentic AI Forecast 2027.
-© 2026 ROSÉ Partnership. All rights reserved. Privileged and Confidential.`;
+  const body = bodyEl ? nodeToText(bodyEl) : '';
+  const content = header + body;
 
   const blob = new Blob([content], { type: 'text/plain' });
   const url  = URL.createObjectURL(blob);
