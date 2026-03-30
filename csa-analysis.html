@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proof, Not Promise · ROSÉ Partnership</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Cinzel:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rose:#CC3562; --rose-light:#E05080; --rose-dark:#8B1030;
+      --gold:#C9A96E; --ink:#040104; --ink-2:#0A0208; --ink-3:#12050D;
+      --text:#EDE8E3; --muted:#9A8A90;
+      --border:rgba(204,53,98,0.2); --border-soft:rgba(204,53,98,0.12);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--ink); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
+    .top-rule { height: 1px; background: linear-gradient(to right, transparent, var(--rose-dark), transparent); }
+    .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 3rem; border-bottom: 1px solid var(--border); }
+    .nav-back { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+    .nav-back:hover { color: var(--rose-light); }
+    .nav-wordmark { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; letter-spacing: 0.35em; color: var(--rose); opacity: 0.8; }
+    .paper-wrap { max-width: 780px; margin: 0 auto; padding: 5rem 2rem 8rem; }
+    .eyebrow { font-family: 'Cinzel', serif; font-size: 0.63rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.2rem; }
+    h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 300; line-height: 1.15; color: var(--text); margin-bottom: 0.6rem; }
+    h1 em { font-style: italic; color: var(--rose-light); }
+    .subtitle { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--muted); line-height: 1.6; margin-bottom: 0.3rem; }
+    .rule { width: 60px; height: 1px; background: var(--rose-dark); margin: 1.8rem 0; }
+    .body-text { font-family: 'Cormorant Garamond', serif; font-size: 1.08rem; line-height: 1.9; color: var(--muted); }
+    p { margin-bottom: 1.5rem; }
+    h2 { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin: 3rem 0 1.2rem; }
+    h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; color: var(--text); margin: 2rem 0 0.8rem; }
+    .pullquote { font-size: 1.1rem; color: var(--text); font-style: italic; border-left: 2px solid var(--rose-dark); padding: 1.2rem 1.5rem; margin: 2rem 0; line-height: 1.75; background: rgba(139,16,48,0.06); }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5px; background: rgba(204,53,98,0.15); margin: 2rem 0; }
+    .stat-cell { background: var(--ink-2); padding: 2rem 1.5rem; text-align: center; }
+    .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 3.5rem; font-weight: 300; color: var(--rose); line-height: 1; margin-bottom: 0.5rem; text-shadow: 0 0 30px rgba(204,53,98,0.3); }
+    .stat-label { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+    .stat-source { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; color: var(--gold); text-transform: uppercase; margin-top: 0.6rem; }
+    .obs-box { border: 1px solid var(--border); background: rgba(201,169,110,0.04); padding: 1.8rem 2rem; margin: 2rem 0; }
+    .obs-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 0.8rem; }
+    .obs-text { font-size: 1rem; line-height: 1.8; color: var(--text); font-family: 'Cormorant Garamond', serif; }
+    .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0 2rem; font-size: 0.85rem; }
+    .data-table th { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); padding: 0.8rem 1rem; border-bottom: 1px solid var(--border); text-align: left; }
+    .data-table td { padding: 0.85rem 1rem; border-bottom: 1px solid var(--border-soft); color: var(--muted); vertical-align: top; line-height: 1.65; font-family: 'Cormorant Garamond', serif; font-size: 1rem; }
+    .data-table td strong { color: var(--text); display: block; margin-bottom: 0.2rem; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; }
+    .data-table tr:last-child td { border-bottom: none; }
+    .property { padding: 1.8rem 0; border-bottom: 1px solid var(--border-soft); }
+    .property:last-child { border-bottom: none; }
+    .property-num { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 300; color: var(--rose-dark); line-height: 1; margin-bottom: 0.3rem; }
+    .property-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; color: var(--text); margin-bottom: 0.7rem; }
+    ul.rose-list { list-style: none; margin-bottom: 1.5rem; }
+    ul.rose-list li { padding: 0.6rem 0 0.6rem 1.6rem; border-bottom: 1px solid var(--border-soft); position: relative; font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; line-height: 1.7; }
+    ul.rose-list li::before { content: '◈'; position: absolute; left: 0; color: var(--rose); font-size: 0.7rem; top: 0.75rem; }
+    ul.rose-list li:last-child { border-bottom: none; }
+    ul.rose-list li strong { color: var(--text); }
+    .cta-block { border: 1px solid var(--border); background: rgba(204,53,98,0.04); padding: 2.5rem; margin-top: 4rem; text-align: center; }
+    .cta-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
+    .cta-about { font-size: 0.9rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn-primary { background: linear-gradient(135deg, var(--rose-dark), var(--rose)); color: var(--text); border: none; padding: 0.9rem 2.4rem; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: opacity 0.3s; }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-outline { background: transparent; color: var(--gold); border: 1px solid rgba(201,169,110,0.4); padding: 0.9rem 2.4rem; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: border-color 0.3s; }
+    .btn-outline:hover { border-color: var(--gold); }
+    .ornament { text-align: center; padding: 2rem 0; color: var(--rose-dark); letter-spacing: 0.8em; opacity: 0.45; }
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 3rem; text-align: center; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); opacity: 0.55; }
+    @media(max-width:700px) {
+      .nav-bar { padding: 1rem 1.5rem; }
+      .paper-wrap { padding: 3rem 1.5rem 6rem; }
+      .stat-grid { grid-template-columns: 1fr; }
+      .data-table { display: block; overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+<div class="top-rule"></div>
+<nav class="nav-bar">
+  <a href="index.html" class="nav-back">← ROSÉ Partnership</a>
+  <span class="nav-wordmark">ROSÉ</span>
+</nav>
+
+<div class="paper-wrap">
+  <p class="eyebrow">White Paper · Security &amp; Identity · Q1 2026 · Privileged and Confidential</p>
+  <h1>Proof, Not Promise:<br><em>Cryptographic Execution Identity for Autonomous AI</em></h1>
+  <p class="subtitle">Why Identity and Access Management Was Not Built for Agents — and What a Cryptographic Execution Ledger Changes</p>
+  <p style="font-family:'Cinzel',serif;font-size:0.58rem;letter-spacing:0.2em;color:var(--muted);text-transform:uppercase;margin-top:0.5rem;">Published by Selfient.xyz · ROSÉ Partnership</p>
+  <div class="rule"></div>
+
+  <div class="body-text">
+
+    <h2>Abstract</h2>
+    <p>Autonomous AI agents are no longer a roadmap item. They are operating in production environments today, executing consequential decisions across hiring, payments, security policy, and operational control — often under borrowed identities, with access privileges inherited from human accounts, and without any mechanism to produce non-repudiable proof of what they did, when, and under what rules.</p>
+    <p>This paper examines the structural incompatibility between traditional Identity and Access Management (IAM) architectures and the operational characteristics of autonomous AI agents. Drawing on March 2026 survey data from the Cloud Security Alliance and the February 2026 CSA/Strata Identity research, it maps the specific failure modes that arise when agent identity is borrowed rather than native — and when execution records are logs rather than cryptographic proof.</p>
+    <p>The central argument is architectural, not merely procedural: the governance gap in autonomous AI cannot be closed by extending existing IAM frameworks. It requires a fundamentally different primitive — one that binds cryptographic identity to execution events at the moment they occur, producing immutable, verifiable proof that satisfies regulators, courts, auditors, and incident response teams alike.</p>
+
+    <h2>I. The Production Reality — Agents Are Already Running</h2>
+    <p>The enterprise conversation about autonomous AI agents shifted decisively in 2025 from feasibility to deployment. The question is no longer whether organizations will run agents in production — they already are. The question is whether the infrastructure assumptions beneath those agents are sound.</p>
+    <p>The March 2026 Cloud Security Alliance survey, <em>Identity and Access Gaps in the Age of Autonomous AI</em> (n=228 IT and security leaders), provides the most current quantitative snapshot of where enterprise deployments actually stand.</p>
+
+    <div class="stat-grid">
+      <div class="stat-cell">
+        <div class="stat-num">85%</div>
+        <div class="stat-label">running agents in production</div>
+        <div class="stat-source">CSA · March 2026 · n=228</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">68%</div>
+        <div class="stat-label">cannot distinguish agent from human in logs</div>
+        <div class="stat-source">CSA · March 2026 · n=228</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">18%</div>
+        <div class="stat-label">highly confident in IAM for agent identities</div>
+        <div class="stat-source">CSA · March 2026 · n=228</div>
+      </div>
+    </div>
+
+    <p>Those three numbers, read in sequence, describe a security posture that should concern every CISO operating at scale. The overwhelming majority of organizations are running agents. More than two-thirds cannot tell, from their own logs, whether a given action was taken by a human or an agent. And fewer than one in five are highly confident that their IAM infrastructure adequately governs agent identities.</p>
+    <p>The February 2026 CSA/Strata Identity research adds further texture: only 28% of organizations report the ability to reliably trace agent actions across environments. Traceability is not an aspirational capability — it is the minimum threshold for meaningful incident response, regulatory compliance, and forensic defensibility. More than seven in ten enterprises currently operating autonomous AI agents in production cannot meet that threshold.</p>
+    <div class="pullquote">85% of organizations are running autonomous AI agents in production. 68% cannot tell, from their own logs, whether a given action was taken by a human or an agent.</div>
+
+    <h2>II. The Identity Architecture Problem — Why IAM Was Not Built for Agents</h2>
+
+    <h3>2.1 The Human-Centric Identity Model</h3>
+    <p>Contemporary IAM frameworks — whether built on LDAP, OAuth 2.0, SAML, or zero-trust ZTNA architectures — share a common design premise: the identity subject is a human being, or a static, predictable workload acting on behalf of a human being. Autonomous AI agents break every one of these assumptions simultaneously. An agent's identity is rarely native — it is almost universally borrowed from an existing account: a service principal, a shared workload identity, or, in the cases that should alarm every security architect, a human user account.</p>
+
+    <div class="obs-box">
+      <div class="obs-label">Architectural Observation</div>
+      <p class="obs-text">The problem is not that organizations are managing agents badly within their existing IAM frameworks. The problem is that the IAM framework was designed for a class of principal that agents are not — and no amount of policy refinement within that framework resolves the structural mismatch.</p>
+    </div>
+
+    <h3>2.2 The Borrowed Identity Attack Surface</h3>
+    <table class="data-table">
+      <thead><tr><th>Failure Mode</th><th>Security and Compliance Implication</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Attribution loss</strong>Log entries become ambiguous — "which principal performed this action?" cannot be answered with confidence.</td><td>Incident response timelines extend dramatically. Root cause isolation becomes forensic archaeology.</td></tr>
+        <tr><td><strong>Blast radius amplification</strong>An agent operating under a privileged service account inherits the full access scope of that account.</td><td>A single misbehaving or compromised agent can move laterally across the entire blast radius of the borrowed credential.</td></tr>
+        <tr><td><strong>Least privilege violation</strong>Agents routinely receive more access than necessary — because access is provisioned for the identity, not the task.</td><td>Dynamic, task-scoped access management does not exist in most current IAM implementations.</td></tr>
+        <tr><td><strong>Non-repudiation failure</strong>When a consequential action is attributed to a shared identity, neither the organization nor any regulator can establish that a specific agent took a specific action under specific rules.</td><td>That is a non-repudiation failure by definition — and a liability in every regulatory framework that follows.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>2.3 The Log Fidelity Problem</h3>
+    <p>Even where organizations maintain comprehensive logs, the 68% figure reveals a fidelity problem, not a volume problem. A log entry that records an action against a shared identity does not establish what actually happened. It establishes that something happened under a particular credential at a particular server clock time. Those are not equivalent propositions.</p>
+    <ul class="rose-list">
+      <li><strong>Identity ambiguity:</strong> The log records the credential, not the agent. In environments where multiple agents share a service principal, log entries are categorically unable to establish which agent acted.</li>
+      <li><strong>Timestamp unreliability:</strong> Server clock timestamps are subject to drift, NTP misconfiguration, and — in adversarial scenarios — manipulation. They do not constitute hardware-attested time.</li>
+      <li><strong>Context absence:</strong> Logs record actions, not the reasoning, inputs, model state, or governance rules that produced them. Reconstructing the decision context from a log entry is, in most current architectures, impossible.</li>
+      <li><strong>Mutability:</strong> Standard log infrastructure does not produce tamper-evident records. In a post-incident or litigation context, the provenance of log data is itself challengeable.</li>
+    </ul>
+    <div class="pullquote">A log entry is a record that something happened. Cryptographic proof is evidence of what happened, in what order, under what rules, at a verifiable point in time. These are not the same thing — and the difference is the entire gap between a defensible organization and an indefensible one.</div>
+
+    <h2>III. The Regulatory Convergence — Why This Gap Is Now a Liability</h2>
+
+    <h3>3.1 The EU AI Act</h3>
+    <p>The EU AI Act's classification of employment-related AI as high-risk carries specific technical obligations that the borrowed-identity, log-based architecture cannot satisfy. The Act requires automatic logging throughout the system lifecycle sufficient to identify risks and track modifications — not simply to record that actions occurred. When 68% of organizations cannot distinguish agent from human actions in their logs, satisfying an EU AI Act audit with those same logs is not credible.</p>
+
+    <h3>3.2 Employment and Algorithmic Decision Law</h3>
+    <ul class="rose-list">
+      <li><strong>New York City AEDT Law:</strong> Requires bias audits and candidate notification for automated employment decision tools, with audit documentation that must withstand regulatory inspection.</li>
+      <li><strong>Illinois AI Video Interview Act:</strong> Requires disclosure and consent for AI analysis of candidate videos, with retention and audit obligations.</li>
+      <li><strong>Colorado AI Act:</strong> Imposes impact assessment and transparency requirements on high-risk AI decisions, including employment decisions.</li>
+      <li><strong>EU GDPR Article 22:</strong> Confers the right not to be subject to solely automated decisions — which requires the organization to produce the decision record and demonstrate it can be meaningfully reviewed.</li>
+    </ul>
+    <div class="obs-box">
+      <div class="obs-label">Compounding Exposure</div>
+      <p class="obs-text">Each of these frameworks independently requires documentation that the current log-based, borrowed-identity architecture cannot reliably produce. In combination — and an organization hiring across jurisdictions faces all of them simultaneously — the exposure is not additive. It compounds.</p>
+    </div>
+
+    <h3>3.3 The Insurance Dimension</h3>
+    <p>Insurers covering AI-related operational failures are beginning to require documentation of agent governance infrastructure as a condition of coverage. Organizations that cannot demonstrate native agent identity, tamper-evident execution records, and auditable governance rules face either coverage exclusions or premium structures that price the gap directly.</p>
+    <p>The Gartner projection that more than 40% of agentic AI projects will be canceled by the end of 2027 due to inadequate risk controls is, in part, a reflection of this dynamic: organizations discovering, after deployment, that their agent governance infrastructure is not insurable at acceptable cost.</p>
+
+    <h2>IV. The Failure Mode Taxonomy</h2>
+    <table class="data-table">
+      <thead><tr><th>Failure Mode</th><th>Proximate Cause</th><th>Downstream Impact</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Attribution failure</strong>in incident response</td><td>Shared identity: log cannot establish which agent acted</td><td>Root cause isolation takes weeks; damage amplifies during reconstruction delay</td></tr>
+        <tr><td><strong>Regulatory non-compliance</strong></td><td>Logs insufficient to satisfy EU AI Act or AEDT audit</td><td>Fines up to 3–7% of global turnover; mandatory remediation orders</td></tr>
+        <tr><td><strong>Lateral movement</strong>from compromised agent</td><td>Excessive inherited privileges from borrowed account</td><td>Blast radius limited only by the scope of the borrowed credential</td></tr>
+        <tr><td><strong>Indefensible employment dispute</strong></td><td>No cryptographic record of decision rules at execution time</td><td>Cannot demonstrate compliance with hiring law; settlement exposure</td></tr>
+        <tr><td><strong>Insurance coverage gap</strong></td><td>No auditable agent governance documentation</td><td>Exclusions or uncovered losses on AI-related operational failures</td></tr>
+        <tr><td><strong>Governance policy drift</strong></td><td>No mechanism to prove which rules governed which execution event</td><td>Policy changes retroactively applied; audit integrity compromised</td></tr>
+      </tbody>
+    </table>
+    <p>The common thread across every row is not a configuration failure, a policy gap, or an operator error. It is a missing primitive: the ability to produce, at the moment of execution, a cryptographically bound, tamper-evident record that ties a specific agent identity to a specific action taken under specific, immutable rules at a verified point in time.</p>
+
+    <h2>V. Required Properties of an Execution Ledger</h2>
+    <p>The architectural response to the problem above is not an extension of existing IAM. It is a new primitive that operates at the execution layer — below the application, above the substrate — and produces the cryptographic guarantees that neither logs nor conventional identity frameworks can provide.</p>
+
+    <div class="property">
+      <div class="property-num">01</div>
+      <div class="property-title">Native Cryptographic Agent Identity</div>
+      <p>Each agent must carry an identity that is cryptographically distinct, non-inherited, and non-transferable — provisioned for the agent, not borrowed from a human or shared workload principal. This property alone eliminates the attribution ambiguity that renders 68% of enterprise logs forensically unreliable.</p>
+    </div>
+    <div class="property">
+      <div class="property-num">02</div>
+      <div class="property-title">Hardware-Attested Timestamping</div>
+      <p>Timestamps must be derived from hardware-attested time, not server clocks. The Precision Time Protocol (PTP) and GPS-synchronized time sources provide the hardware attestation layer that transforms a timestamp from a metadata annotation into an auditable fact that satisfies regulatory and legal evidentiary standards.</p>
+    </div>
+    <div class="property">
+      <div class="property-num">03</div>
+      <div class="property-title">Immutable Execution Ordering</div>
+      <p>In multi-agent workflows, the sequence of execution events is often as legally significant as the events themselves. An execution ledger must establish and preserve ordering cryptographically — requiring consensus-level guarantees, not application-layer sequencing that can be rewritten by anyone with database access.</p>
+    </div>
+    <div class="property">
+      <div class="property-num">04</div>
+      <div class="property-title">Governance Rule Immutability at Execution</div>
+      <p>The governance rules in force at execution time must be locked as part of the cryptographic proof bundle for that event — permanently and immutably, regardless of subsequent policy changes. The rules that governed a hiring decision on a specific date must be recoverable from the ledger entry for that decision, forever.</p>
+    </div>
+    <div class="property">
+      <div class="property-num">05</div>
+      <div class="property-title">Auditable Proof Bundles — Seconds, Not Months</div>
+      <p>An execution ledger must produce verifiable proof bundles that answer the regulator's question — what happened, when, under what rules, in what order — in seconds. The ability to produce proof on demand is what distinguishes an infrastructure investment from a forensic archaeology project.</p>
+    </div>
+
+    <div class="pullquote">The question is not whether you can eventually reconstruct what your agent did. It is whether you can prove it — cryptographically, immediately, to a standard that satisfies a court.</div>
+
+    <h2>VI. From Failure to Intelligence — Proof as Operational Resilience</h2>
+    <p>In a system equipped with an execution ledger, every agent failure becomes high-fidelity training data. Root cause is isolated in minutes. The failure mode is characterized precisely. The governance policy, the model prompt, or the oversight rule that needs adjustment is identified with specificity rather than estimated from fragmentary evidence.</p>
+    <p>Organizations that fear deploying more capable agents because the blast radius of failure is unknown are, in significant part, reacting to the absence of proof infrastructure. When every execution event is cryptographically bounded, the blast radius of failure is no longer unknown — it is precisely recoverable. That knowledge changes the risk calculus materially.</p>
+
+    <h2>VII. The ROSÉ Execution Ledger</h2>
+    <p>The five properties described above are implemented in the ROSÉ Execution Ledger — a purpose-built infrastructure layer developed by the ROSÉ Partnership, a consortium of six specialized technology systems assembled by Selfient.xyz. ROSÉ was designed from first principles for the operational reality that autonomous agents are executing consequential decisions at machine speed and at enterprise scale.</p>
+
+    <table class="data-table">
+      <thead><tr><th>Required Property</th><th>Current Gap</th><th>ROSÉ Implementation</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Native cryptographic agent identity</strong></td><td>Agents borrow service accounts; attribution is ambiguous</td><td>Each agent carries a non-transferable cryptographic identity bound at execution — no shared accounts</td></tr>
+        <tr><td><strong>Hardware-attested timestamps</strong></td><td>Server clock timestamps are unreliable and potentially manipulable</td><td>TimeBeat provides HSM-grade precision timestamps independent of server infrastructure</td></tr>
+        <tr><td><strong>Immutable execution ordering</strong></td><td>Log sequencing is application-layer and rewritable by privileged users</td><td>ROKO provides L1 substrate ordering with consensus-level finality; sequence is cryptographically sealed</td></tr>
+        <tr><td><strong>Governance rule immutability</strong></td><td>Policy changes can retroactively alter the apparent governance context of historical decisions</td><td>Selfient smart contracts lock governance rules as part of the execution proof bundle at the moment of execution</td></tr>
+        <tr><td><strong>On-demand proof bundles</strong></td><td>Forensic reconstruction takes weeks to months from distributed logs</td><td>Matric notary artifacts and Fortémi queryable records produce verifiable proof bundles on demand</td></tr>
+      </tbody>
+    </table>
+
+    <h2>VIII. Conclusion</h2>
+    <p>The Cloud Security Alliance data from early 2026 describes an industry in the early stages of a reckoning that security architects have seen before, in different forms: a powerful new class of system deployed at scale before the governance infrastructure appropriate to it was in place. The difference, this time, is that the systems are goal-directed, the decisions are consequential, and the regulatory environment demanding proof of governance is not emerging — it is here.</p>
+    <p>The architectural answer is not a better log. It is a cryptographic execution ledger that makes every agent action provably accountable — by identity, by sequence, by governance rule, by verified time. Organizations that build or adopt that infrastructure before enforcement pressure arrives will find themselves in a categorically different position than those that build it in response to a finding.</p>
+    <div class="pullquote">Proof, Not Promise. The organizations that scale agentic AI with confidence will be those that can prove what their agents did — not merely assert that their logs suggest it probably happened correctly.</div>
+
+    <div class="cta-block">
+      <p class="cta-label">About ROSÉ &amp; Selfient.xyz</p>
+      <p class="cta-about">ROSÉ is the Regulated Ordered and Signed Execution partnership — purpose-built execution proof infrastructure for autonomous AI. Led by Helen Sharron, CEO and Co-Founder, a 25-year veteran of enterprise technology leadership and two-time founder. The partnership includes Selfient.xyz · Matric · ROKO.Network · Latitude.sh · Fortémi · TimeBeat</p>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:0.82rem;color:var(--muted);margin-bottom:1.5rem;font-style:italic;">References: CSA, <em>Identity and Access Gaps in the Age of Autonomous AI</em> (March 2026, n=228); CSA/Strata Identity research (February 2026); Gartner Agentic AI Forecast 2027.</p>
+      <div class="btn-row">
+        <a href="index.html#contact" class="btn-primary">Request a Briefing</a>
+        <button onclick="downloadPaper()" class="btn-outline">↓ &nbsp; Download PDF</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+<footer>© 2026 ROSÉ Partnership &nbsp;·&nbsp; Selfient · Matric · Roko.network · Latitude.sh · Fortémi · TimeBeat &nbsp;·&nbsp; This paper does not constitute legal advice.</footer>
+
+<script>
+function downloadPaper() {
+  const content = `ROSÉ PARTNERSHIP — WHITE PAPER
+Proof, Not Promise: Cryptographic Execution Identity for Autonomous AI
+Why Identity and Access Management Was Not Built for Agents — and What a Cryptographic Execution Ledger Changes
+Q1 2026 · Privileged and Confidential · selfient.xyz · info@selfient.com
+
+────────────────────────────────────────────
+
+ABSTRACT
+
+Autonomous AI agents are operating in production environments today, executing consequential decisions under borrowed identities, without any mechanism to produce non-repudiable proof of what they did, when, and under what rules.
+
+The central argument is architectural: the governance gap cannot be closed by extending existing IAM frameworks. It requires a cryptographic execution ledger.
+
+────────────────────────────────────────────
+
+I. THE PRODUCTION REALITY — CSA SURVEY DATA (March 2026, n=228)
+
+• 85% of organizations running agents in production
+• 68% cannot distinguish agent from human in logs
+• 18% highly confident in IAM for agent identities
+• 28% can reliably trace agent actions across environments
+
+II. WHY IAM WAS NOT BUILT FOR AGENTS
+
+Contemporary IAM frameworks share a design premise: the identity subject is a human. Autonomous AI agents break every assumption. Agent identity is almost universally borrowed — from service principals, shared workload identities, or human user accounts.
+
+FAILURE MODES FROM BORROWED IDENTITY:
+• Attribution loss — logs cannot establish which principal acted
+• Blast radius amplification — agent inherits full account privileges
+• Least privilege violation — access provisioned for identity, not task
+• Non-repudiation failure — consequential actions cannot be attributed to a specific agent
+
+LOG FIDELITY DEFICIENCIES:
+• Identity ambiguity — credential recorded, not agent
+• Timestamp unreliability — server clocks are manipulable
+• Context absence — governance rules not captured
+• Mutability — logs are not tamper-evident
+
+"A log entry is a record that something happened. Cryptographic proof is evidence of what happened, in what order, under what rules, at a verifiable point in time."
+
+III. THE REGULATORY CONVERGENCE
+
+EU AI Act: Requires automatic logging sufficient to identify risks and track modifications. When 68% of organizations cannot distinguish agent from human actions, satisfying an EU AI Act audit with those logs is not credible.
+
+Additional frameworks: NYC AEDT Law · Illinois AI Video Interview Act · Colorado AI Act · EU GDPR Article 22
+
+Each framework independently requires documentation the current log-based architecture cannot reliably produce. In combination, exposure compounds.
+
+IV. THE FIVE REQUIRED PROPERTIES OF AN EXECUTION LEDGER
+
+1. NATIVE CRYPTOGRAPHIC AGENT IDENTITY
+   Each agent carries a non-inherited, non-transferable cryptographic identity.
+
+2. HARDWARE-ATTESTED TIMESTAMPING
+   Timestamps derived from hardware-attested time (PTP/GPS) — not server clocks.
+
+3. IMMUTABLE EXECUTION ORDERING
+   Consensus-level ordering guarantees; sequence cannot be rewritten by privileged users.
+
+4. GOVERNANCE RULE IMMUTABILITY AT EXECUTION
+   Rules in force at execution time locked permanently as part of the proof bundle.
+
+5. AUDITABLE PROOF BUNDLES — SECONDS, NOT MONTHS
+   Verifiable proof produced on demand, not through weeks of forensic reconstruction.
+
+V. THE ROSÉ EXECUTION LEDGER
+
+Required Property → ROSÉ Implementation:
+• Native agent identity → Non-transferable cryptographic identity at execution (no shared accounts)
+• Hardware timestamps → TimeBeat HSM-grade precision timestamps
+• Immutable ordering → ROKO L1 substrate with consensus-level finality
+• Governance immutability → Selfient smart contracts lock rules at execution
+• On-demand proof bundles → Matric notary artifacts + Fortémi queryable records
+
+VI. CONCLUSION
+
+The architectural answer is not a better log. It is a cryptographic execution ledger that makes every agent action provably accountable — by identity, by sequence, by governance rule, by verified time.
+
+"Proof, Not Promise. The organizations that scale agentic AI with confidence will be those that can prove what their agents did — not merely assert that their logs suggest it probably happened correctly."
+
+────────────────────────────────────────────
+
+ABOUT ROSÉ & SELFIENT.XYZ
+ROSÉ is the Regulated Ordered and Signed Execution partnership.
+The partnership includes Selfient.xyz · Matric · ROKO.Network · Latitude.sh · Fortémi · TimeBeat
+info@selfient.com · selfient.xyz
+
+References: CSA, Identity and Access Gaps in the Age of Autonomous AI (March 2026, n=228);
+CSA/Strata Identity research (February 2026); Gartner Agentic AI Forecast 2027.
+© 2026 ROSÉ Partnership. All rights reserved. Privileged and Confidential.`;
+
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url;
+  a.download = 'ROSE-Proof-Not-Promise-Cryptographic-Execution-Identity-2026.txt';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
