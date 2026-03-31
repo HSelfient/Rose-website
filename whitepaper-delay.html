@@ -145,7 +145,7 @@
       <p class="cta-about">ROSÉ is the Regulated Ordered and Signed Execution partnership — the infrastructure with the ability to prove the work of AI agents. The partnership includes Selfient.xyz · Matric · ROKO.Network · Latitude.sh · Fortémi · TimeBeat</p>
       <div class="btn-row">
         <a href="index.html#contact" class="btn-primary">Request a Briefing</a>
-        <button onclick="downloadPaper()" class="btn-outline">↓ &nbsp; Download PDF</button>
+        <a href="rose-whitepaper-euaiact-2026.pdf" download class="btn-outline">↓ &nbsp; Download PDF</a>
       </div>
     </div>
   </div>
@@ -154,87 +154,5 @@
 <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
 <footer>© 2026 ROSÉ Partnership &nbsp;·&nbsp; Selfient · Matric · Roko.network · Latitude.sh · Fortémi · TimeBeat &nbsp;·&nbsp; This paper does not constitute legal advice.</footer>
 
-<script>
-function downloadPaper() {
-  const content = `ROSÉ PARTNERSHIP
-What the EU AI Act Delay Actually Means
-And Why "Show Your Work" Has Become the Only Defensible Position
-March 2026 · Privileged and Confidential
-selfient.xyz · info@selfient.com
-
-────────────────────────────────────────────
-
-On March 18th, 2026, EU Parliament committees voted to delay high-risk AI obligations to December 2027. Do not misinterpret this as sixteen months of breathing room. The delay is not a reprieve. It is a moment of clarity.
-
-I. WHAT JUST HAPPENED
-
-They did not repeal the EU AI Act. They did not reduce its ambition. They did not soften its penalties. They delayed the enforcement timeline for high-risk obligations.
-
-The regulatory vision remains intact. The system required to operationalize it does not.
-
-II. WHAT THE DELAY ACTUALLY MEANS
-
-The EU did not suspend accountability. What changed is not the obligation. It is the timing of formal enforcement mechanisms.
-
-In effect, regulators have created a new condition: a period in which compliance is not yet fully enforceable — but accountability for outcomes remains immediate.
-
-III. THE HIGH-RISK REALITY
-
-For organisations in employment, finance, and healthcare, AI systems are already making consequential decisions. The question remains: can those decisions be explained and defended when called into question?
-
-IV. WHY "SHOW YOUR WORK" REMAINS CENTRAL
-
-The EU AI Act demands organisations document how systems are designed, trace how decisions are made, monitor behaviour over time, reconstruct events after the fact, and demonstrate oversight and intervention capability.
-
-It is no longer sufficient to describe how a system should behave. Organisations must be able to demonstrate how it actually behaved.
-
-V. THE REGULATORY GAP
-
-Regulation assumes describable systems and predictable outcomes. Technology increasingly produces compositional systems and emergent behaviour. The delay is, in part, an acknowledgment of this gap. But the gap itself remains.
-
-VI. THE NEW STANDARD
-
-Not: "Did you design the system correctly?"
-But: "Can you show what happened when it acted?"
-
-This standard is not dependent on enforcement dates. Decisions have consequences.
-
-VII. WHY EXECUTION-LEVEL VISIBILITY BECOMES DECISIVE
-
-Organisations that invest in execution-level visibility will possess something far more valuable than compliance: defensibility.
-
-They will be able to:
-• Answer regulators with confidence
-• Respond to claims before they become litigation
-• Build trust with users and partners
-• Adapt systems in real time, rather than defend them after failure
-
-VIII. THE STRATEGIC DIVIDE
-
-Those who can explain their systems: able to operate confidently, scale across jurisdictions, withstand enforcement.
-
-Those who cannot: exposed to regulatory action, litigation, and loss of enterprise trust.
-
-IX. CONCLUSION
-
-The EU AI Act delay is not a reprieve. It is a moment of clarity.
-
-For high-risk organisations, the path forward is to prepare for a world in which every consequential AI decision must be explainable, traceable, and defensible. In the absence of certainty about what AI systems will do, the only durable strategy is to ensure that what they did can always be shown.
-
-────────────────────────────────────────────
-
-ABOUT ROSÉ & SELFIENT.XYZ
-ROSÉ is the Regulated Ordered and Signed Execution partnership.
-The partnership includes Selfient.xyz · Matric · ROKO.Network · Latitude.sh · Fortémi · TimeBeat
-info@selfient.com · selfient.xyz
-© 2026 ROSÉ Partnership. All rights reserved.`;
-
-  const blob = new Blob([content], { type: 'text/plain' });
-  const url  = URL.createObjectURL(blob);
-  const a    = document.createElement('a');
-  a.href = url; a.download = 'ROSE-EU-AI-Act-Delay-2026.txt'; a.click();
-  URL.revokeObjectURL(url);
-}
-</script>
 </body>
 </html>
