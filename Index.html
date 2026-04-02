@@ -483,6 +483,7 @@
     @media (max-width: 700px) {
       nav { padding: 0.5rem 1.5rem; }
       .nav-links { display: none; }
+      .hamburger { display: flex; }
       #value, #insights, #members, .quote-break, #contact { padding: 5rem 1.5rem; }
       footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1.5rem; text-align: center; }
       .euact-header, .euact-grid, .obligation-list { grid-template-columns: 1fr; }
@@ -492,6 +493,27 @@
       .value-card { border-right: 1px solid var(--border); }
       .value-card:nth-child(3) { border-bottom: 1px solid var(--border); }
     }
+
+    /* ── HAMBURGER & MOBILE NAV ── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; z-index: 200; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--rose-light); transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .nav-mobile { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(4,1,4,0.98); z-index: 150; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 6vw, 2rem); font-weight: 300; color: var(--text); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
+    .nav-mobile a:hover { color: var(--rose-light); }
+    .nav-mobile a.nav-cta { border: 1px solid var(--rose-dark); color: var(--rose-light); padding: 0.6rem 2rem; font-size: 1rem; }
+    /* ── MODAL CLOSE BUTTON — above hamburger, mobile-safe ── */
+    .modal-close {
+      position: fixed; top: 2rem; right: 2rem; z-index: 1010;
+      background: transparent; border: 1px solid var(--rose-dark); color: var(--muted);
+      padding: 0.5rem 1.2rem; font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+      cursor: pointer; transition: color 0.3s;
+    }
+    .modal-close:hover { color: var(--rose-light); }
   </style>
 </head>
 <body>
@@ -541,6 +563,21 @@
     <li><a href="#insights">Insights</a></li>
     <li><a href="#contact" class="nav-cta">Connect</a></li>
   </ul>
+  <!-- Hamburger — mobile only -->
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile nav overlay — includes Assessment link -->
+<nav class="nav-mobile" id="mobileNav">
+  <a href="#value" onclick="closeMenu()">About</a>
+  <a href="#execution" onclick="closeMenu()">How It Works</a>
+  <a href="#eu-act" onclick="closeMenu()">EU AI Act</a>
+  <a href="#members" onclick="closeMenu()">Federation</a>
+  <a href="compliance-assessment.html" onclick="closeMenu()">Assessment</a>
+  <a href="#insights" onclick="closeMenu()">Insights</a>
+  <a href="#contact" class="nav-cta" onclick="closeMenu()">Connect</a>
 </nav>
 
 <!-- ══ HERO ══ -->
@@ -1135,9 +1172,7 @@ at the moment an action occurs — trusted, ordered, and enterprise-ready.</p>
 <!-- ══ WHITE PAPER MODAL ══ -->
 <div id="wp-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(4,1,4,0.96);overflow-y:auto;align-items:flex-start;justify-content:center;padding:4rem 2rem;">
   <div style="max-width:780px;width:100%;margin:0 auto;position:relative;">
-    <button onclick="document.getElementById('wp-modal').style.display='none'"
-            style="position:fixed;top:2rem;right:2rem;background:transparent;border:1px solid var(--rose-dark);color:var(--muted);padding:0.5rem 1.2rem;font-family:'DM Sans',sans-serif;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:color 0.3s;"
-            onmouseover="this.style.color='#E05080'" onmouseout="this.style.color=''">✕ &nbsp; Close</button>
+    <button class="modal-close" onclick="document.getElementById('wp-modal').style.display='none'">✕ &nbsp; Close</button>
 
     <!-- Header -->
     <p style="font-family:'Cinzel',serif;font-size:0.65rem;letter-spacing:0.5em;color:#C9A96E;text-transform:uppercase;margin-bottom:1.5rem;">White Paper · ROSÉ Partnership · 2026</p>
@@ -1299,6 +1334,17 @@ at the moment an action occurs — trusted, ordered, and enterprise-ready.</p>
 </footer>
 
 <script>
+function toggleMenu(){
+  document.getElementById('hamburger').classList.toggle('open');
+  document.getElementById('mobileNav').classList.toggle('open');
+  document.body.style.overflow = document.getElementById('mobileNav').classList.contains('open') ? 'hidden' : '';
+}
+function closeMenu(){
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileNav').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 (function() {
   const canvas = document.getElementById('starfield');
   const ctx    = canvas.getContext('2d');
