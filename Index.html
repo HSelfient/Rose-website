@@ -482,26 +482,46 @@
     }
 
     /* ── HAMBURGER (base: hidden on desktop) ── */
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; z-index: 200; }
-    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--rose-light); transition: all 0.3s; }
-    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none;
+      padding: 12px; z-index: 200;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--rose-light); transition: all 0.3s; border-radius: 1px; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    /* ── MOBILE NAV OVERLAY (base: hidden) ── */
-    .nav-mobile { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(4,1,4,0.98); z-index: 300; flex-direction: column; align-items: center; justify-content: center; gap: 1.2rem; }
+    /* ── MOBILE NAV OVERLAY ── */
+    .nav-mobile {
+      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(4,1,4,0.98); z-index: 300;
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 1.2rem;
+    }
     .nav-mobile.open { display: flex; }
-    .nav-mobile a { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 4.5vw, 1.55rem); font-weight: 300; color: var(--text); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
-    .nav-mobile a:hover { color: var(--rose-light); }
+    .nav-mobile a {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 4.5vw, 1.55rem);
+      font-weight: 300; color: var(--text); text-decoration: none;
+      letter-spacing: 0.1em; transition: color 0.3s;
+      padding: 0.3rem 1rem;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .nav-mobile a:hover, .nav-mobile a:active { color: var(--rose-light); }
     .nav-mobile a.nav-cta { border: 1px solid var(--rose-dark); color: var(--rose-light); padding: 0.5rem 2rem; }
 
-    /* ── MODAL CLOSE BUTTON — top:5rem clears nav bar on all devices ── */
+    /* ── MODAL CLOSE — top:5rem clears nav on every device ── */
     .modal-close {
       position: fixed; top: 5rem; right: 2rem; z-index: 1010;
       background: transparent; border: 1px solid var(--rose-dark); color: var(--muted);
-      padding: 0.5rem 1.2rem; font-family: 'DM Sans', sans-serif;
+      padding: 0.6rem 1.4rem; font-family: 'DM Sans', sans-serif;
       font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
       cursor: pointer; transition: color 0.3s;
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
     }
     .modal-close:hover { color: var(--rose-light); }
 
@@ -569,20 +589,20 @@
     <li><a href="#contact" class="nav-cta">Connect</a></li>
   </ul>
   <!-- Hamburger — mobile only -->
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+  <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
 <!-- Mobile nav overlay — includes Assessment link -->
 <nav class="nav-mobile" id="mobileNav">
-  <a href="#value" onclick="closeMenu()">About</a>
-  <a href="#execution" onclick="closeMenu()">How It Works</a>
-  <a href="#eu-act" onclick="closeMenu()">EU AI Act</a>
-  <a href="#members" onclick="closeMenu()">Federation</a>
-  <a href="compliance-assessment.html" onclick="closeMenu()">Assessment</a>
-  <a href="#insights" onclick="closeMenu()">Insights</a>
-  <a href="#contact" class="nav-cta" onclick="closeMenu()">Connect</a>
+  <a href="#value">About</a>
+  <a href="#execution">How It Works</a>
+  <a href="#eu-act">EU AI Act</a>
+  <a href="#members">Federation</a>
+  <a href="compliance-assessment.html">Assessment</a>
+  <a href="#insights">Insights</a>
+  <a href="#contact" class="nav-cta">Connect</a>
 </nav>
 
 <!-- ══ HERO ══ -->
@@ -1349,6 +1369,22 @@ function closeMenu(){
   document.getElementById('mobileNav').classList.remove('open');
   document.body.style.overflow = '';
 }
+// Attach events via addEventListener — reliable on iOS Safari
+document.addEventListener('DOMContentLoaded', function() {
+  var hamburger = document.getElementById('hamburger');
+  if (hamburger) {
+    hamburger.addEventListener('click', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleMenu();
+    });
+  }
+  document.querySelectorAll('.nav-mobile a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      closeMenu();
+    });
+  });
+});
 
 (function() {
   const canvas = document.getElementById('starfield');
