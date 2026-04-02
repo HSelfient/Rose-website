@@ -492,7 +492,6 @@
       .members-header { grid-template-columns: 1fr; gap: 2rem; }
       .value-card { border-right: 1px solid var(--border); }
       .value-card:nth-child(3) { border-bottom: 1px solid var(--border); }
-      .modal-close { top: 4.5rem; right: 1rem; padding: 0.4rem 0.9rem; font-size: 0.68rem; }
     }
 
     /* ── HAMBURGER & MOBILE NAV ── */
@@ -501,7 +500,7 @@
     .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-    .nav-mobile { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(4,1,4,0.98); z-index: 150; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+    .nav-mobile { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(4,1,4,0.98); z-index: 300; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
     .nav-mobile.open { display: flex; }
     .nav-mobile a { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.4rem, 6vw, 2rem); font-weight: 300; color: var(--text); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
     .nav-mobile a:hover { color: var(--rose-light); }
@@ -515,6 +514,9 @@
       cursor: pointer; transition: color 0.3s;
     }
     .modal-close:hover { color: var(--rose-light); }
+    @media (max-width: 700px) {
+      .modal-close { top: 4.5rem; right: 1rem; padding: 0.4rem 0.9rem; font-size: 0.68rem; }
+    }
   </style>
 </head>
 <body>
@@ -1165,7 +1167,7 @@ at the moment an action occurs — trusted, ordered, and enterprise-ready.</p>
 
     <a href="#whitepaper" class="insight-card" id="whitepaper" onclick="document.getElementById('wp-modal').style.display='flex';return false;">
       <p class="insight-type">White Paper — ROSÉ Federation</p>
-      <h3 class="insight-title">The Effin Black-Box AI Problem You Likely Have</h3>
+      <h3 class="insight-title">The Black-Box AI Problem You Likely Have</h3>
       <p class="insight-excerpt">AI agents are already making decisions that can cost companies money, trigger liability, and change human lives. Most enterprises still cannot prove what those systems did. This white paper examines why logs are not proof — and what provable execution actually requires.</p>
       <p class="insight-meta">White Paper &nbsp;·&nbsp; 8 min read &nbsp;·&nbsp; 2026</p>
     </a>
