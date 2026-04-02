@@ -91,3 +91,13 @@ Co-Founder Helen Sharron. The website is deployed on GoDaddy via GitHub.
 - The GitHub raw URL format is the correct source: `https://raw.githubusercontent.com/[username]/[repo]/main/[filename]`
 - Claude can fetch raw GitHub URLs directly using the web tool — no manual upload required when a raw URL is provided.
 - Workflow: download from GitHub → upload to Claude → Claude returns corrected file → upload back to GitHub.
+
+---
+
+## Mobile Navigation — Non-Negotiable
+
+- Every page must include a fully functional mobile hamburger menu. No page is permitted to show a blank or inaccessible navigation on small screens.
+- The mobile nav overlay must contain every link that the desktop nav contains — including the Assessment link and the Connect CTA. No orphaned links between desktop and mobile.
+- The hamburger button (☰) must carry z-index: 200. Modal close buttons must carry z-index: 1010 — always above the hamburger, never competing with it.
+- On mobile viewports, modal close buttons must shift downward (top: 4.5rem minimum) to clear the fixed nav bar. This rule applies to every modal on every page.
+- When reviewing any page for mobile readiness, verify: (1) hamburger is present and functional, (2) all nav links appear in the mobile overlay, (3) no close button collides with the hamburger or nav bar.
