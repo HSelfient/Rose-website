@@ -75,3 +75,19 @@ Co-Founder Helen Sharron. The website is deployed on GoDaddy via GitHub.
 - Do not generate PDFs from text when a source PDF exists.
 - Do not rewrite in full when a surgical edit will serve.
 - Do not produce any page that lacks a navigable return path to the homepage.
+
+---
+
+## Code Quality
+
+- Before delivering any HTML, JavaScript, or CSS, flag any function, style rule, or element that is defined but has no reachable call path or selector match. Dead code is a maintenance hazard and a source of invisible bugs.
+- Legal disclaimers must appear at every point where a result, score, or risk assessment is presented to the user — not only at the final results screen. If a triage result, a partial score, or any assessment output is shown, the disclaimer appears there as well.
+
+---
+
+## File Sourcing — Non-Negotiable
+
+- Always work from files downloaded directly from GitHub, not from content pasted into the chat interface. Chat pastes may be truncated, stale, or behind the canonical version.
+- The GitHub raw URL format is the correct source: `https://raw.githubusercontent.com/[username]/[repo]/main/[filename]`
+- Claude can fetch raw GitHub URLs directly using the web tool — no manual upload required when a raw URL is provided.
+- Workflow: download from GitHub → upload to Claude → Claude returns corrected file → upload back to GitHub.
