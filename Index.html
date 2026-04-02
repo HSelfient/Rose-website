@@ -480,6 +480,31 @@
     @media (max-width: 1000px) {
       .member-cards { grid-template-columns: 1fr 1fr; }
     }
+
+    /* ── HAMBURGER (base: hidden on desktop) ── */
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; z-index: 200; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--rose-light); transition: all 0.3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* ── MOBILE NAV OVERLAY (base: hidden) ── */
+    .nav-mobile { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(4,1,4,0.98); z-index: 300; flex-direction: column; align-items: center; justify-content: center; gap: 1.2rem; }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 4.5vw, 1.55rem); font-weight: 300; color: var(--text); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
+    .nav-mobile a:hover { color: var(--rose-light); }
+    .nav-mobile a.nav-cta { border: 1px solid var(--rose-dark); color: var(--rose-light); padding: 0.5rem 2rem; }
+
+    /* ── MODAL CLOSE BUTTON — top:5rem clears nav bar on all devices ── */
+    .modal-close {
+      position: fixed; top: 5rem; right: 2rem; z-index: 1010;
+      background: transparent; border: 1px solid var(--rose-dark); color: var(--muted);
+      padding: 0.5rem 1.2rem; font-family: 'DM Sans', sans-serif;
+      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+      cursor: pointer; transition: color 0.3s;
+    }
+    .modal-close:hover { color: var(--rose-light); }
+
     @media (max-width: 700px) {
       nav { padding: 0.5rem 1.5rem; }
       .nav-links { display: none; }
@@ -494,26 +519,6 @@
       .value-card:nth-child(3) { border-bottom: 1px solid var(--border); }
     }
 
-    /* ── HAMBURGER & MOBILE NAV ── */
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; z-index: 200; }
-    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--rose-light); transition: all 0.3s; }
-    .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .hamburger.open span:nth-child(2) { opacity: 0; }
-    .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-    .nav-mobile { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(4,1,4,0.98); z-index: 300; flex-direction: column; align-items: center; justify-content: center; gap: 1.2rem; }
-    .nav-mobile.open { display: flex; }
-    .nav-mobile a { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 4.5vw, 1.55rem); font-weight: 300; color: var(--text); text-decoration: none; letter-spacing: 0.1em; transition: color 0.3s; }
-    .nav-mobile a:hover { color: var(--rose-light); }
-    .nav-mobile a.nav-cta { border: 1px solid var(--rose-dark); color: var(--rose-light); padding: 0.6rem 2rem; font-size: 1rem; }
-    /* ── MODAL CLOSE BUTTON — above hamburger, mobile-safe ── */
-    .modal-close {
-      position: fixed; top: 5rem; right: 2rem; z-index: 1010;
-      background: transparent; border: 1px solid var(--rose-dark); color: var(--muted);
-      padding: 0.5rem 1.2rem; font-family: 'DM Sans', sans-serif;
-      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
-      cursor: pointer; transition: color 0.3s;
-    }
-    .modal-close:hover { color: var(--rose-light); }
   </style>
 </head>
 <body>
