@@ -481,7 +481,7 @@
       .member-cards { grid-template-columns: 1fr 1fr; }
     }
 
-    /* ── HAMBURGER (base: hidden on desktop) ── */
+    /* ── HAMBURGER (base: hidden; @media below will show on mobile) ── */
     .hamburger {
       display: none; flex-direction: column; gap: 5px;
       cursor: pointer; background: none; border: none;
@@ -504,17 +504,15 @@
     .nav-mobile.open { display: flex; }
     .nav-mobile a {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.1rem, 4.5vw, 1.55rem);
-      font-weight: 300; color: var(--text); text-decoration: none;
-      letter-spacing: 0.1em; transition: color 0.3s;
-      padding: 0.3rem 1rem;
-      -webkit-tap-highlight-color: transparent;
-      touch-action: manipulation;
+      font-size: clamp(1.1rem, 4.5vw, 1.55rem); font-weight: 300;
+      color: var(--text); text-decoration: none; letter-spacing: 0.1em;
+      transition: color 0.3s; padding: 0.3rem 1rem;
+      -webkit-tap-highlight-color: transparent; touch-action: manipulation;
     }
     .nav-mobile a:hover, .nav-mobile a:active { color: var(--rose-light); }
     .nav-mobile a.nav-cta { border: 1px solid var(--rose-dark); color: var(--rose-light); padding: 0.5rem 2rem; }
 
-    /* ── MODAL CLOSE — top:5rem clears nav on every device ── */
+    /* ── MODAL CLOSE — top:5rem clears nav bar on every device ── */
     .modal-close {
       position: fixed; top: 5rem; right: 2rem; z-index: 1010;
       background: transparent; border: 1px solid var(--rose-dark); color: var(--muted);
@@ -580,12 +578,12 @@
     </svg>
   </a>
   <ul class="nav-links">
-    <li><a href="#value" onclick="closeMenu()">About</a></li>
-    <li><a href="#execution" onclick="closeMenu()">How It Works</a></li>
-    <li><a href="#eu-act" onclick="closeMenu()">EU AI Act</a></li>
-    <li><a href="#members" onclick="closeMenu()">Federation</a></li>
-    <li><a href="compliance-assessment.html" onclick="closeMenu()">Assessment</a></li>
-    <li><a href="#insights" onclick="closeMenu()">Insights</a></li>
+    <li><a href="#value">About</a></li>
+    <li><a href="#execution">How It Works</a></li>
+    <li><a href="#eu-act">EU AI Act</a></li>
+    <li><a href="#members">Partnership</a></li>
+    <li><a href="compliance-assessment.html">Assessment</a></li>
+    <li><a href="#insights">Insights</a></li>
     <li><a href="#contact" class="nav-cta">Connect</a></li>
   </ul>
   <!-- Hamburger — mobile only -->
@@ -605,6 +603,24 @@
   <a href="#contact" class="nav-cta" onclick="closeMenu()">Connect</a>
 </nav>
 
+
+<script>
+/* Navigation — isolated block, immune to starfield errors */
+function toggleMenu(){
+  var nav = document.getElementById('mobileNav');
+  var btn = document.getElementById('hamburger');
+  var open = nav.style.display === 'flex';
+  nav.style.display = open ? '' : 'flex';
+  btn.classList.toggle('open', !open);
+  document.body.style.overflow = open ? '' : 'hidden';
+}
+function closeMenu(){
+  document.getElementById('mobileNav').style.display = '';
+  document.getElementById('hamburger').classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
 <!-- ══ HERO ══ -->
 <section id="hero">
   <p class="hero-eyebrow">The Inevitable Execution Primitive for AI</p>
@@ -613,7 +629,7 @@
   <svg xmlns="http://www.w3.org/2000/svg"
        viewBox="50 75 700 620"
        class="hero-logo"
-       aria-label="ROSÉ Federation">
+       aria-label="ROSÉ FEDERATION">
     <defs>
       <linearGradient id="sgH" x1="0" y1="0" x2="1" y2="0">
         <stop offset="0%"   stop-color="#5A0C22"/>
@@ -673,7 +689,7 @@
           letter-spacing="15" text-anchor="middle"
           fill="#CC3062" filter="url(#tgH)" opacity="0.97">ROSÉ</text>
     <text x="400" y="452" font-family="Georgia,serif" font-size="14" letter-spacing="12"
-          text-anchor="middle" fill="#9A2240" opacity="0.9">Federation</text>
+          text-anchor="middle" fill="#9A2240" opacity="0.9">FEDERATION</text>
     <line x1="305" y1="460" x2="495" y2="460" stroke="#6A1020" stroke-width="0.4" opacity="0.5"/>
     <circle cx="305" cy="460" r="1.2" fill="#8B1535" opacity="0.5"/>
     <circle cx="495" cy="460" r="1.2" fill="#8B1535" opacity="0.5"/>
@@ -723,7 +739,7 @@ at the moment an action occurs — trusted, ordered, and enterprise-ready.</p>
     <div class="value-card">
       <div class="value-num">04</div>
       <h3>Executive-Grade Accountability</h3>
-      <p>A single relationship. A single point of escalation. You speak to ROSÉ; ROSÉ moves the entire partnership on your behalf — six systems operating as one, because your time is worth too much for anything less.</p>
+      <p>A single relationship. A single point of escalation. You speak to ROSÉ; ROSÉ moves the entire Federation on your behalf — six systems operating as one, because your time is worth too much for anything less.</p>
     </div>
   </div>
 </section>
@@ -1189,7 +1205,7 @@ at the moment an action occurs — trusted, ordered, and enterprise-ready.</p>
 
     <a href="#whitepaper" class="insight-card" id="whitepaper" onclick="document.getElementById('wp-modal').style.display='flex';return false;">
       <p class="insight-type">White Paper — ROSÉ Federation</p>
-      <h3 class="insight-title">The Black-Box AI Problem You Likely Have</h3>
+      <h3 class="insight-title">The Effin Black-Box AI Problem You Likely Have</h3>
       <p class="insight-excerpt">AI agents are already making decisions that can cost companies money, trigger liability, and change human lives. Most enterprises still cannot prove what those systems did. This white paper examines why logs are not proof — and what provable execution actually requires.</p>
       <p class="insight-meta">White Paper &nbsp;·&nbsp; 8 min read &nbsp;·&nbsp; 2026</p>
     </a>
@@ -1350,26 +1366,15 @@ at the moment an action occurs — trusted, ordered, and enterprise-ready.</p>
     </svg>
   </div>
   <ul class="footer-links">
-    <li><a href="#value" onclick="closeMenu()">About</a></li>
-    <li><a href="#members" onclick="closeMenu()">Partnership</a></li>
-    <li><a href="#insights" onclick="closeMenu()">Insights</a></li>
+    <li><a href="#value">About</a></li>
+    <li><a href="#members">Partnership</a></li>
+    <li><a href="#insights">Insights</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <span class="footer-copy">© 2026 ROSÉ Partnership. All rights reserved.</span>
+  <span class="footer-copy">© 2026 ROSÉ FEDERATION. All rights reserved.</span>
 </footer>
 
 <script>
-function toggleMenu(){
-  document.getElementById('hamburger').classList.toggle('open');
-  document.getElementById('mobileNav').classList.toggle('open');
-  document.body.style.overflow = document.getElementById('mobileNav').classList.contains('open') ? 'hidden' : '';
-}
-function closeMenu(){
-  document.getElementById('hamburger').classList.remove('open');
-  document.getElementById('mobileNav').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
 (function() {
   const canvas = document.getElementById('starfield');
   const ctx    = canvas.getContext('2d');
