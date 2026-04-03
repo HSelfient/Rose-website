@@ -580,29 +580,29 @@
     </svg>
   </a>
   <ul class="nav-links">
-    <li><a href="#value">About</a></li>
-    <li><a href="#execution">How It Works</a></li>
-    <li><a href="#eu-act">EU AI Act</a></li>
-    <li><a href="#members">Partnership</a></li>
-    <li><a href="compliance-assessment.html">Assessment</a></li>
-    <li><a href="#insights">Insights</a></li>
+    <li><a href="#value" onclick="closeMenu()">About</a></li>
+    <li><a href="#execution" onclick="closeMenu()">How It Works</a></li>
+    <li><a href="#eu-act" onclick="closeMenu()">EU AI Act</a></li>
+    <li><a href="#members" onclick="closeMenu()">Partnership</a></li>
+    <li><a href="compliance-assessment.html" onclick="closeMenu()">Assessment</a></li>
+    <li><a href="#insights" onclick="closeMenu()">Insights</a></li>
     <li><a href="#contact" class="nav-cta">Connect</a></li>
   </ul>
   <!-- Hamburger — mobile only -->
-  <button class="hamburger" id="hamburger" aria-label="Menu">
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
 <!-- Mobile nav overlay — includes Assessment link -->
 <nav class="nav-mobile" id="mobileNav">
-  <a href="#value">About</a>
-  <a href="#execution">How It Works</a>
-  <a href="#eu-act">EU AI Act</a>
-  <a href="#members">Federation</a>
-  <a href="compliance-assessment.html">Assessment</a>
-  <a href="#insights">Insights</a>
-  <a href="#contact" class="nav-cta">Connect</a>
+  <a href="#value" onclick="closeMenu()">About</a>
+  <a href="#execution" onclick="closeMenu()">How It Works</a>
+  <a href="#eu-act" onclick="closeMenu()">EU AI Act</a>
+  <a href="#members" onclick="closeMenu()">Federation</a>
+  <a href="compliance-assessment.html" onclick="closeMenu()">Assessment</a>
+  <a href="#insights" onclick="closeMenu()">Insights</a>
+  <a href="#contact" class="nav-cta" onclick="closeMenu()">Connect</a>
 </nav>
 
 <!-- ══ HERO ══ -->
@@ -1189,7 +1189,7 @@ at the moment an action occurs — trusted, ordered, and enterprise-ready.</p>
 
     <a href="#whitepaper" class="insight-card" id="whitepaper" onclick="document.getElementById('wp-modal').style.display='flex';return false;">
       <p class="insight-type">White Paper — ROSÉ Federation</p>
-      <h3 class="insight-title">The effon Black-Box AI Problem You Likely Have</h3>
+      <h3 class="insight-title">The Black-Box AI Problem You Likely Have</h3>
       <p class="insight-excerpt">AI agents are already making decisions that can cost companies money, trigger liability, and change human lives. Most enterprises still cannot prove what those systems did. This white paper examines why logs are not proof — and what provable execution actually requires.</p>
       <p class="insight-meta">White Paper &nbsp;·&nbsp; 8 min read &nbsp;·&nbsp; 2026</p>
     </a>
@@ -1350,9 +1350,9 @@ at the moment an action occurs — trusted, ordered, and enterprise-ready.</p>
     </svg>
   </div>
   <ul class="footer-links">
-    <li><a href="#value">About</a></li>
-    <li><a href="#members">Partnership</a></li>
-    <li><a href="#insights">Insights</a></li>
+    <li><a href="#value" onclick="closeMenu()">About</a></li>
+    <li><a href="#members" onclick="closeMenu()">Partnership</a></li>
+    <li><a href="#insights" onclick="closeMenu()">Insights</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
   <span class="footer-copy">© 2026 ROSÉ Partnership. All rights reserved.</span>
@@ -1369,22 +1369,6 @@ function closeMenu(){
   document.getElementById('mobileNav').classList.remove('open');
   document.body.style.overflow = '';
 }
-// Attach events via addEventListener — reliable on iOS Safari
-document.addEventListener('DOMContentLoaded', function() {
-  var hamburger = document.getElementById('hamburger');
-  if (hamburger) {
-    hamburger.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      toggleMenu();
-    });
-  }
-  document.querySelectorAll('.nav-mobile a').forEach(function(link) {
-    link.addEventListener('click', function() {
-      closeMenu();
-    });
-  });
-});
 
 (function() {
   const canvas = document.getElementById('starfield');
