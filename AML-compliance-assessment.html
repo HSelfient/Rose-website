@@ -3,305 +3,170 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AML · BSA · FinCEN Compliance Assessment — ROSÉ</title>
+  <title>AML &middot; BSA &middot; FinCEN Compliance Assessment &mdash; ROSE</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Cinzel:wght@400;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --navy:        #1B2A4A;
-      --navy-deep:   #0D1726;
-      --navy-mid:    #243352;
-      --gold:        #8B6914;
-      --gold-light:  #C9A553;
-      --gold-pale:   #E8D5A0;
-      --teal:        #0F6E56;
-      --teal-light:  #1A9B78;
-      --teal-pale:   #A8D5C8;
-      --ink:         #060C16;
-      --text:        #E8E4DC;
-      --muted:       #7A8EA8;
-      --border:      rgba(139,105,20,0.25);
-      --teal-border: rgba(15,110,86,0.3);
-      --card-bg:     rgba(13,23,38,0.92);
-      --flag-red:    #8B2020;
-      --flag-amber:  #7A5C10;
+      --rose:       #CC3562;
+      --rose-light: #E05080;
+      --rose-dark:  #8B1030;
+      --gold:       #C9A96E;
+      --ink:        #040104;
+      --ink-2:      #0A0208;
+      --ink-3:      #12050D;
+      --text:       #EDE8E3;
+      --muted:      #9A8A90;
+      --border:     rgba(204,53,98,0.2);
+      --gold-border:rgba(201,169,110,0.25);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body {
-      background: var(--ink);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-weight: 300;
-      min-height: 100vh;
-    }
+    body { background: var(--ink); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
 
-    /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0.75rem 3rem;
-      background: rgba(6,12,22,0.97);
+      background: rgba(4,1,4,0.97);
       border-bottom: 1px solid var(--border);
     }
-    .nav-brand { font-family: 'Cinzel', serif; font-size: 1.05rem; letter-spacing: 0.4em; color: var(--gold-light); text-decoration: none; }
+    .nav-brand { font-family: 'Cinzel', serif; font-size: 1.05rem; letter-spacing: 0.4em; color: var(--gold); text-decoration: none; }
     .nav-back {
       font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
       color: var(--muted); text-decoration: none;
-      border: 1px solid var(--teal); padding: 0.4rem 1.2rem;
+      border: 1px solid var(--rose-dark); padding: 0.4rem 1.2rem;
       transition: background 0.3s, color 0.3s;
     }
-    .nav-back:hover { background: var(--teal); color: var(--text); }
+    .nav-back:hover { background: var(--rose-dark); color: var(--text); }
 
-    /* ── MAIN ── */
     main { max-width: 860px; margin: 0 auto; padding: 120px 2rem 80px; }
 
-    /* ── HEADER ── */
     header { text-align: center; padding-bottom: 2.5rem; border-bottom: 1px solid var(--border); margin-bottom: 2.5rem; }
-    .eyebrow {
-      font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase;
-      color: var(--teal-light); margin-bottom: 1.2rem;
-    }
-    .page-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 300; line-height: 1.2;
-      color: var(--text); margin-bottom: 0.9rem;
-    }
-    .page-title em { font-style: italic; color: var(--gold-light); }
-    .page-subtitle {
-      font-size: 0.92rem; color: var(--muted); max-width: 560px;
-      margin: 0 auto 2rem; line-height: 1.7;
-    }
-    .badge-row {
-      display: flex; flex-wrap: wrap; gap: 0.6rem;
-      justify-content: center; margin-bottom: 0.5rem;
-    }
+    .eyebrow { font-size: 0.68rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.2rem; }
+    .page-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,5vw,3.2rem); font-weight: 300; line-height: 1.2; color: var(--text); margin-bottom: 0.9rem; }
+    .page-title em { font-style: italic; color: var(--rose-light); }
+    .page-subtitle { font-size: 0.92rem; color: var(--muted); max-width: 560px; margin: 0 auto 2rem; line-height: 1.7; }
+    .badge-row { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; margin-bottom: 0.5rem; }
     .badge {
       display: flex; align-items: center; gap: 0.4rem;
       font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
-      border: 1px solid var(--teal-border);
-      padding: 0.35rem 0.85rem; color: var(--teal-pale);
-      background: rgba(15,110,86,0.08);
+      border: 1px solid var(--border); padding: 0.35rem 0.85rem;
+      color: var(--muted); background: rgba(204,53,98,0.04);
     }
-    .badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--teal-light); flex-shrink: 0; }
+    .badge .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--rose); flex-shrink: 0; }
 
-    /* ── PROGRESS ── */
     .progress-wrap { margin-bottom: 2rem; }
     .progress-meta { display: flex; justify-content: space-between; font-size: 0.72rem; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.5rem; }
-    .progress-track { height: 2px; background: rgba(139,105,20,0.15); }
-    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--teal), var(--gold-light)); transition: width 0.4s ease; }
+    .progress-track { height: 2px; background: rgba(204,53,98,0.1); }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--rose-dark), var(--rose)); transition: width 0.4s ease; }
 
-    /* ── ORNAMENT ── */
-    .ornament { text-align: center; color: var(--gold); letter-spacing: 0.6em; font-size: 0.8rem; margin: 1.5rem 0; }
+    .ornament { text-align: center; color: var(--rose-dark); letter-spacing: 0.6em; font-size: 0.8rem; margin: 1.5rem 0; opacity: 0.6; }
 
-    /* ── CARD ── */
     .stage { position: relative; }
-    .card {
-      display: none; animation: fadeIn 0.35s ease;
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      padding: 2.5rem 2.8rem;
-      margin-bottom: 1rem;
-    }
+    .card { display: none; animation: fadeIn 0.35s ease; background: var(--ink-2); border: 1px solid var(--border); padding: 2.5rem 2.8rem; margin-bottom: 1rem; }
     .card.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-    .section-label {
-      font-size: 0.63rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--teal-light); margin-bottom: 0.6rem;
-    }
+    .section-label { font-size: 0.63rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
     .q-counter { font-size: 0.68rem; color: var(--muted); margin-bottom: 1rem; letter-spacing: 0.08em; }
-    .q-text {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.1rem, 3vw, 1.55rem);
-      font-weight: 400; line-height: 1.45;
-      color: var(--text); margin-bottom: 0.75rem;
-    }
-    .q-note {
-      font-size: 0.78rem; color: var(--muted);
-      line-height: 1.6; margin-bottom: 0.6rem;
-      font-style: italic;
-    }
-    .q-juris {
-      font-size: 0.74rem; color: var(--teal-pale);
-      line-height: 1.65; margin-bottom: 1.6rem;
-      padding: 0.75rem 1rem;
-      border-left: 2px solid var(--teal);
-      background: rgba(15,110,86,0.06);
-    }
-    .q-juris strong { color: var(--gold-light); }
+    .q-text { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem,3vw,1.55rem); font-weight: 400; line-height: 1.45; color: var(--text); margin-bottom: 0.75rem; }
+    .q-note { font-size: 0.78rem; color: var(--muted); line-height: 1.6; margin-bottom: 0.6rem; font-style: italic; }
+    .q-juris { font-size: 0.74rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.6rem; padding: 0.75rem 1rem; border-left: 2px solid var(--rose-dark); background: rgba(204,53,98,0.04); }
+    .q-juris strong { color: var(--gold); }
 
-    /* ── OPTIONS ── */
     .options { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 1.8rem; }
     .opt {
-      display: flex; align-items: center; gap: 1rem;
-      padding: 0.9rem 1.2rem;
-      border: 1px solid var(--border);
-      background: transparent; cursor: pointer;
+      display: flex; align-items: center; gap: 1rem; padding: 0.9rem 1.2rem;
+      border: 1px solid var(--border); background: transparent; cursor: pointer;
       text-align: left; transition: border-color 0.2s, background 0.2s;
-      color: var(--text); font-family: 'DM Sans', sans-serif;
-      font-size: 0.84rem; font-weight: 300;
+      color: var(--text); font-family: 'DM Sans', sans-serif; font-size: 0.84rem; font-weight: 300;
     }
-    .opt:hover { border-color: var(--gold-light); background: rgba(139,105,20,0.07); }
-    .opt.selected { border-color: var(--gold-light); background: rgba(139,105,20,0.12); }
-    .opt-ring {
-      width: 18px; height: 18px; border-radius: 50%;
-      border: 1.5px solid var(--muted); flex-shrink: 0;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .opt.selected .opt-ring { border-color: var(--gold-light); background: var(--gold-light); }
+    .opt:hover { border-color: var(--rose); background: rgba(204,53,98,0.05); }
+    .opt.selected { border-color: var(--rose); background: rgba(204,53,98,0.09); }
+    .opt-ring { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--muted); flex-shrink: 0; transition: border-color 0.2s, background 0.2s; }
+    .opt.selected .opt-ring { border-color: var(--rose); background: var(--rose); }
     .opt-label { line-height: 1.5; }
     .opt-label strong { display: block; font-weight: 500; color: var(--text); }
     .opt-label span { font-size: 0.76rem; color: var(--muted); }
 
-    /* ── NAV ROW ── */
-    .nav-row {
-      display: flex; justify-content: flex-end; gap: 0.75rem;
-      padding-top: 0.5rem; border-top: 1px solid var(--border); margin-top: 1rem;
-    }
+    .nav-row { display: flex; justify-content: flex-end; gap: 0.75rem; padding-top: 0.5rem; border-top: 1px solid var(--border); margin-top: 1rem; }
     .btn-primary {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.7rem 2rem;
-      background: var(--teal); color: var(--text);
-      border: none; cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase;
-      transition: background 0.2s;
+      display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 2rem;
+      background: linear-gradient(135deg, var(--rose-dark), var(--rose)); color: var(--text);
+      border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; transition: opacity 0.2s;
     }
-    .btn-primary:hover { background: var(--teal-light); }
+    .btn-primary:hover { opacity: 0.85; }
     .btn-outline {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      padding: 0.7rem 1.5rem;
-      background: transparent; color: var(--muted);
-      border: 1px solid var(--border); cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
-      transition: color 0.2s, border-color 0.2s;
+      display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.5rem;
+      background: transparent; color: var(--muted); border: 1px solid var(--border); cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+      transition: color 0.2s, border-color 0.2s; text-decoration: none;
     }
-    .btn-outline:hover { border-color: var(--muted); color: var(--text); }
+    .btn-outline:hover { border-color: var(--rose); color: var(--rose-light); }
 
-    /* ── INTRO CARD ── */
-    .intro-inner h2 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 300; line-height: 1.3;
-      margin-bottom: 1.1rem; color: var(--text);
-    }
-    .intro-inner h2 em { color: var(--gold-light); font-style: italic; }
+    .intro-inner h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem,4vw,2.4rem); font-weight: 300; line-height: 1.3; margin-bottom: 1.1rem; color: var(--text); }
+    .intro-inner h2 em { color: var(--rose-light); font-style: italic; }
     .intro-inner p { font-size: 0.88rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.8rem; }
     .tier-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.8rem; }
-    .tier-cell {
-      border: 1px solid var(--border); padding: 1.2rem 1.4rem;
-      background: rgba(27,42,74,0.25);
-    }
-    .tier-label { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 0.4rem; }
-    .tier-cell h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold-light); margin-bottom: 0.4rem; }
+    .tier-cell { border: 1px solid var(--border); padding: 1.2rem 1.4rem; background: rgba(204,53,98,0.03); }
+    .tier-label { font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .tier-cell h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--rose-light); margin-bottom: 0.4rem; }
     .tier-cell p { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
 
-    /* ── TRIAGE RESULT ── */
     .triage-result { display: none; }
     .triage-result.active { display: block; }
-    .risk-tier-block {
-      padding: 2rem; text-align: center;
-      border: 1px solid var(--border);
-      margin-bottom: 1.5rem;
-    }
+    .risk-tier-block { padding: 2rem; text-align: center; border: 1px solid var(--border); margin-bottom: 1.5rem; }
     .risk-tier-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
-    .risk-tier-name {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.4rem; font-weight: 600; margin-bottom: 0.5rem;
-    }
+    .risk-tier-name { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 600; margin-bottom: 0.5rem; }
     .tier-critical .risk-tier-name { color: #CC4040; }
     .tier-elevated .risk-tier-name { color: #C9853A; }
-    .tier-moderate .risk-tier-name { color: var(--gold-light); }
-    .tier-managed .risk-tier-name { color: var(--teal-light); }
+    .tier-moderate .risk-tier-name { color: var(--gold); }
+    .tier-managed .risk-tier-name { color: var(--rose-light); }
     .risk-tier-summary { font-size: 0.86rem; color: var(--muted); line-height: 1.7; max-width: 520px; margin: 0 auto; }
     .flags-row { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin: 1rem 0; }
-    .flag {
-      font-size: 0.67rem; letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 0.3rem 0.9rem;
-    }
+    .flag { font-size: 0.67rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.9rem; }
     .flag-red { background: rgba(139,32,32,0.2); border: 1px solid #8B2020; color: #CC7070; }
-    .flag-amber { background: rgba(122,92,16,0.2); border: 1px solid #7A5C10; color: #C9A553; }
+    .flag-amber { background: rgba(139,105,20,0.2); border: 1px solid var(--rose-dark); color: var(--gold); }
     .cta-fork { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem; }
-    .cta-cell {
-      border: 1px solid var(--border); padding: 1.5rem;
-      text-align: center; background: rgba(27,42,74,0.15);
-    }
-    .cta-cell h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--gold-light); margin-bottom: 0.5rem; }
+    .cta-cell { border: 1px solid var(--border); padding: 1.5rem; text-align: center; background: rgba(204,53,98,0.03); }
+    .cta-cell h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--rose-light); margin-bottom: 0.5rem; }
     .cta-cell p { font-size: 0.77rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.6; }
 
-    /* ── FINAL REPORT ── */
     #finalReport { display: none; }
     #finalReport.active { display: block; }
-    .report-header {
-      text-align: center; padding: 2rem 1rem 1.5rem;
-      border-bottom: 1px solid var(--border); margin-bottom: 2rem;
-    }
-    .report-score-ring {
-      width: 120px; height: 120px;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 1rem;
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.4rem; font-weight: 600;
-      border: 2px solid var(--gold);
-    }
+    .report-header { text-align: center; padding: 2rem 1rem 1.5rem; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+    .report-score-ring { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 600; border: 2px solid var(--rose); }
     .score-critical { color: #CC4040; border-color: #8B2020; }
-    .score-elevated { color: #C9853A; border-color: #7A5C10; }
-    .score-moderate { color: var(--gold-light); border-color: var(--gold); }
-    .score-managed  { color: var(--teal-light); border-color: var(--teal); }
-    .report-tier-label {
-      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted);
-    }
+    .score-elevated { color: #C9853A; border-color: var(--rose-dark); }
+    .score-moderate { color: var(--gold); border-color: var(--gold); }
+    .score-managed  { color: var(--rose-light); border-color: var(--rose); }
+    .report-tier-label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
     .report-tier-name { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin: 0.3rem 0; }
     .report-intro { font-size: 0.86rem; color: var(--muted); max-width: 560px; margin: 0.8rem auto 0; line-height: 1.75; }
     .report-section { margin-bottom: 2.5rem; }
-    .report-section h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.25rem; color: var(--gold-light);
-      border-bottom: 1px solid var(--border);
-      padding-bottom: 0.5rem; margin-bottom: 1.1rem;
-    }
-    .finding {
-      display: flex; gap: 1rem; padding: 0.9rem 0;
-      border-bottom: 1px solid rgba(139,105,20,0.1);
-    }
+    .report-section h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--gold); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1.1rem; }
+    .finding { display: flex; gap: 1rem; padding: 0.9rem 0; border-bottom: 1px solid rgba(204,53,98,0.1); }
     .finding:last-child { border-bottom: none; }
     .finding-icon { font-size: 1rem; flex-shrink: 0; margin-top: 2px; }
     .finding-text { font-size: 0.83rem; color: var(--text); line-height: 1.65; }
-    .finding-text strong { color: var(--gold-light); display: block; margin-bottom: 0.2rem; font-weight: 500; }
+    .finding-text strong { color: var(--gold); display: block; margin-bottom: 0.2rem; font-weight: 500; }
     .finding-text em { font-style: normal; color: var(--muted); font-size: 0.76rem; }
-    .spotlight {
-      border: 1px solid var(--teal-border);
-      background: rgba(15,110,86,0.06);
-      padding: 1.5rem 1.8rem; margin: 2rem 0;
-    }
-    .spotlight-label { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--teal-light); margin-bottom: 0.6rem; }
+    .spotlight { border: 1px solid var(--border); background: rgba(204,53,98,0.04); padding: 1.5rem 1.8rem; margin: 2rem 0; }
+    .spotlight-label { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem; }
     .spotlight h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; color: var(--text); margin-bottom: 0.7rem; }
     .spotlight p { font-size: 0.82rem; color: var(--muted); line-height: 1.75; margin-bottom: 0.5rem; }
     .spotlight p:last-child { margin-bottom: 0; }
-    .next-steps { background: rgba(27,42,74,0.3); border: 1px solid var(--border); padding: 1.5rem 1.8rem; }
-    .next-steps h4 { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold-light); margin-bottom: 0.8rem; }
+    .next-steps { background: rgba(204,53,98,0.03); border: 1px solid var(--border); padding: 1.5rem 1.8rem; }
+    .next-steps h4 { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
     .next-steps ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
     .next-steps li { font-size: 0.82rem; color: var(--muted); line-height: 1.6; padding-left: 1.2rem; position: relative; }
-    .next-steps li::before { content: '→'; position: absolute; left: 0; color: var(--teal-light); }
-    .email-cta {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-top: 2rem; padding: 1.5rem 1.8rem;
-      border: 1px solid var(--gold);
-      background: rgba(139,105,20,0.06);
-      gap: 1.5rem;
-    }
-    .email-cta-text h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--gold-light); margin-bottom: 0.3rem; }
+    .next-steps li::before { content: '&rarr;'; position: absolute; left: 0; color: var(--rose); }
+    .email-cta { display: flex; align-items: center; justify-content: space-between; margin-top: 2rem; padding: 1.5rem 1.8rem; border: 1px solid var(--gold-border); background: rgba(201,169,110,0.04); gap: 1.5rem; }
+    .email-cta-text h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; color: var(--gold); margin-bottom: 0.3rem; }
     .email-cta-text p { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
     .email-cta-action { flex-shrink: 0; }
-    .report-footer {
-      display: flex; justify-content: space-between;
-      margin-top: 2.5rem; padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      font-size: 0.67rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
-    }
+    .report-footer { display: flex; justify-content: space-between; margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.67rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
 
     @media (max-width: 600px) {
       nav { padding: 0.7rem 1.2rem; }
@@ -317,16 +182,14 @@
 <body>
 
 <nav>
-  <a href="/" class="nav-brand">ROSÉ</a>
-  <a href="/insights" class="nav-back">← Insights</a>
+  <a href="/" class="nav-brand">ROS&Eacute;</a>
+  <a href="/#insights" class="nav-back">&larr; Insights</a>
 </nav>
 
 <main>
-
-  <!-- HEADER -->
   <header>
-    <p class="eyebrow">ROSÉ · Compliance Intelligence Series</p>
-    <h1 class="page-title"><em>AML · BSA · FinCEN</em><br>Regulatory Risk Assessment</h1>
+    <p class="eyebrow">ROS&Eacute; &middot; Compliance Intelligence Series</p>
+    <h1 class="page-title"><em>AML &middot; BSA &middot; FinCEN</em><br>Regulatory Risk Assessment</h1>
     <p class="page-subtitle">Your AI-assisted compliance program may be more exposed than you know. This assessment maps your institution's obligation profile across every active federal standard.</p>
     <div class="badge-row">
       <div class="badge"><span class="dot"></span>BSA / Title 31</div>
@@ -338,459 +201,388 @@
     </div>
   </header>
 
-  <!-- PROGRESS -->
   <div class="progress-wrap" id="progressWrap" style="display:none">
-    <div class="progress-meta">
-      <span id="progressText">Triage · Question 1 of 5</span>
-      <span id="progressPct">0%</span>
-    </div>
+    <div class="progress-meta"><span id="progressText">Triage &middot; Question 1 of 5</span><span id="progressPct">0%</span></div>
     <div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
   </div>
 
-  <div class="ornament" id="topOrnament">✦ &nbsp; ✦ &nbsp; ✦</div>
+  <div class="ornament" id="topOrnament">&#10022; &nbsp; &#10022; &nbsp; &#10022;</div>
 
   <div class="stage">
 
-    <!-- ── INTRO CARD ── -->
+    <!-- INTRO -->
     <div class="card active" id="introCard">
       <div class="intro-inner">
-        <div class="section-label">AML · Regulatory Readiness</div>
+        <div class="section-label">AML &middot; Regulatory Readiness</div>
         <h2>FinCEN's standard has shifted.<br><em>Has your program?</em></h2>
-        <p>The April 7, 2026 FinCEN proposed rulemaking completed a decade-long migration from rule-based compliance to effectiveness-based compliance. Every financial institution deploying AI in transaction monitoring, SAR generation, customer risk scoring, or model governance is now operating under a more demanding — and more personal — liability framework. This assessment surfaces where your program stands.</p>
+        <p>The April 7, 2026 FinCEN proposed rulemaking completed a decade-long migration from rule-based compliance to effectiveness-based compliance. Every financial institution deploying AI in transaction monitoring, SAR generation, customer risk scoring, or model governance is now operating under a more demanding and more personal liability framework. This assessment surfaces where your program stands.</p>
         <div class="tier-grid">
-          <div class="tier-cell">
-            <div class="tier-label">Tier One · ~3 Minutes</div>
-            <h4>Triage Assessment</h4>
-            <p>Five questions. Immediate risk tier. Flags your most urgent obligation gaps without requiring a full program review.</p>
-          </div>
-          <div class="tier-cell">
-            <div class="tier-label">Tier Two · ~15 Minutes</div>
-            <h4>Full Deep Dive</h4>
-            <p>Nineteen questions across six compliance domains. Complete scored analysis with specific regulatory citations and a ROSÉ Mitigation Spotlight.</p>
-          </div>
+          <div class="tier-cell"><div class="tier-label">Tier One &middot; ~3 Minutes</div><h4>Triage Assessment</h4><p>Five questions. Immediate risk tier. Flags your most urgent obligation gaps.</p></div>
+          <div class="tier-cell"><div class="tier-label">Tier Two &middot; ~15 Minutes</div><h4>Full Deep Dive</h4><p>Nineteen questions across six compliance domains. Complete scored analysis with regulatory citations and a ROS&Eacute; Mitigation Spotlight.</p></div>
         </div>
         <p style="font-size:0.78rem;color:var(--muted);line-height:1.7;">Responses are used solely to generate your personalized assessment. No data is stored or transmitted.</p>
         <div class="nav-row" style="justify-content:center;border:none;margin-top:1.5rem;">
-          <button class="btn-primary" onclick="startTriage()">Begin Triage Assessment →</button>
+          <button class="btn-primary" onclick="startTriage()">Begin Triage Assessment &rarr;</button>
         </div>
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- TRIAGE QUESTIONS  T1–T5                     -->
-    <!-- ═══════════════════════════════════════════ -->
-
     <!-- T1 -->
     <div class="card" id="t1">
-      <div class="section-label">Triage · Section 1 · Institution Profile</div>
+      <div class="section-label">Triage &middot; Section 1 &middot; Institution Profile</div>
       <div class="q-counter">Triage 01 / 05</div>
       <div class="q-text">Which best describes your institution's primary regulatory relationship with FinCEN?</div>
       <div class="q-note">BSA obligations differ substantially by charter type and product scope. Misclassification is itself a compliance risk.</div>
       <div class="options" data-id="t1">
         <button class="opt" data-value="bank" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Federally chartered bank or thrift</strong><span>OCC primary regulator; subject to SR 11-7 model risk guidance and FinCEN's full CDD Final Rule</span></div></button>
-        <button class="opt" data-value="msa" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Money services business (MSB) or payment processor</strong><span>Direct FinCEN registrant; FINCEN-MSB registration obligations plus state licensing</span></div></button>
-        <button class="opt" data-value="casino" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Gaming payments or casino cage operator</strong><span>Title 31 / 31 CFR Part 103 applies; Currency Transaction Reports, SARs, customer ID — all active</span></div></button>
+        <button class="opt" data-value="msa" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Money services business (MSB) or payment processor</strong><span>Direct FinCEN registrant; MSB registration obligations plus state licensing</span></div></button>
+        <button class="opt" data-value="casino" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Gaming payments or casino cage operator</strong><span>Title 31 / 31 CFR Part 103 applies; Currency Transaction Reports, SARs, customer ID all active</span></div></button>
         <button class="opt" data-value="broker" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Broker-dealer, investment adviser, or insurance</strong><span>SEC / FINRA AML rules; FinCEN's 2024 investment adviser rule now in force</span></div></button>
         <button class="opt" data-value="fintech" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Fintech, neobank, or embedded finance provider</strong><span>Partner bank AML obligations flow to you contractually; FinCEN oversight of BaaS expanding</span></div></button>
       </div>
-      <div class="nav-row"><button class="btn-primary" onclick="triageNext(1)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-primary" onclick="triageNext(1)">Next &rarr;</button></div>
     </div>
 
     <!-- T2 -->
     <div class="card" id="t2">
-      <div class="section-label">Triage · Section 2 · AI Deployment</div>
+      <div class="section-label">Triage &middot; Section 2 &middot; AI Deployment</div>
       <div class="q-counter">Triage 02 / 05</div>
       <div class="q-text">Does your institution use AI or machine learning models in any of the following compliance-adjacent functions?</div>
-      <div class="q-note">Select the response that best reflects your current state — even partial or vendor-supplied AI use triggers BSA model governance obligations.</div>
-      <div class="q-juris"><strong>OCC Bulletin 2011-12 (SR 11-7):</strong> Model risk management applies to any quantitative method used to support decisions. AI transaction monitoring systems are models. · <strong>FinCEN April 2026 NPRM:</strong> Institutions using automated systems to generate SAR narratives or filter alerts must demonstrate the system's effectiveness, not merely its deployment.</div>
+      <div class="q-note">Even partial or vendor-supplied AI use triggers BSA model governance obligations.</div>
+      <div class="q-juris"><strong>OCC Bulletin 2011-12 (SR 11-7):</strong> Model risk management applies to any quantitative method used to support decisions. AI transaction monitoring systems are models. &middot; <strong>FinCEN April 2026 NPRM:</strong> Institutions using automated systems to generate SAR narratives or filter alerts must demonstrate effectiveness, not merely deployment.</div>
       <div class="options" data-id="t2">
-        <button class="opt" data-value="full_ai" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — AI models in transaction monitoring, alert triage, or SAR generation</strong><span>Full model governance obligation; effectiveness documentation required under April 2026 NPRM</span></div></button>
-        <button class="opt" data-value="partial_ai" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — AI in customer risk scoring or onboarding only</strong><span>CDD Final Rule §1010.230 model risk applies; KYC AI is a high-risk classification under EU AI Act Annex III</span></div></button>
-        <button class="opt" data-value="vendor_ai" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Vendor-supplied AI — we did not build it but we use it</strong><span>Vendor AI does not transfer liability; OCC guidance holds institutions accountable for third-party models</span></div></button>
-        <button class="opt" data-value="rules_only" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No AI — rules-based systems and manual review only</strong><span>Lower immediate AI risk, but FinCEN's effectiveness standard still applies to rule-based programs</span></div></button>
+        <button class="opt" data-value="full_ai" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; AI models in transaction monitoring, alert triage, or SAR generation</strong><span>Full model governance obligation; effectiveness documentation required under April 2026 NPRM</span></div></button>
+        <button class="opt" data-value="partial_ai" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; AI in customer risk scoring or onboarding only</strong><span>CDD Final Rule model risk applies; KYC AI is high-risk under EU AI Act Annex III</span></div></button>
+        <button class="opt" data-value="vendor_ai" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Vendor-supplied AI &mdash; we did not build it but we use it</strong><span>Vendor AI does not transfer liability; OCC holds institutions accountable for third-party models</span></div></button>
+        <button class="opt" data-value="rules_only" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No AI &mdash; rules-based systems and manual review only</strong><span>Lower immediate AI risk, but FinCEN's effectiveness standard still applies</span></div></button>
       </div>
-      <div class="nav-row">
-        <button class="btn-outline" onclick="triagePrev(2)">← Back</button>
-        <button class="btn-primary" onclick="triageNext(2)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      </div>
+      <div class="nav-row"><button class="btn-outline" onclick="triagePrev(2)">&larr; Back</button><button class="btn-primary" onclick="triageNext(2)">Next &rarr;</button></div>
     </div>
 
     <!-- T3 -->
     <div class="card" id="t3">
-      <div class="section-label">Triage · Section 3 · Effectiveness Documentation</div>
+      <div class="section-label">Triage &middot; Section 3 &middot; Effectiveness Documentation</div>
       <div class="q-counter">Triage 03 / 05</div>
-      <div class="q-text">Can your compliance team produce documented evidence — today — that your AML program is <em>effective</em>, not merely implemented?</div>
+      <div class="q-text">Can your compliance team produce documented evidence &mdash; today &mdash; that your AML program is <em>effective</em>, not merely implemented?</div>
       <div class="q-note">The FinCEN April 2026 NPRM moves the legal standard from "did you have a program" to "did the program work." This is the single most consequential shift in BSA enforcement in two decades.</div>
-      <div class="q-juris"><strong>FinCEN NPRM April 7, 2026:</strong> Proposed §1010.210 would require covered institutions to maintain documentation demonstrating that their AML program is reasonably designed and effective. "Effective" is defined by outcomes — detected activity, filed SARs, and audit findings — not by the presence of policies. · <strong>DOJ prosecution guidance:</strong> The new standard aligns with how DOJ has assessed AML culpability in recent deferred prosecution agreements, including BNP Paribas and Goldman Sachs enforcement actions.</div>
+      <div class="q-juris"><strong>FinCEN NPRM April 7, 2026:</strong> Proposed Section 1010.210 requires institutions to document that their AML program is reasonably designed and effective. "Effective" is defined by outcomes, not the presence of policies. &middot; <strong>DOJ prosecution guidance:</strong> Aligns with how DOJ assessed AML culpability in BNP Paribas and Goldman Sachs enforcement actions.</div>
       <div class="options" data-id="t3">
-        <button class="opt" data-value="documented" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — we maintain effectiveness metrics, detection rates, and audit trails</strong><span>Well-positioned; deep dive will identify any residual gaps in proof architecture</span></div></button>
-        <button class="opt" data-value="partial" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially — we have some metrics but not a structured effectiveness framework</strong><span>Common position; the NPRM's 18-month comment and implementation window is your runway</span></div></button>
-        <button class="opt" data-value="policy_only" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No — our documentation is policy-based, not outcome-based</strong><span>Critical exposure under the proposed rule; immediate gap remediation recommended</span></div></button>
-        <button class="opt" data-value="unsure" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Uncertain — I do not know what our current documentation posture is</strong><span>Requires internal audit; inability to answer this question is itself a finding</span></div></button>
+        <button class="opt" data-value="documented" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; we maintain effectiveness metrics, detection rates, and audit trails</strong><span>Well-positioned; deep dive will identify residual proof architecture gaps</span></div></button>
+        <button class="opt" data-value="partial" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially &mdash; we have some metrics but not a structured effectiveness framework</strong><span>Common position; the NPRM's 18-month implementation window is your runway</span></div></button>
+        <button class="opt" data-value="policy_only" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No &mdash; our documentation is policy-based, not outcome-based</strong><span>Critical exposure under the proposed rule; immediate gap remediation recommended</span></div></button>
+        <button class="opt" data-value="unsure" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Uncertain &mdash; I do not know what our current documentation posture is</strong><span>Requires internal audit; inability to answer this question is itself a finding</span></div></button>
       </div>
-      <div class="nav-row">
-        <button class="btn-outline" onclick="triagePrev(3)">← Back</button>
-        <button class="btn-primary" onclick="triageNext(3)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      </div>
+      <div class="nav-row"><button class="btn-outline" onclick="triagePrev(3)">&larr; Back</button><button class="btn-primary" onclick="triageNext(3)">Next &rarr;</button></div>
     </div>
 
     <!-- T4 -->
     <div class="card" id="t4">
-      <div class="section-label">Triage · Section 4 · Model Governance</div>
+      <div class="section-label">Triage &middot; Section 4 &middot; Model Governance</div>
       <div class="q-counter">Triage 04 / 05</div>
-      <div class="q-text">If your institution uses a third-party AML or transaction monitoring platform, who is accountable when the model produces a false negative — a missed SAR?</div>
-      <div class="q-juris"><strong>OCC SR 11-7:</strong> Model risk management responsibility cannot be outsourced. The institution remains accountable for validating third-party models and for outcomes they produce. · <strong>FinCEN Guidance FIN-2014-G001:</strong> Institutions cannot use vendor reliance as a defense in SAR failure enforcement actions. · <strong>EU AI Act Art. 25:</strong> For institutions with EU operations or EU-connected transactions, the deploying institution shares high-risk AI compliance obligations with the provider.</div>
+      <div class="q-text">If your institution uses a third-party AML or transaction monitoring platform, who is accountable when the model produces a false negative &mdash; a missed SAR?</div>
+      <div class="q-juris"><strong>OCC SR 11-7:</strong> Model risk management responsibility cannot be outsourced. The institution remains accountable for validating third-party models. &middot; <strong>FinCEN Guidance FIN-2014-G001:</strong> Institutions cannot use vendor reliance as a defense in SAR failure enforcement actions. &middot; <strong>EU AI Act Art. 25:</strong> The deploying institution shares high-risk AI compliance obligations with the provider.</div>
       <div class="options" data-id="t4">
-        <button class="opt" data-value="own" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We own it — our team validates, documents, and is accountable for model outcomes</strong><span>Correct posture; deep dive will confirm documentation depth</span></div></button>
-        <button class="opt" data-value="shared" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Shared — we rely on vendor SLAs and their compliance representations</strong><span>Partial exposure; SLAs do not satisfy SR 11-7 or FinCEN guidance</span></div></button>
-        <button class="opt" data-value="vendor" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Vendor — we assume our platform provider is responsible</strong><span>Critical exposure; this assumption has been directly contradicted in enforcement actions</span></div></button>
-        <button class="opt" data-value="no_platform" data-weight="1" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We do not use a third-party AML platform</strong><span>In-house systems; internal model governance and validation obligations still apply</span></div></button>
+        <button class="opt" data-value="own" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We own it &mdash; our team validates, documents, and is accountable for model outcomes</strong><span>Correct posture; deep dive will confirm documentation depth</span></div></button>
+        <button class="opt" data-value="shared" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Shared &mdash; we rely on vendor SLAs and their compliance representations</strong><span>Partial exposure; SLAs do not satisfy SR 11-7 or FinCEN guidance</span></div></button>
+        <button class="opt" data-value="vendor" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Vendor &mdash; we assume our platform provider is responsible</strong><span>Critical exposure; this assumption has been directly contradicted in enforcement actions</span></div></button>
+        <button class="opt" data-value="no_platform" data-weight="1" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We do not use a third-party AML platform</strong><span>In-house systems; internal model governance obligations still apply</span></div></button>
       </div>
-      <div class="nav-row">
-        <button class="btn-outline" onclick="triagePrev(4)">← Back</button>
-        <button class="btn-primary" onclick="triageNext(4)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
-      </div>
+      <div class="nav-row"><button class="btn-outline" onclick="triagePrev(4)">&larr; Back</button><button class="btn-primary" onclick="triageNext(4)">Next &rarr;</button></div>
     </div>
 
     <!-- T5 -->
     <div class="card" id="t5">
-      <div class="section-label">Triage · Section 5 · Exam Readiness</div>
+      <div class="section-label">Triage &middot; Section 5 &middot; Exam Readiness</div>
       <div class="q-counter">Triage 05 / 05</div>
       <div class="q-text">In your most recent regulatory examination, did examiners comment on your AML model governance, AI documentation, or the quality of your SAR narratives?</div>
-      <div class="q-juris"><strong>FFIEC BSA/AML Examination Manual (2023 rev.):</strong> Examiners are now required to assess whether institutions can demonstrate program effectiveness — not just presence. AI and model governance is a named examination focus area. · <strong>FinCEN 314(a) / 314(b):</strong> Information-sharing obligations interact with AI governance; automated 314 responses must be documented as to how they were generated.</div>
+      <div class="q-juris"><strong>FFIEC BSA/AML Examination Manual (2023 rev.):</strong> Examiners now assess whether institutions can demonstrate program effectiveness, not just presence. AI and model governance is a named examination focus area. &middot; <strong>FinCEN 314(a) / 314(b):</strong> Automated 314 responses must be documented as to how they were generated.</div>
       <div class="options" data-id="t5">
-        <button class="opt" data-value="clean" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No comments — clean examination across AML/BSA scope</strong><span>Strong baseline; NPRM changes may still require documentation enhancements</span></div></button>
-        <button class="opt" data-value="mra" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — we received a Matters Requiring Attention (MRA) related to AML</strong><span>Elevated risk; MRA findings combined with the NPRM's effectiveness standard create compounding exposure</span></div></button>
-        <button class="opt" data-value="informal" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Informal feedback only — no formal finding but verbal guidance was noted</strong><span>Moderate exposure; informal guidance frequently precedes formal MRA in the next cycle</span></div></button>
-        <button class="opt" data-value="no_exam" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We have not been examined in the past 24 months</strong><span>Examination cycle gap; proactive readiness assessment is advisable before next cycle</span></div></button>
+        <button class="opt" data-value="clean" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No comments &mdash; clean examination across AML/BSA scope</strong><span>Strong baseline; NPRM changes may still require documentation enhancements</span></div></button>
+        <button class="opt" data-value="mra" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; we received a Matters Requiring Attention (MRA) related to AML</strong><span>Elevated risk; MRA findings combined with the NPRM effectiveness standard create compounding exposure</span></div></button>
+        <button class="opt" data-value="informal" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Informal feedback only &mdash; no formal finding but verbal guidance was noted</strong><span>Moderate exposure; informal guidance frequently precedes formal MRA in the next cycle</span></div></button>
+        <button class="opt" data-value="no_exam" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We have not been examined in the past 24 months</strong><span>Proactive readiness assessment advisable before next cycle</span></div></button>
       </div>
-      <div class="nav-row">
-        <button class="btn-outline" onclick="triagePrev(5)">← Back</button>
-        <button class="btn-primary" onclick="showTriageResult()">View My Risk Profile →</button>
-      </div>
+      <div class="nav-row"><button class="btn-outline" onclick="triagePrev(5)">&larr; Back</button><button class="btn-primary" onclick="showTriageResult()">View My Risk Profile &rarr;</button></div>
     </div>
 
-    <!-- ── TRIAGE RESULT ── -->
+    <!-- TRIAGE RESULT -->
     <div class="card triage-result" id="triageResult">
-      <div class="section-label">Triage Complete · Your Risk Profile</div>
+      <div class="section-label">Triage Complete &middot; Your Risk Profile</div>
       <div class="risk-tier-block" id="riskTierBlock"></div>
       <div class="flags-row" id="flagsRow"></div>
-      <div style="font-size:0.82rem;color:var(--muted);line-height:1.75;margin:1rem 0;">
-        This triage result reflects your immediate exposure across the five highest-signal indicators. The full assessment maps nineteen obligation dimensions, identifies specific regulatory citations bearing on your answers, and produces a ROSÉ Mitigation Spotlight with a concrete remediation path.
-      </div>
+      <div style="font-size:0.82rem;color:var(--muted);line-height:1.75;margin:1rem 0;">This triage result reflects your immediate exposure across the five highest-signal indicators. The full assessment maps nineteen obligation dimensions with specific regulatory citations and a ROS&Eacute; Mitigation Spotlight.</div>
       <div class="cta-fork">
-        <div class="cta-cell">
-          <h4>Continue to Deep Dive</h4>
-          <p>Nineteen questions. Complete scoring across six domains. Specific regulatory citations. Your full compliance obligation map.</p>
-          <button class="btn-primary" onclick="startDeepDive()" style="width:100%;justify-content:center;">Begin Full Assessment →</button>
-        </div>
-        <div class="cta-cell">
-          <h4>Speak With ROSÉ</h4>
-          <p>A ROSÉ compliance architect can review your triage findings and walk through your proof architecture in a single working session.</p>
-          <a href="mailto:hello@selfient.xyz?subject=AML Compliance Assessment — Triage Review" class="btn-outline" style="display:inline-flex;justify-content:center;width:100%;text-decoration:none;">Request a Conversation →</a>
-        </div>
+        <div class="cta-cell"><h4>Continue to Deep Dive</h4><p>Nineteen questions. Complete scoring across six domains. Your full compliance obligation map.</p><button class="btn-primary" onclick="startDeepDive()" style="width:100%;justify-content:center;">Begin Full Assessment &rarr;</button></div>
+        <div class="cta-cell"><h4>Speak With ROS&Eacute;</h4><p>A ROS&Eacute; compliance architect can review your triage findings and walk through your proof architecture in a single working session.</p><a href="mailto:hello@selfient.xyz?subject=AML Compliance Assessment - Triage Review" class="btn-outline" style="width:100%;justify-content:center;">Request a Conversation &rarr;</a></div>
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- DEEP DIVE  D1–D19                           -->
-    <!-- ═══════════════════════════════════════════ -->
-
-    <!-- DOMAIN 1: Program Foundation -->
     <!-- D1 -->
     <div class="card" id="d1">
-      <div class="section-label">Section 1 · Program Foundation</div>
-      <div class="q-counter">Deep Dive 01 / 19</div>
-      <div class="q-text">Does your AML/BSA compliance program have a documented, board-approved written policy that has been updated within the past 12 months?</div>
-      <div class="q-note">The BSA's "Five Pillars" framework requires a written program. Staleness is a finding in itself.</div>
-      <div class="q-juris"><strong>31 U.S.C. §5318(h):</strong> Every covered financial institution must maintain an AML program with internal controls, a compliance officer, employee training, and independent testing. · <strong>FinCEN CDD Final Rule (2018):</strong> Customer due diligence is the fifth pillar, added explicitly. Written programs must reflect all five.</div>
+      <div class="section-label">Section 1 &middot; Program Foundation</div><div class="q-counter">Deep Dive 01 / 19</div>
+      <div class="q-text">Does your AML/BSA compliance program have a documented, board-approved written policy updated within the past 12 months?</div>
+      <div class="q-juris"><strong>31 U.S.C. Section 5318(h):</strong> Every covered financial institution must maintain an AML program with internal controls, a compliance officer, employee training, and independent testing. &middot; <strong>FinCEN CDD Final Rule (2018):</strong> Customer due diligence is the fifth pillar. Written programs must reflect all five.</div>
       <div class="options" data-id="d1">
-        <button class="opt" data-value="current" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — updated within 12 months, board-approved, current</strong></div></button>
+        <button class="opt" data-value="current" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; updated within 12 months, board-approved, current</strong></div></button>
         <button class="opt" data-value="stale" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Policy exists but has not been reviewed in over 12 months</strong></div></button>
         <button class="opt" data-value="partial" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Policy exists but does not reflect AI tools or the April 2026 NPRM changes</strong></div></button>
         <button class="opt" data-value="none" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No formally documented, board-approved AML policy</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(1)">← Back</button><button class="btn-primary" onclick="deepNext(1)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(1)">&larr; Back</button><button class="btn-primary" onclick="deepNext(1)">Next &rarr;</button></div>
     </div>
 
     <!-- D2 -->
     <div class="card" id="d2">
-      <div class="section-label">Section 1 · Program Foundation</div>
-      <div class="q-counter">Deep Dive 02 / 19</div>
+      <div class="section-label">Section 1 &middot; Program Foundation</div><div class="q-counter">Deep Dive 02 / 19</div>
       <div class="q-text">Is your designated BSA/AML Compliance Officer empowered with independent reporting authority and adequate resources to challenge business-line decisions?</div>
-      <div class="q-juris"><strong>31 CFR §1020.210:</strong> BSA Officer must have sufficient authority, independence, and resources. · <strong>DOJ Evaluation of Corporate Compliance Programs (2023):</strong> Prosecutors assess whether the compliance function had genuine power to escalate and override — or was merely ceremonial.</div>
+      <div class="q-juris"><strong>31 CFR Section 1020.210:</strong> BSA Officer must have sufficient authority, independence, and resources. &middot; <strong>DOJ Evaluation of Corporate Compliance Programs (2023):</strong> Prosecutors assess whether compliance had genuine power to escalate and override &mdash; or was merely ceremonial.</div>
       <div class="options" data-id="d2">
-        <button class="opt" data-value="independent" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — reports directly to board or audit committee; has escalation authority</strong></div></button>
-        <button class="opt" data-value="partial" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially independent — reports through business line with some escalation path</strong></div></button>
-        <button class="opt" data-value="embedded" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Embedded in business — limited independence; resource constraints documented</strong></div></button>
+        <button class="opt" data-value="independent" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; reports directly to board or audit committee; has escalation authority</strong></div></button>
+        <button class="opt" data-value="partial" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially independent &mdash; reports through business line with some escalation path</strong></div></button>
+        <button class="opt" data-value="embedded" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Embedded in business &mdash; limited independence; resource constraints documented</strong></div></button>
         <button class="opt" data-value="none" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No designated BSA Compliance Officer in place</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(2)">← Back</button><button class="btn-primary" onclick="deepNext(2)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(2)">&larr; Back</button><button class="btn-primary" onclick="deepNext(2)">Next &rarr;</button></div>
     </div>
 
     <!-- D3 -->
     <div class="card" id="d3">
-      <div class="section-label">Section 1 · Program Foundation</div>
-      <div class="q-counter">Deep Dive 03 / 19</div>
-      <div class="q-text">Does your institution conduct independent AML program testing by a qualified party — internal audit, external auditor, or regulatory consultant — at least annually?</div>
-      <div class="q-juris"><strong>BSA Five Pillars — Pillar 4:</strong> Independent testing is a non-negotiable structural requirement. · <strong>FFIEC Exam Manual:</strong> Testing must be risk-based, cover BSA record-keeping, SAR filing, CTR filing, and customer identification — and must now address model governance for AI-assisted programs.</div>
+      <div class="section-label">Section 1 &middot; Program Foundation</div><div class="q-counter">Deep Dive 03 / 19</div>
+      <div class="q-text">Does your institution conduct independent AML program testing by a qualified party at least annually?</div>
+      <div class="q-juris"><strong>BSA Five Pillars &mdash; Pillar 4:</strong> Independent testing is a non-negotiable structural requirement. &middot; <strong>FFIEC Exam Manual:</strong> Testing must cover BSA record-keeping, SAR filing, CTR filing, customer identification, and must now address model governance for AI-assisted programs.</div>
       <div class="options" data-id="d3">
-        <button class="opt" data-value="annual" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — annual independent testing with written findings and management response</strong></div></button>
+        <button class="opt" data-value="annual" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; annual independent testing with written findings and management response</strong></div></button>
         <button class="opt" data-value="irregular" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Testing occurs but not on a defined annual cadence</strong></div></button>
         <button class="opt" data-value="no_model" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Testing occurs but does not cover AI models or automated decision systems</strong></div></button>
         <button class="opt" data-value="none" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No independent AML testing in place</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(3)">← Back</button><button class="btn-primary" onclick="deepNext(3)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(3)">&larr; Back</button><button class="btn-primary" onclick="deepNext(3)">Next &rarr;</button></div>
     </div>
 
-    <!-- DOMAIN 2: Customer Due Diligence -->
     <!-- D4 -->
     <div class="card" id="d4">
-      <div class="section-label">Section 2 · Customer Due Diligence</div>
-      <div class="q-counter">Deep Dive 04 / 19</div>
-      <div class="q-text">Does your Customer Identification Program (CIP) and Customer Due Diligence (CDD) process collect and verify beneficial ownership information for legal entity customers?</div>
-      <div class="q-juris"><strong>FinCEN CDD Final Rule — 31 CFR §1010.230:</strong> Covered institutions must identify and verify beneficial owners (25% threshold) of legal entity customers. · <strong>Corporate Transparency Act (2024):</strong> FinCEN's beneficial ownership database is now operational; financial institution reliance on the database is permitted but does not replace CDD obligations.</div>
+      <div class="section-label">Section 2 &middot; Customer Due Diligence</div><div class="q-counter">Deep Dive 04 / 19</div>
+      <div class="q-text">Does your CIP and CDD process collect and verify beneficial ownership information for legal entity customers?</div>
+      <div class="q-juris"><strong>FinCEN CDD Final Rule &mdash; 31 CFR Section 1010.230:</strong> Covered institutions must identify and verify beneficial owners (25% threshold) of legal entity customers. &middot; <strong>Corporate Transparency Act (2024):</strong> FinCEN's beneficial ownership database is operational; financial institution reliance is permitted but does not replace CDD obligations.</div>
       <div class="options" data-id="d4">
-        <button class="opt" data-value="full" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — full CDD/beneficial ownership collection and verification for all legal entities</strong></div></button>
-        <button class="opt" data-value="partial" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially — applied to some customer segments but not systematically</strong></div></button>
+        <button class="opt" data-value="full" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; full CDD/beneficial ownership collection and verification for all legal entities</strong></div></button>
+        <button class="opt" data-value="partial" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially &mdash; applied to some customer segments but not systematically</strong></div></button>
         <button class="opt" data-value="ai_gap" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>CDD exists but AI-assisted onboarding decisions are not documented for auditability</strong></div></button>
         <button class="opt" data-value="none" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Beneficial ownership collection is not systematically implemented</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(4)">← Back</button><button class="btn-primary" onclick="deepNext(4)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(4)">&larr; Back</button><button class="btn-primary" onclick="deepNext(4)">Next &rarr;</button></div>
     </div>
 
     <!-- D5 -->
     <div class="card" id="d5">
-      <div class="section-label">Section 2 · Customer Due Diligence</div>
-      <div class="q-counter">Deep Dive 05 / 19</div>
-      <div class="q-text">When your institution uses AI to assign a customer risk score, is the basis for that score explainable — and preserved — in your records?</div>
-      <div class="q-juris"><strong>FinCEN April 2026 NPRM §1010.210:</strong> Risk-rating decisions must be documented as to basis, not merely outcome. An AI-assigned score without an explainability trail is a documentation failure. · <strong>EU AI Act Art. 13 (High-Risk AI):</strong> Customer credit and risk scoring AI used in financial services is a named high-risk application; transparency and human oversight are mandatory. · <strong>FCRA §623:</strong> Adverse action based on AI risk scoring may trigger FCRA dispute rights.</div>
+      <div class="section-label">Section 2 &middot; Customer Due Diligence</div><div class="q-counter">Deep Dive 05 / 19</div>
+      <div class="q-text">When your institution uses AI to assign a customer risk score, is the basis for that score explainable and preserved in your records?</div>
+      <div class="q-juris"><strong>FinCEN April 2026 NPRM Section 1010.210:</strong> Risk-rating decisions must be documented as to basis, not merely outcome. An AI-assigned score without an explainability trail is a documentation failure. &middot; <strong>EU AI Act Art. 13:</strong> Customer risk scoring AI is a named high-risk application; transparency and human oversight are mandatory.</div>
       <div class="options" data-id="d5">
-        <button class="opt" data-value="full" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — explainability documentation is preserved for every AI-generated risk score</strong></div></button>
-        <button class="opt" data-value="partial" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially — some documentation but not systematically tied to individual decisions</strong></div></button>
-        <button class="opt" data-value="black_box" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No — AI scores are used operationally but cannot be explained at the decision level</strong></div></button>
+        <button class="opt" data-value="full" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; explainability documentation is preserved for every AI-generated risk score</strong></div></button>
+        <button class="opt" data-value="partial" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partially &mdash; some documentation but not systematically tied to individual decisions</strong></div></button>
+        <button class="opt" data-value="black_box" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No &mdash; AI scores are used operationally but cannot be explained at the decision level</strong></div></button>
         <button class="opt" data-value="no_ai" data-weight="1" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We do not use AI for customer risk scoring</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(5)">← Back</button><button class="btn-primary" onclick="deepNext(5)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(5)">&larr; Back</button><button class="btn-primary" onclick="deepNext(5)">Next &rarr;</button></div>
     </div>
 
-    <!-- DOMAIN 3: Transaction Monitoring -->
     <!-- D6 -->
     <div class="card" id="d6">
-      <div class="section-label">Section 3 · Transaction Monitoring</div>
-      <div class="q-counter">Deep Dive 06 / 19</div>
-      <div class="q-text">How does your institution validate that your transaction monitoring system — whether AI-based or rules-based — is calibrated correctly and detecting the activity it should be detecting?</div>
-      <div class="q-juris"><strong>FFIEC BSA/AML Exam Manual (2023):</strong> Institutions must demonstrate that transaction monitoring thresholds are reviewed and validated periodically. · <strong>FinCEN April 2026 NPRM:</strong> "Effectiveness" specifically includes whether the monitoring system is appropriately tuned — overly broad (excessive false positives) or overly narrow (false negatives) are both findings.</div>
+      <div class="section-label">Section 3 &middot; Transaction Monitoring</div><div class="q-counter">Deep Dive 06 / 19</div>
+      <div class="q-text">How does your institution validate that your transaction monitoring system is calibrated correctly and detecting the activity it should be detecting?</div>
+      <div class="q-juris"><strong>FFIEC BSA/AML Exam Manual (2023):</strong> Institutions must demonstrate monitoring thresholds are reviewed and validated periodically. &middot; <strong>FinCEN April 2026 NPRM:</strong> "Effectiveness" includes whether the monitoring system is appropriately tuned &mdash; overly broad or overly narrow are both findings.</div>
       <div class="options" data-id="d6">
         <button class="opt" data-value="validated" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Formal tuning review at least annually; documented rationale for all thresholds</strong></div></button>
         <button class="opt" data-value="ad_hoc" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Ad hoc review when problems surface, but no defined tuning cadence</strong></div></button>
         <button class="opt" data-value="vendor_default" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We use vendor default settings without independent validation</strong></div></button>
         <button class="opt" data-value="unknown" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>I do not know how our transaction monitoring is calibrated or validated</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(6)">← Back</button><button class="btn-primary" onclick="deepNext(6)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(6)">&larr; Back</button><button class="btn-primary" onclick="deepNext(6)">Next &rarr;</button></div>
     </div>
 
     <!-- D7 -->
     <div class="card" id="d7">
-      <div class="section-label">Section 3 · Transaction Monitoring</div>
-      <div class="q-counter">Deep Dive 07 / 19</div>
-      <div class="q-text">If an AI model used in transaction monitoring is updated, retrained, or replaced by your vendor, does your institution have a documented process to validate the new version before deployment?</div>
-      <div class="q-juris"><strong>OCC SR 11-7:</strong> Model changes — including vendor-issued updates — require validation before production deployment. · <strong>FinCEN Guidance FIN-2014-G001:</strong> Vendor reliance is not a defense; institutions are responsible for what their systems do, regardless of who built or updated them. This is the invisible drift problem: a model that performed well at deployment may degrade silently after an update.</div>
+      <div class="section-label">Section 3 &middot; Transaction Monitoring</div><div class="q-counter">Deep Dive 07 / 19</div>
+      <div class="q-text">If an AI model used in transaction monitoring is updated or replaced by your vendor, does your institution have a documented process to validate the new version before deployment?</div>
+      <div class="q-juris"><strong>OCC SR 11-7:</strong> Model changes &mdash; including vendor-issued updates &mdash; require validation before production deployment. &middot; <strong>FinCEN FIN-2014-G001:</strong> Vendor reliance is not a defense. A model that performed well at deployment may degrade silently after an update &mdash; what ROSE calls invisible drift.</div>
       <div class="options" data-id="d7">
-        <button class="opt" data-value="formal" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — formal pre-deployment validation with documented approval workflow</strong></div></button>
-        <button class="opt" data-value="informal" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Informal review — we test but do not document the validation process</strong></div></button>
+        <button class="opt" data-value="formal" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; formal pre-deployment validation with documented approval workflow</strong></div></button>
+        <button class="opt" data-value="informal" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Informal review &mdash; we test but do not document the validation process</strong></div></button>
         <button class="opt" data-value="vendor_notify" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We rely on vendor release notes; no independent validation performed</strong></div></button>
-        <button class="opt" data-value="unaware" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We are not always notified of — or aware of — vendor model updates</strong></div></button>
+        <button class="opt" data-value="unaware" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We are not always notified of or aware of vendor model updates</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(7)">← Back</button><button class="btn-primary" onclick="deepNext(7)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(7)">&larr; Back</button><button class="btn-primary" onclick="deepNext(7)">Next &rarr;</button></div>
     </div>
 
     <!-- D8 -->
     <div class="card" id="d8">
-      <div class="section-label">Section 3 · Transaction Monitoring</div>
-      <div class="q-counter">Deep Dive 08 / 19</div>
-      <div class="q-text">Do you maintain a cryptographically reliable, tamper-evident audit trail of what each transaction monitoring decision was based on — and which model version produced it?</div>
-      <div class="q-juris"><strong>FinCEN April 2026 NPRM:</strong> Documented effectiveness must include the ability to reconstruct why a particular transaction was flagged, de-prioritized, or dismissed. · <strong>DOJ DPA practice:</strong> In enforcement negotiations, regulators have required institutions to produce decision-level audit trails for specific suspicious transactions going back three to five years. Systems that cannot produce this trail have faced enhanced monitorship requirements.</div>
+      <div class="section-label">Section 3 &middot; Transaction Monitoring</div><div class="q-counter">Deep Dive 08 / 19</div>
+      <div class="q-text">Do you maintain a cryptographically reliable, tamper-evident audit trail of what each transaction monitoring decision was based on &mdash; and which model version produced it?</div>
+      <div class="q-juris"><strong>FinCEN April 2026 NPRM:</strong> Documented effectiveness must include the ability to reconstruct why a transaction was flagged, de-prioritized, or dismissed. &middot; <strong>DOJ DPA practice:</strong> Regulators have required institutions to produce decision-level audit trails for specific suspicious transactions going back three to five years.</div>
       <div class="options" data-id="d8">
-        <button class="opt" data-value="cryptographic" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — tamper-evident, version-stamped audit trail for every decision</strong></div></button>
-        <button class="opt" data-value="logs" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Standard system logs — not cryptographically secured but records exist</strong></div></button>
-        <button class="opt" data-value="partial" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partial — some decisions logged but not at the granularity required for enforcement review</strong></div></button>
+        <button class="opt" data-value="cryptographic" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; tamper-evident, version-stamped audit trail for every decision</strong></div></button>
+        <button class="opt" data-value="logs" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Standard system logs &mdash; not cryptographically secured but records exist</strong></div></button>
+        <button class="opt" data-value="partial" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partial &mdash; some decisions logged but not at the granularity required for enforcement review</strong></div></button>
         <button class="opt" data-value="none" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No reliable decision-level audit trail</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(8)">← Back</button><button class="btn-primary" onclick="deepNext(8)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(8)">&larr; Back</button><button class="btn-primary" onclick="deepNext(8)">Next &rarr;</button></div>
     </div>
 
-    <!-- DOMAIN 4: SAR / CTR Obligations -->
     <!-- D9 -->
     <div class="card" id="d9">
-      <div class="section-label">Section 4 · SAR and CTR Obligations</div>
-      <div class="q-counter">Deep Dive 09 / 19</div>
-      <div class="q-text">If AI is used to draft or pre-populate SAR narratives, does a qualified human reviewer make the final SAR filing decision — and is that human review documented?</div>
-      <div class="q-juris"><strong>31 CFR §1020.320:</strong> The SAR filing decision is the institution's — not the system's. AI-assisted SAR drafting is permissible; AI-autonomous SAR decisions are not. · <strong>FinCEN SAR Filing Guidance (2012, reaffirmed 2024):</strong> Narrative quality is an examination focus. AI-generated narratives that are conclusory, template-driven, or fail to articulate specific suspicious indicators are a finding.</div>
+      <div class="section-label">Section 4 &middot; SAR and CTR Obligations</div><div class="q-counter">Deep Dive 09 / 19</div>
+      <div class="q-text">If AI is used to draft or pre-populate SAR narratives, does a qualified human reviewer make the final SAR filing decision &mdash; and is that human review documented?</div>
+      <div class="q-juris"><strong>31 CFR Section 1020.320:</strong> The SAR filing decision is the institution's &mdash; not the system's. AI-assisted SAR drafting is permissible; AI-autonomous SAR decisions are not. &middot; <strong>FinCEN SAR Filing Guidance (2012, reaffirmed 2024):</strong> Narrative quality is an examination focus. AI-generated narratives that are conclusory or template-driven are a finding.</div>
       <div class="options" data-id="d9">
-        <button class="opt" data-value="documented_human" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — documented human review and approval for every SAR; AI is a drafting aid only</strong></div></button>
+        <button class="opt" data-value="documented_human" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; documented human review and approval for every SAR; AI is a drafting aid only</strong></div></button>
         <button class="opt" data-value="human_undoc" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Human reviews but the review is not separately documented</strong></div></button>
         <button class="opt" data-value="ai_primary" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>AI determines the SAR filing decision with limited or no human override documented</strong></div></button>
         <button class="opt" data-value="no_ai_sar" data-weight="1" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We do not use AI in the SAR process</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(9)">← Back</button><button class="btn-primary" onclick="deepNext(9)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(9)">&larr; Back</button><button class="btn-primary" onclick="deepNext(9)">Next &rarr;</button></div>
     </div>
 
     <!-- D10 -->
     <div class="card" id="d10">
-      <div class="section-label">Section 4 · SAR and CTR Obligations</div>
-      <div class="q-counter">Deep Dive 10 / 19</div>
-      <div class="q-text">For Currency Transaction Reports (CTRs), does your institution have an automated CTR aggregation system — and has that system been tested for accuracy within the past 12 months?</div>
-      <div class="q-juris"><strong>31 CFR §1010.311:</strong> CTRs must be filed for currency transactions exceeding $10,000. Aggregation errors — missing related transactions or incorrectly combining unrelated ones — are among the most common BSA examination findings. · <strong>FFIEC Exam Manual:</strong> CTR aggregation logic, particularly in AI-enhanced systems, must be tested and documented.</div>
+      <div class="section-label">Section 4 &middot; SAR and CTR Obligations</div><div class="q-counter">Deep Dive 10 / 19</div>
+      <div class="q-text">For Currency Transaction Reports (CTRs), does your institution have an automated CTR aggregation system &mdash; and has that system been tested for accuracy within the past 12 months?</div>
+      <div class="q-juris"><strong>31 CFR Section 1010.311:</strong> CTRs must be filed for currency transactions exceeding $10,000. Aggregation errors are among the most common BSA examination findings. &middot; <strong>FFIEC Exam Manual:</strong> CTR aggregation logic, particularly in AI-enhanced systems, must be tested and documented.</div>
       <div class="options" data-id="d10">
         <button class="opt" data-value="tested" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Automated CTR aggregation, tested within 12 months, with documented results</strong></div></button>
         <button class="opt" data-value="auto_untested" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Automated aggregation but testing cadence is not documented or current</strong></div></button>
-        <button class="opt" data-value="manual" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Manual CTR processes — no automated aggregation</strong></div></button>
+        <button class="opt" data-value="manual" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Manual CTR processes &mdash; no automated aggregation</strong></div></button>
         <button class="opt" data-value="unknown" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>I do not know how our CTR aggregation works or when it was last tested</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(10)">← Back</button><button class="btn-primary" onclick="deepNext(10)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(10)">&larr; Back</button><button class="btn-primary" onclick="deepNext(10)">Next &rarr;</button></div>
     </div>
 
-    <!-- DOMAIN 5: EU AI Act + Cross-Border -->
     <!-- D11 -->
     <div class="card" id="d11">
-      <div class="section-label">Section 5 · EU AI Act and Cross-Border Obligations</div>
-      <div class="q-counter">Deep Dive 11 / 19</div>
-      <div class="q-text">Does your institution have operations, customers, or correspondent banking relationships within the European Union — or process transactions denominated in euros or involving EU-regulated counterparties?</div>
-      <div class="q-note">EU AI Act obligations attach to the deploying institution if the AI system affects persons within the EU — regardless of where the institution is headquartered.</div>
-      <div class="q-juris"><strong>EU AI Act Art. 2(1)(c):</strong> The Act applies to providers and deployers of AI systems whose output is used in the EU, even if the provider or deployer is established outside the EU. · <strong>EU AI Act Annex III, §5(b):</strong> AI used in credit scoring, risk assessment, and creditworthiness evaluation is explicitly classified as high-risk — including correspondent banking risk scoring.</div>
+      <div class="section-label">Section 5 &middot; EU AI Act and Cross-Border Obligations</div><div class="q-counter">Deep Dive 11 / 19</div>
+      <div class="q-text">Does your institution have operations, customers, or correspondent banking relationships within the European Union &mdash; or process transactions involving EU-regulated counterparties?</div>
+      <div class="q-note">EU AI Act obligations attach to the deploying institution if the AI system affects persons within the EU, regardless of where the institution is headquartered.</div>
+      <div class="q-juris"><strong>EU AI Act Art. 2(1)(c):</strong> The Act applies to deployers of AI systems whose output is used in the EU, even if the deployer is established outside the EU. &middot; <strong>EU AI Act Annex III, Section 5(b):</strong> AI used in credit scoring and risk assessment is explicitly classified as high-risk &mdash; including correspondent banking risk scoring.</div>
       <div class="options" data-id="d11">
-        <button class="opt" data-value="significant" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — significant EU operations, customers, or correspondent relationships</strong><span>Full EU AI Act high-risk AI obligations apply; conformity assessment likely required</span></div></button>
-        <button class="opt" data-value="incidental" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Incidental — some EU-connected transactions but not a primary market</strong><span>Proportional exposure; EU AI Act applies to the extent EU persons are affected</span></div></button>
+        <button class="opt" data-value="significant" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; significant EU operations, customers, or correspondent relationships</strong><span>Full EU AI Act high-risk AI obligations apply; conformity assessment likely required</span></div></button>
+        <button class="opt" data-value="incidental" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Incidental &mdash; some EU-connected transactions but not a primary market</strong><span>Proportional exposure; EU AI Act applies to the extent EU persons are affected</span></div></button>
         <button class="opt" data-value="none" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No EU operations, customers, or counterparties</strong><span>EU AI Act does not currently apply; monitor for extraterritorial expansion</span></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(11)">← Back</button><button class="btn-primary" onclick="deepNext(11)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(11)">&larr; Back</button><button class="btn-primary" onclick="deepNext(11)">Next &rarr;</button></div>
     </div>
 
     <!-- D12 -->
     <div class="card" id="d12">
-      <div class="section-label">Section 5 · EU AI Act and Cross-Border Obligations</div>
-      <div class="q-counter">Deep Dive 12 / 19</div>
-      <div class="q-text">For AI systems that fall within EU AI Act scope, has your institution conducted a conformity assessment and designated a responsible person within the EU?</div>
-      <div class="q-juris"><strong>EU AI Act Art. 43:</strong> High-risk AI systems require a conformity assessment before deployment or making available in the EU market. · <strong>EU AI Act Art. 22:</strong> Non-EU deployers placing high-risk AI affecting EU persons must designate an authorized representative established in the EU.</div>
+      <div class="section-label">Section 5 &middot; EU AI Act and Cross-Border Obligations</div><div class="q-counter">Deep Dive 12 / 19</div>
+      <div class="q-text">For AI systems within EU AI Act scope, has your institution conducted a conformity assessment and designated a responsible person within the EU?</div>
+      <div class="q-juris"><strong>EU AI Act Art. 43:</strong> High-risk AI systems require a conformity assessment before deployment in the EU market. &middot; <strong>EU AI Act Art. 22:</strong> Non-EU deployers of high-risk AI affecting EU persons must designate an authorized EU representative.</div>
       <div class="options" data-id="d12">
         <button class="opt" data-value="complete" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Conformity assessment complete; EU representative designated</strong></div></button>
-        <button class="opt" data-value="in_progress" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>In progress — assessment underway but not yet complete</strong></div></button>
-        <button class="opt" data-value="not_started" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Not yet begun — EU AI Act obligations not yet assessed for our AI systems</strong></div></button>
-        <button class="opt" data-value="not_applicable" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Not applicable — no EU nexus</strong></div></button>
+        <button class="opt" data-value="in_progress" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>In progress &mdash; assessment underway but not yet complete</strong></div></button>
+        <button class="opt" data-value="not_started" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Not yet begun &mdash; EU AI Act obligations not yet assessed for our AI systems</strong></div></button>
+        <button class="opt" data-value="not_applicable" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Not applicable &mdash; no EU nexus</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(12)">← Back</button><button class="btn-primary" onclick="deepNext(12)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(12)">&larr; Back</button><button class="btn-primary" onclick="deepNext(12)">Next &rarr;</button></div>
     </div>
 
     <!-- D13 -->
     <div class="card" id="d13">
-      <div class="section-label">Section 5 · EU AI Act and Cross-Border Obligations</div>
-      <div class="q-counter">Deep Dive 13 / 19</div>
-      <div class="q-text">Does your institution have FATF Recommendation 10 and 16 obligations — and are your AI-assisted wire transfer screening systems compliant with the Travel Rule?</div>
-      <div class="q-juris"><strong>FATF Recommendation 16 (Travel Rule):</strong> Originating financial institutions must obtain and transmit beneficiary information for wire transfers over $1,000 (FinCEN threshold). · <strong>FinCEN Travel Rule — 31 CFR §1010.410:</strong> AI systems that process wire transfers must preserve and transmit required originator and beneficiary information without suppression or truncation. · <strong>FATF Virtual Asset Guidance (2021):</strong> Travel Rule applies to virtual asset service providers; AI screening must cover crypto-fiat on-ramps.</div>
+      <div class="section-label">Section 5 &middot; EU AI Act and Cross-Border Obligations</div><div class="q-counter">Deep Dive 13 / 19</div>
+      <div class="q-text">Are your AI-assisted wire transfer screening systems compliant with the FATF Travel Rule &mdash; and is compliance documented?</div>
+      <div class="q-juris"><strong>FATF Recommendation 16 (Travel Rule):</strong> Originating institutions must transmit beneficiary information for wire transfers over $1,000. &middot; <strong>FinCEN Travel Rule &mdash; 31 CFR Section 1010.410:</strong> AI systems processing wire transfers must preserve and transmit required information without suppression or truncation.</div>
       <div class="options" data-id="d13">
         <button class="opt" data-value="compliant" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Full Travel Rule compliance; AI systems tested for information preservation</strong></div></button>
-        <button class="opt" data-value="partial" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partial — domestic Travel Rule addressed but cross-border or crypto gaps exist</strong></div></button>
+        <button class="opt" data-value="partial" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partial &mdash; domestic Travel Rule addressed but cross-border or crypto gaps exist</strong></div></button>
         <button class="opt" data-value="legacy_gap" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Legacy systems process wires but Travel Rule compliance has not been validated</strong></div></button>
         <button class="opt" data-value="not_applicable" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We do not process wire transfers or virtual assets</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(13)">← Back</button><button class="btn-primary" onclick="deepNext(13)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(13)">&larr; Back</button><button class="btn-primary" onclick="deepNext(13)">Next &rarr;</button></div>
     </div>
 
-    <!-- DOMAIN 6: Model Governance & Proof Architecture -->
     <!-- D14 -->
     <div class="card" id="d14">
-      <div class="section-label">Section 6 · Model Governance and Proof Architecture</div>
-      <div class="q-counter">Deep Dive 14 / 19</div>
-      <div class="q-text">Does your institution maintain a model inventory — a complete registry of every AI and quantitative model used in compliance, risk, or customer-facing decisions?</div>
-      <div class="q-juris"><strong>OCC SR 11-7 / OCC Bulletin 2011-12:</strong> Model risk management begins with a complete model inventory. Institutions with incomplete inventories cannot demonstrate that their model governance program covers all material models. · <strong>FFIEC Exam Manual (2023 update):</strong> Examiners now specifically request the model inventory as part of BSA/AML examination opening procedures.</div>
+      <div class="section-label">Section 6 &middot; Model Governance and Proof Architecture</div><div class="q-counter">Deep Dive 14 / 19</div>
+      <div class="q-text">Does your institution maintain a model inventory &mdash; a complete registry of every AI and quantitative model used in compliance, risk, or customer-facing decisions?</div>
+      <div class="q-juris"><strong>OCC SR 11-7:</strong> Model risk management begins with a complete model inventory. Incomplete inventories cannot demonstrate that model governance covers all material models. &middot; <strong>FFIEC Exam Manual (2023 update):</strong> Examiners now specifically request the model inventory as part of BSA/AML examination opening procedures.</div>
       <div class="options" data-id="d14">
-        <button class="opt" data-value="complete" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Complete, current model inventory — including all vendor AI and third-party models</strong></div></button>
+        <button class="opt" data-value="complete" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Complete, current model inventory &mdash; including all vendor AI and third-party models</strong></div></button>
         <button class="opt" data-value="internal_only" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Internal models inventoried; vendor/third-party models not catalogued</strong></div></button>
-        <button class="opt" data-value="partial" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partial inventory — known gaps; inventory not systematically maintained</strong></div></button>
+        <button class="opt" data-value="partial" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Partial inventory &mdash; known gaps; not systematically maintained</strong></div></button>
         <button class="opt" data-value="none" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No formal model inventory exists</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(14)">← Back</button><button class="btn-primary" onclick="deepNext(14)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(14)">&larr; Back</button><button class="btn-primary" onclick="deepNext(14)">Next &rarr;</button></div>
     </div>
 
     <!-- D15 -->
     <div class="card" id="d15">
-      <div class="section-label">Section 6 · Model Governance and Proof Architecture</div>
-      <div class="q-counter">Deep Dive 15 / 19</div>
-      <div class="q-text">Can your institution detect, in near real-time, whether an AI model's behavior has shifted from its validated baseline — what governance professionals call model drift?</div>
-      <div class="q-juris"><strong>OCC SR 11-7:</strong> Model validation is not a one-time event. Ongoing monitoring is required to detect performance degradation. · <strong>FinCEN April 2026 NPRM:</strong> The proposed effectiveness standard creates ongoing performance monitoring obligations for all automated compliance systems. · <strong>Chartis Research (2024):</strong> Documented evidence that 67% of financial institutions using AI in AML cannot detect model drift until an examination or enforcement action surfaces it.</div>
+      <div class="section-label">Section 6 &middot; Model Governance and Proof Architecture</div><div class="q-counter">Deep Dive 15 / 19</div>
+      <div class="q-text">Can your institution detect, in near real-time, whether an AI model's behavior has shifted from its validated baseline &mdash; what governance professionals call model drift?</div>
+      <div class="q-juris"><strong>OCC SR 11-7:</strong> Model validation is not a one-time event. Ongoing monitoring is required to detect performance degradation. &middot; <strong>FinCEN April 2026 NPRM:</strong> The proposed effectiveness standard creates ongoing performance monitoring obligations for all automated compliance systems.</div>
       <div class="options" data-id="d15">
-        <button class="opt" data-value="realtime" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — continuous drift monitoring with automated alerting when models deviate from baseline</strong></div></button>
-        <button class="opt" data-value="periodic" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Periodic review — drift is assessed at model validation cycles, not continuously</strong></div></button>
+        <button class="opt" data-value="realtime" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; continuous drift monitoring with automated alerting when models deviate from baseline</strong></div></button>
+        <button class="opt" data-value="periodic" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Periodic review &mdash; drift is assessed at model validation cycles, not continuously</strong></div></button>
         <button class="opt" data-value="exam_triggered" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We discover model performance issues during examinations or after incidents</strong></div></button>
         <button class="opt" data-value="none" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No model drift monitoring in place</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(15)">← Back</button><button class="btn-primary" onclick="deepNext(15)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(15)">&larr; Back</button><button class="btn-primary" onclick="deepNext(15)">Next &rarr;</button></div>
     </div>
 
     <!-- D16 -->
     <div class="card" id="d16">
-      <div class="section-label">Section 6 · Model Governance and Proof Architecture</div>
-      <div class="q-counter">Deep Dive 16 / 19</div>
-      <div class="q-text">If a regulator or enforcement attorney requested a reconstruction of a specific compliance decision made 18 months ago — what data was used, what model version decided it, and what the outcome was — how long would it take your team to produce that evidence?</div>
+      <div class="section-label">Section 6 &middot; Model Governance and Proof Architecture</div><div class="q-counter">Deep Dive 16 / 19</div>
+      <div class="q-text">If a regulator requested reconstruction of a specific compliance decision made 18 months ago &mdash; what data was used, what model version decided it, and what the outcome was &mdash; how long would it take your team to produce that evidence?</div>
       <div class="options" data-id="d16">
-        <button class="opt" data-value="hours" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Hours — our audit infrastructure can reconstruct any decision within 24 hours</strong></div></button>
-        <button class="opt" data-value="days" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Days — possible but requires manual effort across multiple systems</strong></div></button>
-        <button class="opt" data-value="weeks" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Weeks — requires significant forensic effort; some data may be incomplete</strong></div></button>
+        <button class="opt" data-value="hours" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Hours &mdash; our audit infrastructure can reconstruct any decision within 24 hours</strong></div></button>
+        <button class="opt" data-value="days" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Days &mdash; possible but requires manual effort across multiple systems</strong></div></button>
+        <button class="opt" data-value="weeks" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Weeks &mdash; requires significant forensic effort; some data may be incomplete</strong></div></button>
         <button class="opt" data-value="impossible" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>We could not produce a reliable reconstruction for decisions from 18 months ago</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(16)">← Back</button><button class="btn-primary" onclick="deepNext(16)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(16)">&larr; Back</button><button class="btn-primary" onclick="deepNext(16)">Next &rarr;</button></div>
     </div>
 
     <!-- D17 -->
     <div class="card" id="d17">
-      <div class="section-label">Section 6 · Model Governance and Proof Architecture</div>
-      <div class="q-counter">Deep Dive 17 / 19</div>
-      <div class="q-text">Does your institution have a documented process for managing third-party vendor risk specifically as it relates to AI model updates, data pipeline changes, and vendor-driven configuration changes to compliance systems?</div>
-      <div class="q-juris"><strong>OCC Third-Party Risk Management Guidance (2023):</strong> Comprehensive vendor risk management includes ongoing monitoring of third parties that provide model-related services. · <strong>FFIEC IT Examination Handbook:</strong> AI-specific vendor risk management is a named gap in examinations of institutions that adopted cloud-based AML platforms after 2020.</div>
+      <div class="section-label">Section 6 &middot; Model Governance and Proof Architecture</div><div class="q-counter">Deep Dive 17 / 19</div>
+      <div class="q-text">Does your institution have a documented process for managing third-party vendor risk as it relates to AI model updates and vendor-driven configuration changes to compliance systems?</div>
+      <div class="q-juris"><strong>OCC Third-Party Risk Management Guidance (2023):</strong> Comprehensive vendor risk management includes ongoing monitoring of third parties that provide model-related services. &middot; <strong>FFIEC IT Examination Handbook:</strong> AI-specific vendor risk management is a named gap in examinations of institutions that adopted cloud-based AML platforms after 2020.</div>
       <div class="options" data-id="d17">
         <button class="opt" data-value="formal" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Formal AI-specific vendor risk process; notification rights contractually secured</strong></div></button>
         <button class="opt" data-value="general" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>General vendor risk process applies but AI-specific controls not separately documented</strong></div></button>
-        <button class="opt" data-value="sla_only" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>SLA and contract review only — no AI-specific vendor change management</strong></div></button>
+        <button class="opt" data-value="sla_only" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>SLA and contract review only &mdash; no AI-specific vendor change management</strong></div></button>
         <button class="opt" data-value="none" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>No vendor risk management specific to AI or compliance model providers</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(17)">← Back</button><button class="btn-primary" onclick="deepNext(17)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(17)">&larr; Back</button><button class="btn-primary" onclick="deepNext(17)">Next &rarr;</button></div>
     </div>
 
     <!-- D18 -->
     <div class="card" id="d18">
-      <div class="section-label">Section 6 · Model Governance and Proof Architecture</div>
-      <div class="q-counter">Deep Dive 18 / 19</div>
+      <div class="section-label">Section 6 &middot; Model Governance and Proof Architecture</div><div class="q-counter">Deep Dive 18 / 19</div>
       <div class="q-text">Is your institution's AML compliance team aware of the April 7, 2026 FinCEN NPRM, and has your program begun the internal assessment needed to respond to its proposed effectiveness standard?</div>
       <div class="options" data-id="d18">
-        <button class="opt" data-value="assessed" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes — gap assessment underway; formal response to comment period being prepared</strong></div></button>
+        <button class="opt" data-value="assessed" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Yes &mdash; gap assessment underway; formal response to comment period being prepared</strong></div></button>
         <button class="opt" data-value="aware" data-weight="2" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Aware of the NPRM but internal assessment has not yet begun</strong></div></button>
         <button class="opt" data-value="vague" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>General awareness but compliance team has not reviewed the proposed rule text</strong></div></button>
         <button class="opt" data-value="unaware" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Not aware of the April 2026 FinCEN NPRM</strong></div></button>
       </div>
-      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(18)">← Back</button><button class="btn-primary" onclick="deepNext(18)">Next <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button></div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(18)">&larr; Back</button><button class="btn-primary" onclick="deepNext(18)">Next &rarr;</button></div>
     </div>
 
     <!-- D19 -->
     <div class="card" id="d19">
-      <div class="section-label">Section 6 · Model Governance and Proof Architecture</div>
-      <div class="q-counter">Deep Dive 19 / 19</div>
-      <div class="q-text">Finally: who within your institution would be personally accountable — by name and title — if a regulator determined that your AML program was ineffective?</div>
-      <div class="q-note">The answer to this question has changed. The April 2026 NPRM and recent enforcement trends suggest individual accountability is expanding beyond the BSA Officer.</div>
-      <div class="q-juris"><strong>DOJ Individual Accountability Guidance (Yates Memo, reaffirmed 2022):</strong> Regulators increasingly seek individual accountability in AML failures, not only institutional penalties. · <strong>FinCEN Enforcement (2024–2025):</strong> Recent consent orders have included personal liability provisions for CCOs and BSA Officers whose programs were found to lack documented effectiveness.</div>
+      <div class="section-label">Section 6 &middot; Model Governance and Proof Architecture</div><div class="q-counter">Deep Dive 19 / 19</div>
+      <div class="q-text">Finally: who within your institution would be personally accountable &mdash; by name and title &mdash; if a regulator determined that your AML program was ineffective?</div>
+      <div class="q-note">The April 2026 NPRM and recent enforcement trends suggest individual accountability is expanding beyond the BSA Officer.</div>
+      <div class="q-juris"><strong>DOJ Individual Accountability Guidance (Yates Memo, reaffirmed 2022):</strong> Regulators increasingly seek individual accountability in AML failures. &middot; <strong>FinCEN Enforcement (2024-2025):</strong> Recent consent orders have included personal liability provisions for CCOs and BSA Officers whose programs lacked documented effectiveness.</div>
       <div class="options" data-id="d19">
-        <button class="opt" data-value="clear_owner" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Clear — BSA Officer with board-documented authority and documented program accountability</strong></div></button>
-        <button class="opt" data-value="unclear" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Somewhat clear — responsibility is understood informally but not formally documented</strong></div></button>
-        <button class="opt" data-value="diffuse" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Diffuse — shared among compliance, legal, and risk; no single accountable owner</strong></div></button>
-        <button class="opt" data-value="unknown" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Unclear — this has not been formally designated or documented</strong></div></button>
+        <button class="opt" data-value="clear_owner" data-weight="0" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Clear &mdash; BSA Officer with board-documented authority and documented program accountability</strong></div></button>
+        <button class="opt" data-value="unclear" data-weight="3" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Somewhat clear &mdash; responsibility is understood informally but not formally documented</strong></div></button>
+        <button class="opt" data-value="diffuse" data-weight="4" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Diffuse &mdash; shared among compliance, legal, and risk; no single accountable owner</strong></div></button>
+        <button class="opt" data-value="unknown" data-weight="5" onclick="pick(this)"><div class="opt-ring"></div><div class="opt-label"><strong>Unclear &mdash; this has not been formally designated or documented</strong></div></button>
       </div>
-      <div class="nav-row">
-        <button class="btn-outline" onclick="deepPrev(19)">← Back</button>
-        <button class="btn-primary" onclick="showFinalReport()">Generate My Full Report →</button>
-      </div>
+      <div class="nav-row"><button class="btn-outline" onclick="deepPrev(19)">&larr; Back</button><button class="btn-primary" onclick="showFinalReport()">Generate My Full Report &rarr;</button></div>
     </div>
 
-    <!-- ── FINAL REPORT ── -->
+    <!-- FINAL REPORT -->
     <div id="finalReport">
       <div class="report-header">
         <div class="report-score-ring" id="reportScoreRing"></div>
@@ -798,320 +590,183 @@
         <div class="report-tier-name" id="reportTierName"></div>
         <div class="report-intro" id="reportIntro"></div>
       </div>
-
-      <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
-
-      <div class="report-section">
-        <h3>Program Foundation</h3>
-        <div id="findingsDomain1"></div>
-      </div>
-      <div class="report-section">
-        <h3>Customer Due Diligence and Risk Scoring</h3>
-        <div id="findingsDomain2"></div>
-      </div>
-      <div class="report-section">
-        <h3>Transaction Monitoring and Audit Infrastructure</h3>
-        <div id="findingsDomain3"></div>
-      </div>
-      <div class="report-section">
-        <h3>SAR and CTR Obligations</h3>
-        <div id="findingsDomain4"></div>
-      </div>
-      <div class="report-section">
-        <h3>EU AI Act and Cross-Border Obligations</h3>
-        <div id="findingsDomain5"></div>
-      </div>
-      <div class="report-section">
-        <h3>Model Governance and Proof Architecture</h3>
-        <div id="findingsDomain6"></div>
-      </div>
-
-      <!-- ROSÉ MITIGATION SPOTLIGHT -->
+      <div class="ornament">&#10022; &nbsp; &#10022; &nbsp; &#10022;</div>
+      <div class="report-section"><h3>Program Foundation</h3><div id="findingsDomain1"></div></div>
+      <div class="report-section"><h3>Customer Due Diligence and Risk Scoring</h3><div id="findingsDomain2"></div></div>
+      <div class="report-section"><h3>Transaction Monitoring and Audit Infrastructure</h3><div id="findingsDomain3"></div></div>
+      <div class="report-section"><h3>SAR and CTR Obligations</h3><div id="findingsDomain4"></div></div>
+      <div class="report-section"><h3>EU AI Act and Cross-Border Obligations</h3><div id="findingsDomain5"></div></div>
+      <div class="report-section"><h3>Model Governance and Proof Architecture</h3><div id="findingsDomain6"></div></div>
       <div class="spotlight">
-        <div class="spotlight-label">ROSÉ · Mitigation Spotlight</div>
+        <div class="spotlight-label">ROS&Eacute; &middot; Mitigation Spotlight</div>
         <h4>The Proof Architecture Your Program Is Missing</h4>
-        <p>Every gap surfaced in this assessment shares a structural root: compliance programs built on process attestation rather than execution proof. Policies exist. Procedures are written. But when a regulator asks whether your AML program was <em>effective</em> — at a specific decision, on a specific date, under a specific model version — the answer depends on whether you have cryptographic, tamper-evident evidence of what actually happened.</p>
-        <p>ROSÉ's governance infrastructure wraps every AI-assisted compliance decision in a time-stamped, version-anchored proof record. Not a log. A proof. One that satisfies FinCEN's April 2026 NPRM effectiveness standard, OCC's SR 11-7 model governance requirements, and the EU AI Act's Art. 13 transparency mandate — simultaneously, without requiring your compliance team to build separate documentation workflows for each framework.</p>
-        <p>The Pavilion Payments architecture demonstrates this in the gaming payments vertical. The same infrastructure scales to any institution where AI touches regulated decisions: banks, MSBs, broker-dealers, investment advisers, payment processors. One proof layer. Every framework. Every decision. Defensible on the day it is made — and three years later, in front of a regulator.</p>
+        <p>Every gap surfaced in this assessment shares a structural root: compliance programs built on process attestation rather than execution proof. Policies exist. Procedures are written. But when a regulator asks whether your AML program was effective at a specific decision, on a specific date, under a specific model version, the answer depends on whether you have cryptographic, tamper-evident evidence of what actually happened.</p>
+        <p>ROS&Eacute;'s governance infrastructure wraps every AI-assisted compliance decision in a time-stamped, version-anchored proof record. Not a log. A proof. One that satisfies FinCEN's April 2026 NPRM effectiveness standard, OCC's SR 11-7 model governance requirements, and the EU AI Act's Art. 13 transparency mandate simultaneously, without requiring your compliance team to build separate documentation workflows for each framework.</p>
+        <p>One proof layer. Every framework. Every decision. Defensible on the day it is made &mdash; and three years later, in front of a regulator.</p>
       </div>
-
-      <div class="next-steps">
-        <h4>Recommended Immediate Actions</h4>
-        <ul id="nextStepsList"></ul>
-      </div>
-
+      <div class="next-steps"><h4>Recommended Immediate Actions</h4><ul id="nextStepsList"></ul></div>
       <div class="email-cta">
-        <div class="email-cta-text">
-          <h4>Receive Your Full Assessment Report</h4>
-          <p>A ROSÉ compliance architect will send your scored findings, specific regulatory citations, and a prioritized remediation roadmap within one business day.</p>
-        </div>
-        <div class="email-cta-action">
-          <a href="mailto:hello@selfient.xyz?subject=AML Compliance Assessment — Full Report Request" class="btn-primary" style="text-decoration:none;display:inline-flex;">Request Report →</a>
-        </div>
+        <div class="email-cta-text"><h4>Receive Your Full Assessment Report</h4><p>A ROS&Eacute; compliance architect will send your scored findings, specific regulatory citations, and a prioritized remediation roadmap within one business day.</p></div>
+        <div class="email-cta-action"><a href="mailto:hello@selfient.xyz?subject=AML Compliance Assessment - Full Report Request" class="btn-primary" style="text-decoration:none;display:inline-flex;">Request Report &rarr;</a></div>
       </div>
-
-      <div class="report-footer">
-        <span>ROSÉ · Selfient, Inc.</span>
-        <span>AML · BSA · FinCEN Compliance Assessment</span>
-        <span id="reportDate"></span>
-      </div>
+      <div class="report-footer"><span>ROS&Eacute; &middot; Selfient, Inc.</span><span>AML &middot; BSA &middot; FinCEN Compliance Assessment</span><span id="reportDate"></span></div>
     </div>
 
-  </div><!-- /stage -->
+  </div>
 </main>
 
 <script>
-// ── STATE ──────────────────────────────────────────────────────────────────
-const scores  = {};   // {t1,t2,...,d1,...d19} → numeric weight
-const values  = {};   // {t1,...} → value string
-let triageScore = 0;
+const scores={}, values={};
+let triageScore=0;
 
-// ── HELPERS ────────────────────────────────────────────────────────────────
-function show(id)  { const el=document.getElementById(id); if(el){ el.classList.add('active'); el.style.display=''; } }
-function hide(id)  { const el=document.getElementById(id); if(el){ el.classList.remove('active'); el.style.display='none'; } }
-function showCard(id) {
-  document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
-  const el=document.getElementById(id);
-  if(el){ el.classList.add('active'); el.scrollIntoView({behavior:'smooth',block:'start'}); }
-}
+function show(id){const el=document.getElementById(id);if(el){el.classList.add('active');el.style.display='';}}
+function hide(id){const el=document.getElementById(id);if(el){el.classList.remove('active');el.style.display='none';}}
+function showCard(id){document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));const el=document.getElementById(id);if(el){el.classList.add('active');el.scrollIntoView({behavior:'smooth',block:'start'});}}
 
-function pick(btn) {
-  const group = btn.closest('.options');
-  group.querySelectorAll('.opt').forEach(b=>b.classList.remove('selected'));
-  btn.classList.add('selected');
-}
+function pick(btn){const g=btn.closest('.options');g.querySelectorAll('.opt').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');}
 
-function getSelected(groupId) {
-  const group = document.querySelector(`[data-id="${groupId}"]`);
-  if (!group) return null;
-  const sel = group.querySelector('.opt.selected');
-  if (!sel) return null;
-  return { weight: parseInt(sel.dataset.weight||0), value: sel.dataset.value };
-}
+function getSelected(gid){const g=document.querySelector('[data-id="'+gid+'"]');if(!g)return null;const s=g.querySelector('.opt.selected');if(!s)return null;return{weight:parseInt(s.dataset.weight||0),value:s.dataset.value};}
 
-function updateProgress(current, total, label) {
+function updateProgress(cur,tot,label){
   show('progressWrap');
-  document.getElementById('progressText').textContent = label + ' · Question ' + current + ' of ' + total;
-  const pct = Math.round((current-1)/total*100);
-  document.getElementById('progressPct').textContent = pct + '%';
-  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent=label+' \u00B7 Question '+cur+' of '+tot;
+  const pct=Math.round((cur-1)/tot*100);
+  document.getElementById('progressPct').textContent=pct+'%';
+  document.getElementById('progressFill').style.width=pct+'%';
 }
 
-// ── TRIAGE ─────────────────────────────────────────────────────────────────
-function startTriage() {
-  hide('introCard');
-  document.getElementById('topOrnament').style.display='none';
-  showCard('t1');
-  updateProgress(1,5,'Triage');
-}
+function startTriage(){hide('introCard');document.getElementById('topOrnament').style.display='none';showCard('t1');updateProgress(1,5,'Triage');}
 
-function triageNext(n) {
-  const sel = getSelected('t'+n);
-  if (!sel) { alert('Please select an answer to continue.'); return; }
-  scores['t'+n] = sel.weight;
-  values['t'+n] = sel.value;
-  if (n < 5) { showCard('t'+(n+1)); updateProgress(n+1,5,'Triage'); }
-  else showTriageResult();
-}
+function triageNext(n){const s=getSelected('t'+n);if(!s){alert('Please select an answer to continue.');return;}scores['t'+n]=s.weight;values['t'+n]=s.value;if(n<5){showCard('t'+(n+1));updateProgress(n+1,5,'Triage');}else showTriageResult();}
 
-function triagePrev(n) {
-  showCard('t'+(n-1));
-  updateProgress(n-1,5,'Triage');
-}
+function triagePrev(n){showCard('t'+(n-1));updateProgress(n-1,5,'Triage');}
 
-function showTriageResult() {
-  triageScore = Object.keys(scores).filter(k=>k.startsWith('t')).reduce((s,k)=>s+scores[k],0);
-  const tier = getTier(triageScore, [6,12,18]);
-
+function showTriageResult(){
+  triageScore=Object.keys(scores).filter(k=>k.startsWith('t')).reduce((s,k)=>s+scores[k],0);
+  const tier=getTier(triageScore,[6,12,18]);
   document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
-  const res = document.getElementById('triageResult');
-  res.classList.add('active');
-  res.style.display = 'block';
-
-  const block = document.getElementById('riskTierBlock');
-  block.className = 'risk-tier-block tier-'+tier.key;
-  block.innerHTML = `
-    <div class="risk-tier-label">Triage Score · ${triageScore} / 25</div>
-    <div class="risk-tier-name">${tier.name}</div>
-    <div class="risk-tier-summary">${tier.triageSummary}</div>`;
-
-  // Flags
-  const flags = [];
-  if (values.t2 === 'full_ai' || values.t2 === 'vendor_ai') flags.push({cls:'flag-red',txt:'AI Model Governance Gap'});
-  if (values.t3 === 'policy_only' || values.t3 === 'unsure') flags.push({cls:'flag-red',txt:'Effectiveness Documentation — Critical'});
-  if (values.t4 === 'vendor') flags.push({cls:'flag-red',txt:'Vendor Liability Misassignment'});
-  if (values.t5 === 'mra') flags.push({cls:'flag-amber',txt:'Prior MRA — Elevated Scrutiny'});
-  if (values.t1 === 'casino') flags.push({cls:'flag-amber',txt:'Title 31 Gaming Obligations Active'});
-  const flagsRow = document.getElementById('flagsRow');
-  flagsRow.innerHTML = flags.map(f=>`<span class="flag ${f.cls}">${f.txt}</span>`).join('');
-
-  document.getElementById('progressText').textContent = 'Triage Complete';
-  document.getElementById('progressPct').textContent = '100%';
-  document.getElementById('progressFill').style.width = '100%';
+  const res=document.getElementById('triageResult');
+  res.classList.add('active');res.style.display='block';
+  const block=document.getElementById('riskTierBlock');
+  block.className='risk-tier-block tier-'+tier.key;
+  block.innerHTML='<div class="risk-tier-label">Triage Score \u00B7 '+triageScore+' / 25</div><div class="risk-tier-name">'+tier.name+'</div><div class="risk-tier-summary">'+tier.triageSummary+'</div>';
+  const flags=[];
+  if(values.t2==='full_ai'||values.t2==='vendor_ai')flags.push({cls:'flag-red',txt:'AI Model Governance Gap'});
+  if(values.t3==='policy_only'||values.t3==='unsure')flags.push({cls:'flag-red',txt:'Effectiveness Documentation \u2014 Critical'});
+  if(values.t4==='vendor')flags.push({cls:'flag-red',txt:'Vendor Liability Misassignment'});
+  if(values.t5==='mra')flags.push({cls:'flag-amber',txt:'Prior MRA \u2014 Elevated Scrutiny'});
+  if(values.t1==='casino')flags.push({cls:'flag-amber',txt:'Title 31 Gaming Obligations Active'});
+  document.getElementById('flagsRow').innerHTML=flags.map(f=>'<span class="flag '+f.cls+'">'+f.txt+'</span>').join('');
+  document.getElementById('progressText').textContent='Triage Complete';
+  document.getElementById('progressPct').textContent='100%';
+  document.getElementById('progressFill').style.width='100%';
   res.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-// ── DEEP DIVE ──────────────────────────────────────────────────────────────
-function startDeepDive() {
-  document.getElementById('triageResult').classList.remove('active');
-  document.getElementById('triageResult').style.display='none';
-  showCard('d1');
-  updateProgress(1,19,'Deep Dive');
+function startDeepDive(){document.getElementById('triageResult').classList.remove('active');document.getElementById('triageResult').style.display='none';showCard('d1');updateProgress(1,19,'Deep Dive');}
+
+function deepNext(n){const s=getSelected('d'+n);if(!s){alert('Please select an answer to continue.');return;}scores['d'+n]=s.weight;values['d'+n]=s.value;if(n<19){showCard('d'+(n+1));updateProgress(n+1,19,'Deep Dive');}else showFinalReport();}
+
+function deepPrev(n){
+  if(n===1){document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));show('triageResult');document.getElementById('progressText').textContent='Triage Complete';document.getElementById('progressPct').textContent='100%';document.getElementById('progressFill').style.width='100%';}
+  else{showCard('d'+(n-1));updateProgress(n-1,19,'Deep Dive');}
 }
 
-function deepNext(n) {
-  const sel = getSelected('d'+n);
-  if (!sel) { alert('Please select an answer to continue.'); return; }
-  scores['d'+n] = sel.weight;
-  values['d'+n] = sel.value;
-  if (n < 19) { showCard('d'+(n+1)); updateProgress(n+1,19,'Deep Dive'); }
-  else showFinalReport();
-}
-
-function deepPrev(n) {
-  if (n === 1) {
-    document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
-    show('triageResult');
-    document.getElementById('progressText').textContent = 'Triage Complete';
-    document.getElementById('progressPct').textContent = '100%';
-    document.getElementById('progressFill').style.width = '100%';
-  } else {
-    showCard('d'+(n-1));
-    updateProgress(n-1,19,'Deep Dive');
-  }
-}
-
-// ── FINAL REPORT ───────────────────────────────────────────────────────────
-function showFinalReport() {
+function showFinalReport(){
   document.querySelectorAll('.card').forEach(c=>c.classList.remove('active'));
+  const deepScore=Object.keys(scores).filter(k=>k.startsWith('d')).reduce((s,k)=>s+scores[k],0);
+  const total=triageScore+deepScore;
+  const tier=getTier(total,[20,40,65]);
+  const report=document.getElementById('finalReport');
+  report.style.display='block';report.classList.add('active');
+  const ring=document.getElementById('reportScoreRing');
+  ring.textContent=total;ring.className='report-score-ring score-'+tier.key;
+  document.getElementById('reportTierName').textContent=tier.name;
+  document.getElementById('reportTierName').style.color=tier.color;
+  document.getElementById('reportIntro').textContent=tier.deepSummary;
+  document.getElementById('reportDate').textContent=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 
-  const deepScore = Object.keys(scores).filter(k=>k.startsWith('d')).reduce((s,k)=>s+scores[k],0);
-  const totalScore = triageScore + deepScore;
-  const tier = getTier(totalScore, [20,40,65]);
-
-  const report = document.getElementById('finalReport');
-  report.style.display = 'block';
-  report.classList.add('active');
-
-  // Score ring
-  const ring = document.getElementById('reportScoreRing');
-  ring.textContent = totalScore;
-  ring.className = 'report-score-ring score-'+tier.key;
-  document.getElementById('reportTierName').textContent = tier.name;
-  document.getElementById('reportTierName').style.color = tier.color;
-  document.getElementById('reportIntro').textContent = tier.deepSummary;
-  document.getElementById('reportDate').textContent = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
-
-  // Domain findings
-  renderDomain('findingsDomain1', [
-    {qid:'d1', label:'Written AML Policy', findings:{current:'Policy is current and board-approved — strong foundation.',stale:'Policy staleness is an examination finding. Update within 90 days.',partial:'Policy does not reflect AI tools. Update required before next examination cycle.',none:'Absence of a board-approved written policy is a BSA violation. Immediate remediation required.'}},
-    {qid:'d2', label:'BSA Officer Independence', findings:{independent:'Independent reporting structure is correctly in place.',partial:'Partial independence creates vulnerability in enforcement scenarios. Document escalation path formally.',embedded:'Embedded compliance function is a governance finding. Strengthen independence.',none:'No designated BSA Officer is a critical violation requiring immediate remediation.'}}
+  renderDomain('findingsDomain1',[
+    {qid:'d1',label:'Written AML Policy',findings:{current:'Policy is current and board-approved \u2014 strong foundation.',stale:'Policy staleness is an examination finding. Update within 90 days.',partial:'Policy does not reflect AI tools. Update required before next examination cycle.',none:'Absence of a board-approved written policy is a BSA violation. Immediate remediation required.'}},
+    {qid:'d2',label:'BSA Officer Independence',findings:{independent:'Independent reporting structure is correctly in place.',partial:'Partial independence creates vulnerability in enforcement scenarios. Document escalation path formally.',embedded:'Embedded compliance function is a governance finding. Strengthen independence.',none:'No designated BSA Officer is a critical violation requiring immediate remediation.'}}
+  ]);
+  renderDomain('findingsDomain2',[
+    {qid:'d4',label:'CDD and Beneficial Ownership',findings:{full:'CDD/beneficial ownership fully implemented \u2014 regulatory baseline met.',partial:'Systematic gaps in CDD create CDD Final Rule exposure. Map and close by segment.',ai_gap:'AI-assisted onboarding without decision-level documentation is an emerging examination focus.',none:'Missing beneficial ownership collection is a CDD Final Rule violation.'}},
+    {qid:'d5',label:'AI Risk Score Explainability',findings:{full:'Explainability documentation in place \u2014 EU AI Act Art. 13 and FinCEN NPRM requirements addressed.',partial:'Partial documentation leaves individual decisions undefended. Systematic explainability needed.',black_box:'Black-box AI risk scoring is a critical gap under the NPRM and EU AI Act. This is your most urgent remediation.',no_ai:'No AI risk scoring. Rules-based CDD still subject to effectiveness documentation requirements.'}}
+  ]);
+  renderDomain('findingsDomain3',[
+    {qid:'d6',label:'Transaction Monitoring Calibration',findings:{validated:'Formal tuning with documented rationale satisfies FFIEC examination expectations.',ad_hoc:'Ad hoc calibration will not survive an effectiveness-standard examination. Formalize the process.',vendor_default:'Vendor defaults without independent validation is a named OCC SR 11-7 gap.',unknown:'Inability to describe calibration is an immediate examination vulnerability.'}},
+    {qid:'d7',label:'Model Update Validation',findings:{formal:'Pre-deployment validation workflow correctly addresses SR 11-7 model change requirements.',informal:'Undocumented testing does not satisfy OCC validation requirements. Document the process.',vendor_notify:'Relying solely on vendor release notes has been specifically rejected as adequate by regulators.',unaware:'Not being notified of model updates is a vendor contract and governance failure.'}},
+    {qid:'d8',label:'Decision-Level Audit Trail',findings:{cryptographic:'Tamper-evident audit trail is the gold standard. ROS\u00C9-level infrastructure in place.',logs:'Standard logs are a foundation, but not sufficient for enforcement reconstruction. Strengthen to tamper-evident.',partial:'Partial audit trail creates the worst of both worlds: existence suggests capability, gaps demonstrate failure.',none:'Absence of a decision-level audit trail is the single most consequential gap under the April 2026 NPRM.'}}
+  ]);
+  renderDomain('findingsDomain4',[
+    {qid:'d9',label:'SAR Process and Human Review',findings:{documented_human:'Documented human review satisfies FinCEN SAR guidance. Current standard is met.',human_undoc:'Undocumented human review will not withstand an enforcement inquiry. Document the approval.',ai_primary:'AI-autonomous SAR decisions contradict FinCEN guidance. This requires immediate process redesign.',no_ai_sar:'Manual SAR process. Ensure narrative quality standards are maintained.'}},
+    {qid:'d10',label:'CTR Aggregation Accuracy',findings:{tested:'Tested CTR aggregation with documented results is examination-ready.',auto_untested:'Automated but untested aggregation creates undetected error risk. Schedule validation.',manual:'Manual CTR processes carry inherent error risk. Document procedures carefully.',unknown:'Unknown CTR process status is an examination finding in itself.'}}
+  ]);
+  renderDomain('findingsDomain5',[
+    {qid:'d11',label:'EU Nexus Assessment',findings:{significant:'Significant EU nexus means full EU AI Act high-risk AI obligations apply to your financial AI systems.',incidental:'Proportional EU AI Act obligations attach wherever EU persons are affected.',none:'No current EU AI Act exposure. Monitor for regulatory expansion.'}},
+    {qid:'d12',label:'Conformity Assessment Status',findings:{complete:'Conformity assessment complete \u2014 EU AI Act deployment obligations satisfied.',in_progress:'Assessment underway. Prioritize completion before next compliance cycle.',not_started:'EU AI Act conformity assessment not yet begun. Significant exposure for institutions with EU nexus.',not_applicable:'No EU nexus. No conformity assessment required at this time.'}},
+    {qid:'d13',label:'Travel Rule Compliance',findings:{compliant:'Travel Rule compliance demonstrated, including AI system testing for information preservation.',partial:'Partial compliance \u2014 cross-border or crypto gaps should be addressed in the next remediation cycle.',legacy_gap:'Unvalidated legacy wire processing is a FinCEN Travel Rule examination finding.',not_applicable:'Wire transfers and virtual assets are not in scope.'}}
+  ]);
+  renderDomain('findingsDomain6',[
+    {qid:'d14',label:'Model Inventory',findings:{complete:'Complete model inventory \u2014 a prerequisite for all downstream governance activities.',internal_only:'Vendor models not inventoried. OCC SR 11-7 requires third-party models to be included.',partial:'Known inventory gaps undermine your ability to demonstrate program completeness.',none:'No model inventory is a foundational governance failure. This is the starting point for all remediation.'}},
+    {qid:'d15',label:'Drift Monitoring',findings:{realtime:'Continuous drift monitoring represents the emerging regulatory standard. You are ahead of most peers.',periodic:'Periodic review is better than none, but the NPRM effectiveness standard implies ongoing performance monitoring.',exam_triggered:'Discovering model performance issues at examination is the liability scenario FinCEN is specifically targeting.',none:'No drift monitoring is a critical gap. This is where invisible risk accumulates undetected.'}},
+    {qid:'d16',label:'Decision Reconstruction Speed',findings:{hours:'Hours-level reconstruction capability is the enforcement-ready standard.',days:'Days-level reconstruction is adequate for most scenarios but stressful under enforcement timelines.',weeks:'Weeks-level reconstruction signals systemic audit trail fragmentation. Structural remediation needed.',impossible:'Inability to reconstruct compliance decisions is the most acute proof architecture failure.'}},
+    {qid:'d17',label:'AI Vendor Risk Management',findings:{formal:'AI-specific vendor risk with contractual notification rights is the correct framework.',general:'General vendor risk without AI-specific controls leaves model change risk unmanaged.',sla_only:'SLA-only vendor risk management has been found inadequate in OCC third-party risk examinations.',none:'No AI vendor risk management. Every vendor model update is an unmanaged governance event.'}},
+    {qid:'d18',label:'April 2026 NPRM Awareness',findings:{assessed:'Gap assessment underway. You are in the optimal position to meet the comment and implementation timeline.',aware:'Awareness without assessment creates a closing runway. Begin internal review immediately.',vague:'Vague awareness without rule text review means your team is not positioned to respond.',unaware:'Unawareness of the April 2026 FinCEN NPRM is an urgent corrective action item.'}},
+    {qid:'d19',label:'Individual Accountability',findings:{clear_owner:'Documented individual accountability satisfies DOJ and FinCEN individual accountability expectations.',unclear:'Informal accountability is vulnerability. Formalize the designation.',diffuse:'Diffuse accountability is precisely what DOJ individual accountability guidance is designed to eliminate.',unknown:'Unknown accountability structure is itself a governance finding.'}}
   ]);
 
-  renderDomain('findingsDomain2', [
-    {qid:'d4', label:'CDD and Beneficial Ownership', findings:{full:'CDD/beneficial ownership fully implemented — regulatory baseline met.',partial:'Systematic gaps in CDD create CDD Final Rule exposure. Map and close by segment.',ai_gap:'AI-assisted onboarding without decision-level documentation is an emerging examination focus.',none:'Missing beneficial ownership collection is a CDD Final Rule violation.'}},
-    {qid:'d5', label:'AI Risk Score Explainability', findings:{full:'Explainability documentation in place — EU AI Act Art. 13 and FinCEN NPRM requirements addressed.',partial:'Partial documentation leaves individual decisions undefended. Systematic explainability needed.',black_box:'Black-box AI risk scoring is a critical gap under the NPRM and EU AI Act. This is your most urgent remediation.',no_ai:'No AI risk scoring. Rules-based CDD still subject to effectiveness documentation requirements.'}}
-  ]);
+  const steps=[];
+  if(scores.d3>=3)steps.push('Schedule independent AML program testing covering all AI and automated compliance models.');
+  if(scores.d5>=3)steps.push('Implement explainability documentation for AI-generated risk scores before the next examination cycle.');
+  if(scores.d8>=3)steps.push('Upgrade your audit trail infrastructure to produce tamper-evident, decision-level records with model version attribution.');
+  if(scores.d14>=3)steps.push('Conduct a full model inventory exercise, including all vendor-supplied and third-party AI systems.');
+  if(scores.d15>=3)steps.push('Implement continuous model drift monitoring with automated alerting.');
+  if(scores.d18>=3)steps.push('Assign a team member to read the April 7, 2026 FinCEN NPRM in full and begin an internal gap assessment.');
+  if(scores.d1>=3)steps.push('Update your written AML/BSA policy to reflect AI tools in use and the NPRM effectiveness-based standard.');
+  if(values.t4==='vendor')steps.push('Correct the internal understanding that your AML vendor bears primary accountability for model outcomes. This assumption has been explicitly rejected by regulators.');
+  if(steps.length===0)steps.push('Your program shows strong foundational posture. Focus on continuous improvement and proactive NPRM response preparation.');
+  document.getElementById('nextStepsList').innerHTML=steps.map(s=>'<li>'+s+'</li>').join('');
 
-  renderDomain('findingsDomain3', [
-    {qid:'d6', label:'Transaction Monitoring Calibration', findings:{validated:'Formal tuning with documented rationale satisfies FFIEC examination expectations.',ad_hoc:'Ad hoc calibration will not survive an effectiveness-standard examination. Formalize the process.',vendor_default:'Vendor defaults without independent validation is a named OCC SR 11-7 gap.',unknown:'Inability to describe calibration is an immediate examination vulnerability.'}},
-    {qid:'d7', label:'Model Update Validation', findings:{formal:'Pre-deployment validation workflow correctly addresses SR 11-7 model change requirements.',informal:'Undocumented testing does not satisfy OCC validation requirements. Document the process.',vendor_notify:'Relying solely on vendor release notes has been specifically rejected as adequate by regulators.',unaware:'Not being notified of model updates is a vendor contract and governance failure.'}},
-    {qid:'d8', label:'Decision-Level Audit Trail', findings:{cryptographic:'Tamper-evident audit trail is the gold standard. ROSÉ-level infrastructure in place.',logs:'Standard logs are a foundation, but not sufficient for enforcement reconstruction. Strengthen to tamper-evident.',partial:'Partial audit trail creates the worst of both worlds: existence suggests capability, gaps demonstrate failure.',none:'Absence of a decision-level audit trail is the single most consequential gap under the April 2026 NPRM.'}}
-  ]);
-
-  renderDomain('findingsDomain4', [
-    {qid:'d9', label:'SAR Process and Human Review', findings:{documented_human:'Documented human review satisfies FinCEN SAR guidance. Current standard is met.',human_undoc:'Undocumented human review will not withstand an enforcement inquiry. Document the approval.',ai_primary:'AI-autonomous SAR decisions contradict FinCEN guidance. This requires immediate process redesign.',no_ai_sar:'Manual SAR process. Ensure narrative quality standards are maintained without AI assistance.'}},
-    {qid:'d10', label:'CTR Aggregation Accuracy', findings:{tested:'Tested CTR aggregation with documented results is examination-ready.',auto_untested:'Automated but untested aggregation creates undetected error risk. Schedule validation.',manual:'Manual CTR processes carry inherent error risk. Document procedures carefully.',unknown:'Unknown CTR process status is an examination finding in itself.'}}
-  ]);
-
-  renderDomain('findingsDomain5', [
-    {qid:'d11', label:'EU Nexus Assessment', findings:{significant:'Significant EU nexus means full EU AI Act high-risk AI obligations apply to your financial AI systems.',incidental:'Proportional EU AI Act obligations attach wherever EU persons are affected.',none:'No current EU AI Act exposure. Monitor for regulatory expansion.'}},
-    {qid:'d12', label:'Conformity Assessment Status', findings:{complete:'Conformity assessment complete — EU AI Act deployment obligations satisfied.',in_progress:'Assessment underway. Prioritize completion before next compliance cycle.',not_started:'EU AI Act conformity assessment not yet begun. Significant exposure for institutions with EU nexus.',not_applicable:'No EU nexus. No conformity assessment required at this time.'}},
-    {qid:'d13', label:'Travel Rule Compliance', findings:{compliant:'Travel Rule compliance demonstrated, including AI system testing for information preservation.',partial:'Partial compliance — cross-border or crypto gaps should be addressed in the next remediation cycle.',legacy_gap:'Unvalidated legacy wire processing is a FinCEN Travel Rule examination finding.',not_applicable:'Wire transfers and virtual assets are not in scope.'}}
-  ]);
-
-  renderDomain('findingsDomain6', [
-    {qid:'d14', label:'Model Inventory', findings:{complete:'Complete model inventory — a prerequisite for all downstream governance activities.',internal_only:'Vendor models not inventoried. OCC SR 11-7 requires third-party models to be included.',partial:'Known inventory gaps undermine your ability to demonstrate program completeness.',none:'No model inventory is a foundational governance failure. This is the starting point for all remediation.'}},
-    {qid:'d15', label:'Drift Monitoring', findings:{realtime:'Continuous drift monitoring represents the emerging regulatory standard. You are ahead of most peers.',periodic:'Periodic review is better than none, but the April 2026 NPRM's effectiveness standard implies ongoing performance monitoring.',exam_triggered:'Discovering model performance issues at examination is the liability scenario FinCEN is specifically targeting.',none:'No drift monitoring is a critical gap. This is where invisible risk accumulates undetected.'}},
-    {qid:'d16', label:'Decision Reconstruction Speed', findings:{hours:'Hours-level reconstruction capability is the enforcement-ready standard.',days:'Days-level reconstruction is adequate for most scenarios but stressful under enforcement timelines.',weeks:'Weeks-level reconstruction signals systemic audit trail fragmentation. Structural remediation needed.',impossible:'Inability to reconstruct compliance decisions is the most acute proof architecture failure.'}},
-    {qid:'d17', label:'AI Vendor Risk Management', findings:{formal:'AI-specific vendor risk with contractual notification rights is the correct framework.',general:'General vendor risk without AI-specific controls leaves model change risk unmanaged.',sla_only:'SLA-only vendor risk management has been found inadequate in OCC third-party risk examinations.',none:'No AI vendor risk management. Every vendor model update is an unmanaged governance event.'}},
-    {qid:'d18', label:'April 2026 NPRM Awareness', findings:{assessed:'Gap assessment underway. You are in the optimal position to meet the comment and implementation timeline.',aware:'Awareness without assessment creates a closing runway. Begin internal review immediately.',vague:'Vague awareness without rule text review means your team is not positioned to respond.',unaware:'Unawareness of the April 2026 FinCEN NPRM is an urgent corrective action item.'}},
-    {qid:'d19', label:'Individual Accountability', findings:{clear_owner:'Documented individual accountability satisfies DOJ and FinCEN individual accountability expectations.',unclear:'Informal accountability is vulnerability. Formalize the designation.',diffuse:'Diffuse accountability is precisely what DOJ individual accountability guidance is designed to eliminate.',unknown:'Unknown accountability structure is itself a governance finding.'}}
-  ]);
-
-  // Next steps
-  const steps = buildNextSteps();
-  document.getElementById('nextStepsList').innerHTML = steps.map(s=>`<li>${s}</li>`).join('');
-
-  document.getElementById('progressText').textContent = 'Assessment Complete';
-  document.getElementById('progressPct').textContent = '100%';
-  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('progressText').textContent='Assessment Complete';
+  document.getElementById('progressPct').textContent='100%';
+  document.getElementById('progressFill').style.width='100%';
   report.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-function renderDomain(containerId, questions) {
-  const icons = {0:'✓',1:'✓',2:'⊘',3:'▲',4:'⚠',5:'✕'};
-  const colors = {0:'var(--teal-light)',1:'var(--teal-light)',2:'var(--muted)',3:'var(--gold-light)',4:'#C9853A',5:'#CC4040'};
-  let html = '';
+function renderDomain(cid,questions){
+  const icons={0:'\u2713',1:'\u2713',2:'\u25CB',3:'\u25B2',4:'\u26A0',5:'\u2715'};
+  const colors={0:'var(--rose-light)',1:'var(--rose-light)',2:'var(--muted)',3:'var(--gold)',4:'#C9853A',5:'#CC4040'};
+  let html='';
   questions.forEach(q=>{
-    const w = scores[q.qid]??0;
-    const v = values[q.qid];
-    const finding = (q.findings[v]) || 'No specific finding recorded for this selection.';
-    const icon = icons[Math.min(w,5)];
-    const color = colors[Math.min(w,5)];
-    html += `<div class="finding">
-      <div class="finding-icon" style="color:${color}">${icon}</div>
-      <div class="finding-text">
-        <strong>${q.label}</strong>
-        ${finding}
-        <em>Severity score: ${w}/5</em>
-      </div>
-    </div>`;
+    const w=scores[q.qid]??0;
+    const v=values[q.qid];
+    const finding=(q.findings[v])||'No specific finding recorded for this selection.';
+    html+='<div class="finding"><div class="finding-icon" style="color:'+colors[Math.min(w,5)]+'">'+icons[Math.min(w,5)]+'</div><div class="finding-text"><strong>'+q.label+'</strong>'+finding+'<em>Severity score: '+w+'/5</em></div></div>';
   });
-  document.getElementById(containerId).innerHTML = html;
+  document.getElementById(cid).innerHTML=html;
 }
 
-function buildNextSteps() {
-  const steps = [];
-  if (scores.d3 >= 3) steps.push('Schedule independent AML program testing and ensure scope covers all AI and automated compliance models.');
-  if (scores.d5 >= 3) steps.push('Implement explainability documentation for AI-generated risk scores before the next examination cycle.');
-  if (scores.d8 >= 3) steps.push('Upgrade your audit trail infrastructure to produce tamper-evident, decision-level records with model version attribution.');
-  if (scores.d14 >= 3) steps.push('Conduct a full model inventory exercise, including all vendor-supplied and third-party AI systems.');
-  if (scores.d15 >= 3) steps.push('Implement continuous model drift monitoring with automated alerting.');
-  if (scores.d18 >= 3) steps.push('Assign a team member to read the April 7, 2026 FinCEN NPRM in full and begin an internal gap assessment.');
-  if (scores.d1 >= 3) steps.push('Update your written AML/BSA policy to reflect AI tools in use and the NPRM's effectiveness-based standard.');
-  if (scores.t4 === 'vendor') steps.push('Correct the internal understanding that your AML vendor bears primary accountability for model outcomes. This assumption has been explicitly rejected by regulators.');
-  if (steps.length === 0) steps.push('Your program shows strong foundational posture. Focus on continuous improvement and proactive NPRM response preparation.');
-  return steps;
-}
-
-function getTier(score, thresholds) {
-  const tiers = {
-    managed: {
-      key:'managed', name:'Managed', color:'var(--teal-light)',
-      triageSummary:'Your triage results suggest a foundational program is in place. The full assessment will identify specific gaps in the effectiveness documentation, model governance, and proof architecture layers that regulators are now examining most closely.',
-      deepSummary:'Your program demonstrates meaningful investment in BSA/AML compliance. The findings in this report identify the specific documentation and governance gaps that differentiate a managed program from a defensible one under the April 2026 FinCEN NPRM standard.'
-    },
-    moderate: {
-      key:'moderate', name:'Moderate Exposure', color:'var(--gold-light)',
+function getTier(score,thresholds){
+  const t={
+    managed:{key:'managed',name:'Managed',color:'var(--rose-light)',
+      triageSummary:'Your triage results suggest a foundational program is in place. The full assessment will identify specific gaps in effectiveness documentation, model governance, and proof architecture that regulators are now examining most closely.',
+      deepSummary:'Your program demonstrates meaningful investment in BSA/AML compliance. The findings in this report identify the specific documentation and governance gaps that differentiate a managed program from a defensible one under the April 2026 FinCEN NPRM standard.'},
+    moderate:{key:'moderate',name:'Moderate Exposure',color:'var(--gold)',
       triageSummary:'Your triage results identify several areas where your program\'s documentation and AI governance posture may not satisfy the emerging effectiveness standard. The full assessment will map the specific obligation dimensions requiring attention.',
-      deepSummary:'Your program has foundational elements in place but contains material gaps in effectiveness documentation, model governance, or proof architecture. These gaps are manageable within the NPRM comment and implementation timeline — but require structured remediation planning now.'
-    },
-    elevated: {
-      key:'elevated', name:'Elevated Risk', color:'#C9853A',
-      triageSummary:'Your triage results indicate significant exposure across one or more BSA/AML obligation domains. The full assessment will produce a prioritized remediation roadmap — but immediate attention to your highest-scored areas is warranted.',
-      deepSummary:'This assessment identifies substantial gaps between your current program posture and the standard regulators are applying under the April 2026 FinCEN NPRM. Several findings carry individual accountability implications. Structured engagement with qualified compliance counsel and an infrastructure provider is advisable.'
-    },
-    critical: {
-      key:'critical', name:'Critical Exposure', color:'#CC4040',
-      triageSummary:'Your triage results indicate critical gaps in BSA/AML program foundations, effectiveness documentation, or AI governance. Immediate action across multiple program dimensions is warranted. The full assessment will identify the precise nature and priority of each exposure.',
-      deepSummary:'This assessment identifies critical gaps across multiple compliance domains. Your program\'s current posture creates material enforcement risk under the BSA, the April 2026 FinCEN NPRM, and applicable AI governance standards. Remediation should begin immediately, prioritizing the highest-severity findings identified above.'
-    }
+      deepSummary:'Your program has foundational elements in place but contains material gaps in effectiveness documentation, model governance, or proof architecture. These gaps are manageable within the NPRM implementation timeline but require structured remediation planning now.'},
+    elevated:{key:'elevated',name:'Elevated Risk',color:'#C9853A',
+      triageSummary:'Your triage results indicate significant exposure across one or more BSA/AML obligation domains. The full assessment will produce a prioritized remediation roadmap, but immediate attention to your highest-scored areas is warranted.',
+      deepSummary:'This assessment identifies substantial gaps between your current program posture and the standard regulators are applying under the April 2026 FinCEN NPRM. Several findings carry individual accountability implications. Structured engagement with qualified compliance counsel and an infrastructure provider is advisable.'},
+    critical:{key:'critical',name:'Critical Exposure',color:'#CC4040',
+      triageSummary:'Your triage results indicate critical gaps in BSA/AML program foundations, effectiveness documentation, or AI governance. Immediate action across multiple program dimensions is warranted.',
+      deepSummary:'This assessment identifies critical gaps across multiple compliance domains. Your program\'s current posture creates material enforcement risk under the BSA, the April 2026 FinCEN NPRM, and applicable AI governance standards. Remediation should begin immediately.'}
   };
-  if (score <= thresholds[0]) return tiers.managed;
-  if (score <= thresholds[1]) return tiers.moderate;
-  if (score <= thresholds[2]) return tiers.elevated;
-  return tiers.critical;
+  if(score<=thresholds[0])return t.managed;
+  if(score<=thresholds[1])return t.moderate;
+  if(score<=thresholds[2])return t.elevated;
+  return t.critical;
 }
 </script>
 
