@@ -637,7 +637,13 @@ function updateProgress(cur,tot,label){
 
 function startTriage(){hide('introCard');document.getElementById('topOrnament').style.display='none';showCard('t1');updateProgress(1,5,'Triage');}
 
-function triageNext(n){const s=getSelected('t'+n);if(!s){alert('Please select an answer to continue.');return;}scores['t'+n]=s.weight;values['t'+n]=s.value;if(n<5){showCard('t'+(n+1));updateProgress(n+1,5,'Triage');}else showTriageResult();}
+    function triageNext(n) {
+  const sel = getSelected('t'+n);
+  if (!sel) { scores['t'+n] = 0; values['t'+n] = 'skipped'; }
+  else { scores['t'+n] = sel.weight; values['t'+n] = sel.value; }
+  if (n < 5) { showCard('t'+(n+1)); updateProgress(n+1,5,'Triage'); }
+  else showTriageResult();
+}
 
 function triagePrev(n){showCard('t'+(n-1));updateProgress(n-1,5,'Triage');}
 
