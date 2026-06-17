@@ -222,7 +222,10 @@
         </div>
         <p style="font-size:0.78rem;color:var(--muted);line-height:1.7;">Responses are used solely to generate your personalized assessment. No data is stored or transmitted.</p>
         <div class="nav-row" style="justify-content:center;border:none;margin-top:1.5rem;">
-          <button class="btn-primary" onclick="startTriage()">Begin Triage Assessment &rarr;</button>
+<button class="btn-primary" onclick="startTriage()">Begin Triage Assessment &rarr;</button>
+          <br><br>
+          <a href="#" onclick="startDeepDive();return false;" style="font-size:0.76rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);text-decoration:none;border-bottom:1px solid var(--border);">Skip to Full Assessment &rarr;</a>
+          
         </div>
       </div>
     </div>
@@ -636,7 +639,7 @@ function updateProgress(cur,tot,label){
 }
 
 function startTriage(){hide('introCard');document.getElementById('topOrnament').style.display='none';showCard('t1');updateProgress(1,5,'Triage');}
-
+  
     function triageNext(n) {
   const sel = getSelected('t'+n);
   if (!sel) { scores['t'+n] = 0; values['t'+n] = 'skipped'; }
