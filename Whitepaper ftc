@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Witness Requirement · ROSÉ Federation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Cinzel:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rose:#CC3562; --rose-light:#E05080; --rose-dark:#8B1030;
+      --gold:#C9A96E; --ink:#040104; --ink-2:#0A0208;
+      --text:#EDE8E3; --muted:#9A8A90;
+      --border:rgba(204,53,98,0.2);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--ink); color: var(--text); font-family: 'DM Sans', sans-serif; font-weight: 300; min-height: 100vh; }
+    .top-rule { height: 1px; background: linear-gradient(to right, transparent, var(--rose-dark), transparent); }
+    .nav-bar { display: flex; align-items: center; justify-content: space-between; padding: 1.2rem 3rem; border-bottom: 1px solid var(--border); }
+    .nav-back { font-family: 'Cinzel', serif; font-size: 0.62rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+    .nav-back:hover { color: var(--rose-light); }
+    .nav-wordmark { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; letter-spacing: 0.35em; color: var(--rose); opacity: 0.8; }
+    .paper-wrap { max-width: 760px; margin: 0 auto; padding: 5rem 2rem 8rem; }
+    .eyebrow { font-family: 'Cinzel', serif; font-size: 0.63rem; letter-spacing: 0.5em; color: var(--gold); text-transform: uppercase; margin-bottom: 1.2rem; }
+    h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 300; line-height: 1.15; color: var(--text); margin-bottom: 0.8rem; }
+    h1 em { font-style: italic; color: var(--rose-light); }
+    .rule { width: 60px; height: 1px; background: var(--rose-dark); margin: 1.8rem 0; }
+    .body-text { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; line-height: 1.9; color: var(--muted); }
+    .lead { font-size: 1.2rem; color: var(--text); font-style: italic; margin-bottom: 2rem; }
+    p { margin-bottom: 1.5rem; }
+    h2 { font-family: 'Cinzel', serif; font-size: 0.72rem; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin: 2.8rem 0 1.2rem; }
+    .pullquote { font-size: 1.15rem; color: var(--text); font-style: italic; border-left: 2px solid var(--rose-dark); padding-left: 1.5rem; margin: 2rem 0; line-height: 1.7; }
+    .timeline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(204,53,98,0.2); margin: 1.5rem 0 2rem; }
+    .timeline-cell { background: var(--ink-2); padding: 1.5rem; }
+    .timeline-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; color: var(--rose); text-transform: uppercase; margin-bottom: 0.5rem; }
+    .timeline-text { font-size: 0.9rem; color: var(--text); line-height: 1.6; }
+    .divide-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(204,53,98,0.15); margin: 1.5rem 0 2rem; }
+    .divide-cell { background: var(--ink-2); padding: 1.8rem; text-align: center; }
+    .divide-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 300; margin-bottom: 0.5rem; line-height: 1.3; }
+    .divide-desc { font-size: 0.8rem; color: var(--muted); }
+    ul.action-list { list-style: none; margin-bottom: 2rem; }
+    ul.action-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+    ul.action-list li:last-child { border-bottom: none; }
+    .cta-block { border: 1px solid var(--border); background: rgba(204,53,98,0.04); padding: 2.5rem; margin-top: 4rem; text-align: center; }
+    .cta-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.4em; color: var(--gold); text-transform: uppercase; margin-bottom: 1rem; }
+    .cta-about { font-size: 0.9rem; color: var(--muted); line-height: 1.8; margin-bottom: 2rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .btn-row { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+    .btn-primary { background: linear-gradient(135deg, var(--rose-dark), var(--rose)); color: var(--text); border: none; padding: 0.9rem 2.4rem; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: opacity 0.3s; }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-outline { background: transparent; color: var(--gold); border: 1px solid rgba(201,169,110,0.4); padding: 0.9rem 2.4rem; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; display: inline-block; transition: border-color 0.3s; text-decoration: none; }
+    .btn-outline:hover { border-color: var(--gold); }
+    .ornament { text-align: center; padding: 2rem 0; color: var(--rose-dark); letter-spacing: 0.8em; opacity: 0.45; }
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 3rem; text-align: center; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); opacity: 0.55; }
+    @media(max-width:600px){ .nav-bar{padding:1rem 1.5rem;} .paper-wrap{padding:3rem 1.5rem 6rem;} .timeline-grid,.divide-grid{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+<div class="top-rule"></div>
+<nav class="nav-bar">
+  <a href="index.html" class="nav-back">← ROSÉ Federation</a>
+  <span class="nav-wordmark">ROSÉ</span>
+</nav>
+
+<div class="paper-wrap">
+  <p class="eyebrow">White Paper · ROSÉ Federation · July 2026</p>
+  <h1>The Witness Requirement —<br><em>What the FTC Just Told Every AI Company in America</em></h1>
+  <div class="rule"></div>
+
+  <div class="body-text">
+    <p class="lead">On July 1, 2026, the Federal Trade Commission proposed a policy statement asserting that an AI company which steers its systems' outputs toward undisclosed objectives and away from what users request or reasonably expect, is likely deceiving consumers under Section 5 of the FTC Act. While this is not a rule as yet, it is instructive of how the oldest consumer protection statute in American commerce intends to meet the newest technology.</p>
+
+    <h2>I. What Just Happened</h2>
+    <p>The July 2026 proposed statement was issued pursuant to Executive Order 14365, signed December 11, 2025, which directed the Commission to clarify how Section 5 applies to AI models and, in particular, how state laws that require alterations to the accurate outputs of AI systems can conflict with federal law.</p>
+    <p>The Commission authorized the statement on a 2-0 vote; it was published in the Federal Register on July 7, 2026, and the public comment period closes on July 31, 2026. Although the statement creates no new legal obligation on its own, it announces an enforcement posture; such a declared posture deserves nearly as much attention from enterprises as a finished rule.</p>
+
+    <div class="timeline-grid">
+      <div class="timeline-cell">
+        <p class="timeline-label">Dec 11, 2025 — Executive Order 14365</p>
+        <p class="timeline-text">A national AI policy framework is established, and the Commission is directed to clarify the application of Section 5 to AI systems.</p>
+      </div>
+      <div class="timeline-cell">
+        <p class="timeline-label">July 1, 2026 — Proposed Policy Statement</p>
+        <p class="timeline-text">The Commission asserts that undisclosed steering of AI outputs is likely deceptive. Comments close July 31, 2026.</p>
+      </div>
+    </div>
+
+    <h2>II. The Theory of the Case</h2>
+    <p>The Commission's reasoning proceeds in three steps, each of which deserves a close reading from any enterprise that builds, embeds, or resells AI capability.</p>
+    <p>The first is that the marketing itself constitutes the representation. AI companies have spent years telling the market, both explicitly and implicitly, that their systems aim to produce the most accurate output possible within their technological constraints, and the Commission cites the industry's own promotional language as the operative promise. Consumers, it concludes, reasonably expect an AI system to pursue the objectives they set for it rather than objectives set for them without their knowledge.</p>
+    <p>The second is that undisclosed steering breaks that consumer promise. Under the Commission's long-standing deception test, a representation is actionable when it is likely to mislead a reasonable consumer in a material way, and an AI system trained or configured to prioritize objectives its users never requested and cannot see fails that test, whatever the motive, for the Commission is explicit in treating motive as irrelevant.</p>
+    <p>The third step reaches back to the oldest doctrine in the Commission's arsenal: representations must be substantiated. The FTC has already brought enforcement actions against companies that could not support the claims made for their AI, among them weapons-screening systems, facial recognition software, and automated legal services. A claim invites a question, and the question demands evidence.</p>
+    <div class="pullquote">The marketing is the representation, and the output is the evidence. Between them stands a question every enterprise will eventually be asked: can you show what your system actually did?</div>
+
+    <h2>III. The Preemption Turn</h2>
+    <p>The statement's most consequential passage concerns state law. Several states have enacted or advanced statutes that press AI companies to alter their systems' outputs, and Colorado's Artificial Intelligence Act is named directly. The Commission's position is unambiguous: compliance with a state law is no defense to deception under Section 5, and a state law that effectively requires a company to deceive its consumers is impliedly preempted to the extent of the conflict.</p>
+    <p>This places enterprises in a genuine squeeze. State law may pull a system's behavior in one direction while federal deception doctrine demands that any such pull be disclosed prominently and persistently. The two pressures compound rather than cancel one another; the only stable position between them is documentation of precisely what a system is designed to do, what has been disclosed about it, and what it did in operation.</p>
+    <p>It should be said plainly that this is a proposed statement, that its framing is contested, and that its preemption theory will be tested in the courts. Enterprises should not treat it as settled law, but neither should they miss what it demonstrably is: the third major regulator in twelve months, after the European Parliament and FinCEN, to converge on the same underlying demand.</p>
+    <div class="pullquote">Three regulators, three theories of liability, and one common demand: prove it.</div>
+
+    <h2>IV. The Safe Harbor Is Disclosure — and Disclosure Is a Claim</h2>
+    <p>The Commission offers one path to safety: a company may avoid liability by making clear, conspicuous, and adequate disclosure that its system is designed to prioritize certain objectives over what users request or would otherwise expect. The statement is emphatic about the standard. Such disclosure cannot be buried in the terms of service; it must be prominent and persistent, and the more it cuts against user expectations, the more prominent it must be.</p>
+    <p>Yet a disclosure is itself a representation about the design and behavior of an AI system, and representations, under the very doctrine this statement invokes, require substantiation. An enterprise that discloses "our system prioritizes X" has not escaped the evidentiary question; it has merely restated it. What supports the disclosure? What demonstrates that the system, in operation, does what the disclosure says it does, no more, no less, and nothing undisclosed besides?</p>
+    <p>Traditional logs provide records. High-consequence AI systems increasingly require evidence. The distinction is not one of storage but of trust: a log is self-attested, a diary kept by the party under examination, and for ordinary operations it serves well enough. As the consequence of a machine decision rises, however, so does the burden of proof, and what the Commission's framework implies without yet naming it is an independent record: non-repudiable, cryptographically bound to time and context, and capable of establishing both what a system was instructed to do and what it did. The point is not to discard the record but to elevate it.</p>
+    <div class="pullquote">Disclosure without proof is merely a claim. The Commission has asked for the claim; the market will ask for the witness.</div>
+
+    <h2>V. The Witness Requirement</h2>
+    <p>Beneath the surface of the statement lies a problem older and larger than any regulator. Historically, evidence was created by humans. The entire architecture of proof — testimony, deposition, cross-examination, and the business records exception itself — rests on a single assumption: that when a question is asked, a human witness can eventually be produced. Machine decisions break that assumption.</p>
+    <div class="pullquote">The decision-maker is no longer human, yet the obligation to explain and to prove remains.</div>
+    <p>It is worth being precise about what the Commission has and has not done. The FTC did not create a witness requirement; it expanded the substantiation requirement for AI systems. The <em><strong>witness requirement</strong></em> is our prediction of what enterprises will ultimately need in order to satisfy that burden at scale: for every consequential representation about an AI system's objectives and behavior, there must exist evidence, independent of the party making the representation, sufficient to establish that the representation is true.</p>
+    <p>Design documents describe intention, and disclosures describe policy, but neither establishes conduct. Only execution-level proof decisions, captured as they occur, and bound to the AI model version, the configuration, the inputs, and the moment, only that can close the distance between what a company says its system does, and what its system demonstrably did.</p>
+    <p>This is the infrastructure ROSÉ exists to provide: not commentary on AI behavior, and not summaries of it, but a signed, ordered, and regulated record of execution, the difference between asserting good faith and being able to demonstrate it. ROSÉ does not replace the log; it seals it.</p>
+
+    <h2>VI. The Convergence</h2>
+    <p>For two centuries, institutions have relied upon a simple assumption: when a consequential decision is questioned, a human being can eventually be called to explain it. That assumption is now failing simultaneously across multiple domains.</p>
+    <p>Financial regulators require firms to demonstrate the basis of decisions that affect risk and compliance. Consumer protection regulators require companies to substantiate representations made about products and services. AI regulators increasingly require transparency into the objectives, behavior, and outputs of automated systems. Courts are being asked to determine liability for decisions made by algorithms rather than people. And enterprises themselves must explain the actions of software agents operating across increasingly complex environments.</p>
+    <p>These institutions did not coordinate their demands. They arrived at them independently. Yet each is converging upon the same question.</p>
+    <div class="pullquote">Who witnessed the decision?</div>
+    <p>When the answer was a human, testimony was sufficient. When the answer is a machine, testimony becomes an account after the fact. The emerging requirement is not fundamentally regulatory. It is evidentiary. A society that delegates consequential decisions to machines must create a new mechanism of proof.</p>
+    <p>Existing systems were built to record transactions. They were not built to establish provenance of autonomous decisions. A payment system can tell you that money moved. A workflow system can tell you that a task executed. A log can tell you that an event occurred. None of them were designed to answer the question increasingly asked by regulators, courts, and enterprises alike: <em>why did the machine decide what it decided, and how can that account be independently verified?</em></p>
+    <p>The regulators are merely the first to discover the problem.</p>
+
+    <h2>VII. What This Means for Regulated Enterprises</h2>
+    <p>Although the statement is addressed to AI companies, its gravity extends to every enterprise that embeds or resells AI capability, because representations travel down the channel. A platform that embeds a third-party model and markets its capability to customers has made a representation about that model's behavior, and if the claim cannot be substantiated, the exposure belongs to the party who made the claim rather than merely to the party who trained the model.</p>
+    <p>Enterprises in financial services will recognize the shape of this obligation, for it is the same principle that SR 11-7 has long applied to model risk: a third-party model in your product is your responsibility to validate and monitor. The FTC statement extends that logic from safety and soundness to consumer protection, and the perimeter of accountability now encloses the deployer.</p>
+
+    <h2>VIII. What to Do Now</h2>
+    <ul class="action-list">
+      <li>→ &nbsp; Inventory every representation your organization makes about AI capability — in marketing, in sales materials, and in product documentation.</li>
+      <li>→ &nbsp; Map the actual objectives of each AI system in your stack, including third-party and embedded models, against those representations.</li>
+      <li>→ &nbsp; Align disclosures to the Commission's standard: clear, conspicuous, prominent, and persistent — never buried in terms of service.</li>
+      <li>→ &nbsp; Build the substantiation record: execution-level evidence of what each system was configured to do and what it did in operation.</li>
+      <li>→ &nbsp; Consider filing a public comment before July 31, 2026 — the comment window is where the final shape of this policy will be argued.</li>
+      <li>→ &nbsp; Evaluate ROSÉ as the execution proof infrastructure beneath your disclosures — before the question is asked under oath.</li>
+    </ul>
+
+    <h2>IX. The Strategic Divide</h2>
+    <div class="divide-grid">
+      <div class="divide-cell">
+        <p class="divide-title" style="color:var(--rose-light);">Those who can prove their disclosures</p>
+        <p class="divide-desc">Able to make confident representations about AI capability, satisfy state and federal regimes simultaneously, and answer the evidentiary question before it is asked.</p>
+      </div>
+      <div class="divide-cell">
+        <p class="divide-title" style="color:var(--muted);">Those who can only assert them</p>
+        <p class="divide-desc">Exposed on both flanks, to state obligations pulling system behavior in one direction, and to federal deception doctrine demanding proof of every undisclosed pull.</p>
+      </div>
+    </div>
+
+    <h2>X. Conclusion</h2>
+    <p>The FTC's proposed statement will be debated, revised, and litigated, and its final text cannot be known today. Its direction, however, can. Regulators on two continents have now arrived, by entirely different roads, at the same destination: an AI system's stated objectives are a promise, and promises made in commerce must be capable of proof.</p>
+    <p>Every prior technological shift created a corresponding trust layer. Cybersecurity emerged because digital commerce required trust in systems; the witness requirement emerges because autonomous commerce requires trust in decisions.</p>
+    <p>Accounting produced the audit. The internet produced cybersecurity. Autonomous systems will produce the witness.</p>
+    <p>The enterprises that flourish under this standard will not be those with the most careful lawyers; they will be those with the most credible evidence.</p>
+    <div class="pullquote">What these institutions need is a witness; one that was present at the execution itself, for everything else is testimony after the fact.</div>
+
+    <div class="cta-block">
+      <p class="cta-label">About ROSÉ.xyz</p>
+      <p class="cta-about">ROSÉ is the Regulated, Ordered &amp; Signed Execution federation, the infrastructure with the ability to prove the work of AI agents. The federation includes Selfient.xyz · Matric · ROKO.Network · Latitude.sh · Fortémi · TimeBeat · CustodyCore</p>
+      <div class="btn-row">
+        <a href="index.html#contact" class="btn-primary">Request a Briefing</a>
+      </div>
+    </div>
+    <p style="font-size:0.68rem;color:var(--muted);text-align:center;margin-top:1.5rem;opacity:0.6;">This paper is provided for informational purposes only and does not constitute legal advice. The FTC policy statement discussed herein is proposed and subject to revision following the public comment period. Consult qualified legal counsel for guidance specific to your organization.</p>
+  </div>
+</div>
+
+<div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+<footer>© 2026 ROSÉ Federation &nbsp;·&nbsp; Selfient · Matric · Roko.network · Latitude.sh · Fortémi · TimeBeat &nbsp;·&nbsp; This paper does not constitute legal advice.</footer>
+
+</body>
+</html>
